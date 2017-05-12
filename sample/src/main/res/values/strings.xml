@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Photal</string>
+
+    <string-array name="sample_list">
+        <item>photo grid selector</item>
+        <item>photo gallery selector</item>
+        <item>photo switch gallery selector</item>
+        <item>camera</item>
+    </string-array>
 </resources>

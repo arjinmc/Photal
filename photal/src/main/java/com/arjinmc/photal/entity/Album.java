@@ -11,7 +11,6 @@ public class Album {
     private int id;
     private int name;
     private int count;
-    private long coverId;
 
     public int getId() {
         return id;
@@ -37,11 +36,4 @@ public class Album {
         this.count = count;
     }
 
-    public long getCoverId() {
-        return coverId;
-    }
-
-    public void setCoverId(long coverId) {
-        this.coverId = coverId;
-    }
 }

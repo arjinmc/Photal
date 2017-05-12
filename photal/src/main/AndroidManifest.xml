@@ -2,9 +2,22 @@
 
     package="com.arjinmc.photal">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application android:allowBackup="true" android:label="@string/app_name"
         android:supportsRtl="true">
 
+
+        <activity android:name=".selector.PhotoGridSelectorActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".selector.PhotoGallerySelectorActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".selector.PhotoSwitchGallerySelectorActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PreviewActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

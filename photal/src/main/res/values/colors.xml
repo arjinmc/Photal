@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="theme">#222222</color>
+    <color name="white">#ffffff</color>
+
+    <color name="photo_grid_theme">#424242</color>
+    <color name="photo_grid_count">#999999</color>
+
+</resources>

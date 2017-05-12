@@ -10,4 +10,6 @@ public final class Config {
     public static final String CAMERA_FILE_DIRECTORY = "photal";
     public static final String IMAGE_NAME_PREFIX = "IMAGE";
 
+    public static final int MAX_CHOOSE_PHOTO = 9;
+
 }

@@ -1,6 +1,8 @@
 package com.arjinmc.photal.config;
 
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 
 import com.arjinmc.photal.util.FileUtils;
 
@@ -15,8 +17,10 @@ import java.util.Date;
 
 public final class Constant {
 
-    public static final String MODE_CHOOSE_SINGLE = "MODE_CHOOSE_SINGLE";
-    public static final String MODE_CHOOSE_MULTIPLE = "MODE_CHOOSE_MULTIPLE";
+    public static final int MODE_CHOOSE_SINGLE = 0;
+    public static final int MODE_CHOOSE_MULTIPLE = 1;
+
+    public static final Uri URI_IMAGE_MEDIA = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
     public static String getCameraPhotoPath() {
 
@@ -36,6 +40,13 @@ public final class Constant {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYYMMDDhhmmsss");
         imageName = Config.IMAGE_NAME_PREFIX + simpleDateFormat.format(new Date());
         return imageName;
+    }
+
+    public static int getMaxChoosePhotoCount(){
+        int count = Config.MAX_CHOOSE_PHOTO;
+        if(count<1)
+            return 1;
+        return count;
     }
 
 
