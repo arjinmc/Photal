@@ -1,32 +1,55 @@
 package com.arjinmc.photal.loader;
 
-import android.content.Context;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 
-import com.arjinmc.photal.config.Constant;
+import com.arjinmc.photal.callback.PhotalLoaderCallback;
+import com.arjinmc.photal.config.Config;
 
 /**
- * Loader for photo album
- * Created by Eminem Lu on 28/4/17.
+ * Created by Eminem Lu on 25/5/17.
  * Email arjinmc@hotmail.com
  */
 
-public class AlbumLoader extends CursorLoader {
+public class AlbumLoader implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final String ALBUM_ID = MediaStore.Images.Media.BUCKET_ID;
-    public static final String ALBUM_NAME = MediaStore.Images.Media.BUCKET_DISPLAY_NAME;
-    public static final String ALBUM_ORDER_BY = "MAX(" + MediaStore.Images.Media.DATE_TAKEN + ") DESC";
-    public static final String ALBUM_PHOTO_COUNT = "count";
+    private FragmentActivity mContext;
+    private PhotalLoaderCallback mPhotalLoaderCallback;
 
-    public AlbumLoader(Context context) {
-        super(context,Constant.URI_IMAGE_MEDIA
-                ,new String[]{ALBUM_ID,ALBUM_NAME,"COUNT(*) AS "+ALBUM_PHOTO_COUNT},null,null, ALBUM_ORDER_BY);
+
+    public AlbumLoader(FragmentActivity context, PhotalLoaderCallback photalLoaderCallback){
+        mContext = context;
+        mPhotalLoaderCallback = photalLoaderCallback;
     }
 
-    public AlbumLoader(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        super(context, uri,projection, selection, selectionArgs, sortOrder);
+    public void load(){
+        mContext.getSupportLoaderManager().initLoader(Config.LOADER_ID_ALBUM,null,this);
+    }
+
+    public void destroyLoader(){
+        mContext.getSupportLoaderManager().destroyLoader(Config.LOADER_ID_ALBUM);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new AlbumCursorLoader(mContext);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(mPhotalLoaderCallback!=null){
+            mPhotalLoaderCallback.onLoadFinished(data);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        if(mPhotalLoaderCallback!=null){
+            mPhotalLoaderCallback.onLoaderReset();
+        }
     }
 
 }

@@ -1,7 +1,6 @@
 package com.arjinmc.photal.util;
 
 import android.content.Context;
-import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -21,7 +20,7 @@ public final class ImageLoader {
     private static int mode = MODE_GLIDE;
 
 
-    public static void loadThumbnail(Context context,Uri uri,ImageView imageView){
+    public static void loadThumbnail(Context context,String uri,ImageView imageView){
         switch (mode){
             case MODE_GLIDE:
                 Glide.with(context).load(uri).centerCrop().into(imageView);

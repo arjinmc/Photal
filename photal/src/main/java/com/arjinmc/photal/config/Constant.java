@@ -20,6 +20,8 @@ public final class Constant {
     public static final int MODE_CHOOSE_SINGLE = 0;
     public static final int MODE_CHOOSE_MULTIPLE = 1;
 
+    public static final String BUNDLE_KEY = "photal";
+
     public static final Uri URI_IMAGE_MEDIA = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
     public static String getCameraPhotoPath() {

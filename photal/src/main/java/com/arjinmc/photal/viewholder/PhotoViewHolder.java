@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.arjinmc.photal.R;
+import com.arjinmc.photal.widget.SelectBox;
 
 /**
  * PhotoViewHolder
@@ -14,10 +15,12 @@ import com.arjinmc.photal.R;
 
 public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
-    private ImageView ivPhoto;
+    public ImageView ivPhoto;
+    public SelectBox sbCheck;
 
     public PhotoViewHolder(View itemView) {
         super(itemView);
         ivPhoto = (ImageView) itemView.findViewById(R.id.iv_photo);
+        sbCheck = (SelectBox) itemView.findViewById(R.id.cb_check);
     }
 }

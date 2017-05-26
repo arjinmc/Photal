@@ -6,12 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.arjinmc.photal.config.Config;
+import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.selector.PhotoGridSelectorActivity;
 
 public class MainActivity extends AppCompatActivity{
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity{
         public void onClick(View v) {
             switch (position){
                 case 0:
-                    startAct(PhotoGridSelectorActivity.class);
+                    startActivityForResult(new Intent(MainActivity.this,PhotoGridSelectorActivity.class),1);
                     break;
             }
         }
@@ -88,5 +92,28 @@ public class MainActivity extends AppCompatActivity{
     private void startAct(Class clz){
         startActivity(new Intent(this,clz));
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Config.SELECTOR_RESULT_CODE){
+            String[] paths = data.getStringArrayExtra(Constant.BUNDLE_KEY);
+            String result = getPath(paths);
+            Log.e("path",result);
+            Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private String getPath(String[] path){
+        StringBuilder stringBuilder = new StringBuilder();
+        int len = path.length;
+        for(int i=0;i<len;i++){
+            stringBuilder.append(path[i]+"\n");
+        }
+        return stringBuilder.toString();
+    }
+
 
 }

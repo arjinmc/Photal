@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="theme">#222222</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 
-    <color name="photo_grid_theme">#424242</color>
-    <color name="photo_grid_count">#999999</color>
+    <color name="photal_theme">#555555</color>
+    <color name="photal_theme_dark">#111111</color>
+
+    <color name="photal_grid_theme">#424242</color>
+    <color name="photal_grid_count">#999999</color>
+    <color name="photal_title_text">@color/white</color>
+    <color name="photal_send_disable">#7CCD7C</color>
+    <color name="photal_send_enable">#00CD66</color>
+    <color name="photal_send_press">#008B45</color>
+    <color name="photal_album_diver">#999999</color>
+    <color name="photal_album_background">#CDC9C9</color>
 
 </resources>
