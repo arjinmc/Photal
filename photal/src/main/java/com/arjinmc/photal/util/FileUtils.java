@@ -10,15 +10,15 @@ import java.io.IOException;
 
 public final class FileUtils {
 
-    public static boolean isExisted(String filePath){
+    public static boolean isExisted(String filePath) {
         File file = new File(filePath);
-        if(file.exists())
+        if (file.exists())
             return true;
         return false;
     }
 
-    public static void create(String filePath){
-        if(!isExisted(filePath)){
+    public static void create(String filePath) {
+        if (!isExisted(filePath)) {
             File file = new File(filePath);
             try {
                 file.createNewFile();

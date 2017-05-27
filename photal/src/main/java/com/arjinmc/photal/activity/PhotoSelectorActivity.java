@@ -1,4 +1,4 @@
-package com.arjinmc.photal.selector;
+package com.arjinmc.photal.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,7 +27,7 @@ import com.arjinmc.photal.loader.PhotoCursorLoader;
 import com.arjinmc.photal.loader.PhotoLoader;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.viewholder.PhotoViewHolder;
-import com.arjinmc.photal.widget.PhotoGridAlbumPopupWindow;
+import com.arjinmc.photal.widget.PhotoAlbumPopupWindow;
 import com.arjinmc.photal.widget.RecyclerViewItemDecoration;
 import com.arjinmc.photal.widget.SelectBox;
 
@@ -35,47 +35,54 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * photo selector grid style
+ * photo selector
  * Created by Eminem Lu on 11/5/17.
  * Email arjinmc@hotmail.com
  */
 
-public class PhotoGridSelectorActivity extends FragmentActivity implements View.OnClickListener {
+public class PhotoSelectorActivity extends FragmentActivity implements View.OnClickListener {
 
-    private ImageButton mIvBack;
-    private PhotoGridAlbumPopupWindow mPopAlbum;
+    private ImageButton mbtnBack;
+    private PhotoAlbumPopupWindow mPopAlbum;
     private RecyclerView mRvPhoto;
     private PhotoGridSelctorAdapter mPhotoAdapter;
     private PhotoLoader mPhotoLoader;
     private TextView mTvAlbum;
+    private TextView mTvPreview;
     private Button mBtnSend;
 
-    private int mCurrentMode;
+    private int mCurrentAlbumId = -1;
+    private String mCurrentAction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_grid_selector);
 
-        mIvBack = (ImageButton) findViewById(R.id.iv_back);
-        mIvBack.setOnClickListener(this);
+        mbtnBack = (ImageButton) findViewById(R.id.btn_back);
+        mbtnBack.setOnClickListener(this);
 
         mBtnSend = (Button) findViewById(R.id.btn_send);
         mBtnSend.setOnClickListener(this);
         mBtnSend.setEnabled(false);
 
-        mPopAlbum = new PhotoGridAlbumPopupWindow(this);
+        mPopAlbum = new PhotoAlbumPopupWindow(this);
         mPopAlbum.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 int albumId = mPopAlbum.getChosenAlbumId();
-                mPhotoLoader.destroyLoader();
-                mPhotoLoader.load(albumId);
-
+                if (mCurrentAlbumId != albumId) {
+                    mCurrentAlbumId = albumId;
+                    mPhotoLoader.destroyLoader();
+                    mPhotoLoader.load(albumId);
+                }
             }
         });
         mTvAlbum = (TextView) findViewById(R.id.tv_album);
         mTvAlbum.setOnClickListener(this);
+
+        mTvPreview = (TextView) findViewById(R.id.tv_preview);
+        mTvPreview.setOnClickListener(this);
 
         mRvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
         mRvPhoto.setLayoutManager(new GridLayoutManager(this, 3));
@@ -98,6 +105,12 @@ public class PhotoGridSelectorActivity extends FragmentActivity implements View.
                 mPhotoAdapter.setCursor(null);
             }
         });
+
+        mCurrentAction = getIntent().getAction();
+        if (mCurrentAction == null) mCurrentAction = Constant.ACTION_CHOOSE_MULTIPLE;
+        if (mCurrentAction.equals(Constant.ACTION_CHOOSE_SINGLE)) {
+            mBtnSend.setVisibility(View.GONE);
+        }
         mPhotoLoader.load(null);
 
     }
@@ -111,19 +124,29 @@ public class PhotoGridSelectorActivity extends FragmentActivity implements View.
             } else {
                 mPopAlbum.dismiss();
             }
-        } else if (i == R.id.iv_back) {
+        } else if (i == R.id.btn_back) {
             if (mPopAlbum != null && mPopAlbum.isShowing()) {
                 mPopAlbum.dismiss();
             } else {
                 finish();
             }
-        }else if (i == R.id.btn_send){
-            Intent intent = new Intent();
-            intent.putExtra(Constant.BUNDLE_KEY,mPhotoAdapter.getChosenImagePaths());
-            setResult(Config.SELECTOR_RESULT_CODE,intent);
-            finish();
+        } else if (i == R.id.btn_send) {
+            dispatchImages();
+        } else if (i == R.id.tv_preview) {
+            Intent previewIntent = new Intent(PhotoSelectorActivity.this, PreviewActivity.class);
+            startActivity(previewIntent);
         }
 
+    }
+
+    /**
+     * dispatch images back to preview activity
+     */
+    private void dispatchImages() {
+        Intent intent = new Intent();
+        intent.putExtra(Constant.BUNDLE_KEY, mPhotoAdapter.getChosenImagePaths());
+        setResult(Config.SELECTOR_RESULT_CODE, intent);
+        finish();
     }
 
     /**
@@ -162,27 +185,38 @@ public class PhotoGridSelectorActivity extends FragmentActivity implements View.
                 final String dataPath = mCusor.getString(mCusor.getColumnIndex(PhotoCursorLoader.PHOTO_DATA));
                 ImageLoader.loadThumbnail(getBaseContext()
                         , dataPath, holder.ivPhoto);
-                if (chosenImagesPaths.containsKey(dataPath))
-                    holder.sbCheck.setChecked(true);
-                else holder.sbCheck.setChecked(false);
-                holder.sbCheck.setOnCheckChangeListener(new SelectBox.OnCheckChangeListener() {
-                    @Override
-                    public void onChange(boolean change) {
-                        if (chosenImagesPaths.size() >= Constant.getMaxChoosePhotoCount() && change) {
-                            holder.sbCheck.setChecked(!change);
-                            Toast.makeText(getBaseContext()
-                                    , String.format(getString(R.string.photal_chosen_max)
-                                            ,Constant.getMaxChoosePhotoCount()), Toast.LENGTH_SHORT).show();
-                        } else {
-                            if (change) {
-                                chosenImagesPaths.put(dataPath, dataPath);
+                if (mCurrentAction.equals(Constant.ACTION_CHOOSE_MULTIPLE)) {
+                    if (chosenImagesPaths.containsKey(dataPath))
+                        holder.sbCheck.setChecked(true);
+                    else holder.sbCheck.setChecked(false);
+                    holder.sbCheck.setOnCheckChangeListener(new SelectBox.OnCheckChangeListener() {
+                        @Override
+                        public void onChange(boolean change) {
+                            if (chosenImagesPaths.size() >= Constant.getMaxChoosePhotoCount() && change) {
+                                holder.sbCheck.setChecked(!change);
+                                Toast.makeText(getBaseContext()
+                                        , String.format(getString(R.string.photal_chosen_max)
+                                                , Constant.getMaxChoosePhotoCount()), Toast.LENGTH_SHORT).show();
                             } else {
-                                chosenImagesPaths.remove(dataPath);
+                                if (change) {
+                                    chosenImagesPaths.put(dataPath, dataPath);
+                                } else {
+                                    chosenImagesPaths.remove(dataPath);
+                                }
                             }
+                            updateBtnSend();
                         }
-                        updateBtnSend();
-                    }
-                });
+                    });
+                } else {
+                    holder.sbCheck.setVisibility(View.GONE);
+                    holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            chosenImagesPaths.put(dataPath, dataPath);
+                            dispatchImages();
+                        }
+                    });
+                }
             }
         }
 

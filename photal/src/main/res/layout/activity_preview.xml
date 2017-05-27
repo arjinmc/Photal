@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        style="@style/layout_mw.h"
+        android:layout_height="@dimen/photal_title_bar_h"
+        android:background="@color/photal_theme">
+
+        <ImageButton
+            android:id="@id/btn_back"
+            android:layout_width="@dimen/photal_title_bar_h"
+            android:layout_height="match_parent"
+            android:background="@drawable/photal_action_btn_bg_selector"
+            android:src="@drawable/ic_photal_arrow_back" />
+
+        <TextView
+            style="@style/layout_ww.single"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/btn_back"
+            android:text="@string/photal_preview"
+            android:textColor="@color/photal_title_text"
+            android:textSize="@dimen/txt_normal" />
+
+        <Button
+            android:id="@id/btn_send"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/photal_btn_send_h"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:background="@drawable/photal_send_btn_bg_selector"
+            android:text="@string/photal_send"
+            android:textColor="@color/photal_title_text" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        style="@style/layout_mw"
+        android:layout_alignParentBottom="true"
+        android:background="@color/photal_theme"
+        android:padding="@dimen/margin_big">
+
+        <CheckBox
+            android:id="@id/cb_check"
+            style="@style/layout_ww.single"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/photal_choose"
+            android:textColor="@color/photal_title_text"
+            android:textSize="@dimen/txt_normal" />
+    </RelativeLayout>
+
+</RelativeLayout>

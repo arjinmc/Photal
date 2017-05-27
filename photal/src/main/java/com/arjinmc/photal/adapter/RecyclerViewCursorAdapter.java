@@ -9,7 +9,7 @@ import android.view.ViewGroup;
  * Email arjinmc@hotmail.com
  */
 
-public class RecyclerViewCursorAdapter< VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     protected Cursor mCusor;
 
@@ -25,12 +25,12 @@ public class RecyclerViewCursorAdapter< VH extends RecyclerView.ViewHolder> exte
 
     @Override
     public int getItemCount() {
-        if(mCusor!=null)
+        if (mCusor != null)
             return mCusor.getCount();
         return 0;
     }
 
-    public void setCursor(Cursor cursor){
+    public void setCursor(Cursor cursor) {
         mCusor = cursor;
     }
 }

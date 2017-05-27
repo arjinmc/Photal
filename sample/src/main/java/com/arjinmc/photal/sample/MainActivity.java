@@ -1,9 +1,9 @@
 package com.arjinmc.photal.sample;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,11 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
-import com.arjinmc.photal.selector.PhotoGridSelectorActivity;
+import com.arjinmc.photal.widget.RecyclerViewItemDecoration;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private String[] mSampleList;
     private RecyclerView mRecyclerView;
@@ -30,19 +31,21 @@ public class MainActivity extends AppCompatActivity{
 
         mSampleList = getResources().getStringArray(R.array.sample_list);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), LinearLayout.VERTICAL));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.addItemDecoration(
+                new RecyclerViewItemDecoration.Builder(this)
+                        .color(Color.BLACK).thickness(2).paddingStart(20).paddingEnd(20).create());
         mRecyclerView.setAdapter(new MyAdapter());
 
     }
 
 
-    private class MyAdapter extends RecyclerView.Adapter<ItemViewHolder>{
+    private class MyAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
         @Override
         public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ItemViewHolder(LayoutInflater.from(getBaseContext())
-                    .inflate(R.layout.item_sample_list,parent,false));
+                    .inflate(R.layout.item_sample_list, parent, false));
         }
 
         @Override
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder{
+    private class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private LinearLayout llParent;
         private TextView tvName;
@@ -70,47 +73,52 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private class ItemClickListener implements View.OnClickListener{
+    private class ItemClickListener implements View.OnClickListener {
 
         private int position;
 
-        public ItemClickListener(int position){
+        public ItemClickListener(int position) {
             this.position = position;
         }
 
         @Override
         public void onClick(View v) {
-            switch (position){
+            switch (position) {
                 case 0:
-                    startActivityForResult(new Intent(MainActivity.this,PhotoGridSelectorActivity.class),1);
+                    startActivityForResult(new Intent(MainActivity.this, PhotoSelectorActivity.class), 1);
+                    break;
+                case 1:
+                    Intent selectOneIntent = new Intent(MainActivity.this, PhotoSelectorActivity.class);
+                    selectOneIntent.setAction(Constant.ACTION_CHOOSE_SINGLE);
+                    startActivityForResult(selectOneIntent, 1);
                     break;
             }
         }
     }
 
 
-    private void startAct(Class clz){
-        startActivity(new Intent(this,clz));
+    private void startAct(Class clz) {
+        startActivity(new Intent(this, clz));
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Config.SELECTOR_RESULT_CODE){
+        if (resultCode == Config.SELECTOR_RESULT_CODE) {
             String[] paths = data.getStringArrayExtra(Constant.BUNDLE_KEY);
             String result = getPath(paths);
-            Log.e("path",result);
+            Log.e("path", result);
             Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
         }
     }
 
 
-    private String getPath(String[] path){
+    private String getPath(String[] path) {
         StringBuilder stringBuilder = new StringBuilder();
         int len = path.length;
-        for(int i=0;i<len;i++){
-            stringBuilder.append(path[i]+"\n");
+        for (int i = 0; i < len; i++) {
+            stringBuilder.append(path[i] + "\n");
         }
         return stringBuilder.toString();
     }

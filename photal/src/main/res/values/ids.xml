@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item name="iv_back" type="id"/>
+    <item name="btn_back" type="id"/>
     <item name="iv_photo" type="id"/>
     <item name="tv_name" type="id"/>
     <item name="tv_count" type="id"/>
@@ -10,5 +10,6 @@
     <item name="rv_album" type="id"/>
     <item name="tv_album" type="id"/>
     <item name="btn_send" type="id"/>
+    <item name="tv_preview" type="id"/>
 
 </resources>

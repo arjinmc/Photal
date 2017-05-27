@@ -20,16 +20,16 @@ public class AlbumLoader implements LoaderManager.LoaderCallbacks<Cursor> {
     private PhotalLoaderCallback mPhotalLoaderCallback;
 
 
-    public AlbumLoader(FragmentActivity context, PhotalLoaderCallback photalLoaderCallback){
+    public AlbumLoader(FragmentActivity context, PhotalLoaderCallback photalLoaderCallback) {
         mContext = context;
         mPhotalLoaderCallback = photalLoaderCallback;
     }
 
-    public void load(){
-        mContext.getSupportLoaderManager().initLoader(Config.LOADER_ID_ALBUM,null,this);
+    public void load() {
+        mContext.getSupportLoaderManager().initLoader(Config.LOADER_ID_ALBUM, null, this);
     }
 
-    public void destroyLoader(){
+    public void destroyLoader() {
         mContext.getSupportLoaderManager().destroyLoader(Config.LOADER_ID_ALBUM);
     }
 
@@ -40,14 +40,14 @@ public class AlbumLoader implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if(mPhotalLoaderCallback!=null){
+        if (mPhotalLoaderCallback != null) {
             mPhotalLoaderCallback.onLoadFinished(data);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        if(mPhotalLoaderCallback!=null){
+        if (mPhotalLoaderCallback != null) {
             mPhotalLoaderCallback.onLoaderReset();
         }
     }

@@ -19,7 +19,7 @@ public class PhotoCursorLoader extends CursorLoader {
     public static final String PHOTO_DATA = MediaStore.Images.Media.DATA;
     public static final String PHOTO_TYPE = MediaStore.Images.Media.MIME_TYPE;
 
-    public static final String SELECTION_ALBUM = AlbumCursorLoader.ALBUM_ID+"=?";
+    public static final String SELECTION_ALBUM = AlbumCursorLoader.ALBUM_ID + "=?";
 
     public PhotoCursorLoader(Context context) {
 
@@ -29,7 +29,7 @@ public class PhotoCursorLoader extends CursorLoader {
 
     }
 
-    public PhotoCursorLoader(Context context,Integer albumId) {
+    public PhotoCursorLoader(Context context, Integer albumId) {
 
         super(context, Constant.URI_IMAGE_MEDIA
                 , new String[]{PHOTO_ID, PHOTO_DISPLAY_NAME, PHOTO_DATA, PHOTO_TYPE}

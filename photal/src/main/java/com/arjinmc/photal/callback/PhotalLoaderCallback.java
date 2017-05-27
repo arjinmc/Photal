@@ -11,5 +11,6 @@ import android.database.Cursor;
 public interface PhotalLoaderCallback {
 
     public void onLoadFinished(Cursor cursor);
+
     public void onLoaderReset();
 }

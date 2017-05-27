@@ -17,10 +17,11 @@ import java.util.Date;
 
 public final class Constant {
 
-    public static final int MODE_CHOOSE_SINGLE = 0;
-    public static final int MODE_CHOOSE_MULTIPLE = 1;
+    public static final String ACTION_CHOOSE_SINGLE = "ACTION_CHOOSE_SINGLE";
+    public static final String ACTION_CHOOSE_MULTIPLE = "ACTION_CHOOSE_MULTIPLE";
 
     public static final String BUNDLE_KEY = "photal";
+    public static final String BUNDLE_USE_CAMERA = "use_camera";
 
     public static final Uri URI_IMAGE_MEDIA = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
@@ -44,9 +45,9 @@ public final class Constant {
         return imageName;
     }
 
-    public static int getMaxChoosePhotoCount(){
+    public static int getMaxChoosePhotoCount() {
         int count = Config.MAX_CHOOSE_PHOTO;
-        if(count<1)
+        if (count < 1)
             return 1;
         return count;
     }

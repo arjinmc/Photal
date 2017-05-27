@@ -59,4 +59,5 @@
         <item name="android:layout_marginRight">@dimen/margin_big</item>
         <item name="android:button">@android:style/Widget.DeviceDefault.CompoundButton.RadioButton</item>
     </style>
+
 </resources>

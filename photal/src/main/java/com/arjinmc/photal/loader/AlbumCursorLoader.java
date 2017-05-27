@@ -41,14 +41,14 @@ public class AlbumCursorLoader extends CursorLoader {
         int totalCount = 0;
         String totalData = null;
         while (cur.moveToNext()) {
-            if(cur.getPosition()==0)
+            if (cur.getPosition() == 0)
                 totalData = cur.getString(cur.getColumnIndex(ALBUM_IMAGE_DATA));
             totalCount += cur.getInt(cur.getColumnIndex(ALBUM_PHOTO_COUNT));
         }
         allCur.addRow(new String[]{"-1"
                 , mContext.getString(R.string.photal_all_photos)
-                ,totalData
-                ,String.valueOf(totalCount)});
+                , totalData
+                , String.valueOf(totalCount)});
         return new MergeCursor(new Cursor[]{allCur, cur});
     }
 }

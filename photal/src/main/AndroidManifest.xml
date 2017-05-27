@@ -10,13 +10,9 @@
         android:supportsRtl="true">
 
 
-        <activity android:name=".selector.PhotoGridSelectorActivity"
+        <activity android:name=".activity.PhotoSelectorActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".selector.PhotoGallerySelectorActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".selector.PhotoSwitchGallerySelectorActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".PreviewActivity"
+        <activity android:name=".activity.PreviewActivity"
             android:screenOrientation="portrait"/>
     </application>
 

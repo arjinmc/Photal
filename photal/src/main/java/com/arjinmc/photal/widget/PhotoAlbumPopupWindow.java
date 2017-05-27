@@ -29,7 +29,7 @@ import com.arjinmc.photal.viewholder.AlbumViewHolder;
  * Email arjinmc@hotmail.com
  */
 
-public class PhotoGridAlbumPopupWindow extends PopupWindow {
+public class PhotoAlbumPopupWindow extends PopupWindow {
 
     private FragmentActivity mContext;
 
@@ -37,10 +37,10 @@ public class PhotoGridAlbumPopupWindow extends PopupWindow {
     private AlbumAdapter mAlbumAdapter;
     private DismissRunnable mDismissRunnable;
     private Handler mHandler = new Handler();
-    private int mAlbumId;
+    private int mAlbumId = -1;
 
 
-    public PhotoGridAlbumPopupWindow(FragmentActivity context) {
+    public PhotoAlbumPopupWindow(FragmentActivity context) {
         mContext = context;
         init();
     }
@@ -103,7 +103,7 @@ public class PhotoGridAlbumPopupWindow extends PopupWindow {
 
     private class AlbumAdapter extends RecyclerViewCursorAdapter<AlbumViewHolder> {
 
-        private int currentPosition = -1;
+        private int currentPosition = 0;
 
         @Override
         public AlbumViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

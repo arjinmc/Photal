@@ -61,7 +61,7 @@ public final class PermissionAssistant {
                     if (shouldRequest == false && permissionResult == PackageManager.PERMISSION_DENIED) {
                         useDialog = true;
                     }
-                    Log.e("permissionResult",permissionResult +":"+shouldRequest);
+                    Log.e("permissionResult", permissionResult + ":" + shouldRequest);
                 }
             }
             Log.e("mUngranted", mUngrantedPermissionList.size() + "");

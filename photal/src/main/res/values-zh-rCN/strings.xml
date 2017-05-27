@@ -6,10 +6,13 @@
     <string name="permission_setting_yes">是</string>
     <string name="permission_setting_no">否</string>
 
-    <string name="photal_photos">图片相册</string>
+    <string name="photal_photos">相册和图片</string>
     <string name="photal_send">发送</string>
     <string name="photal_send_number">发送 (%1$d/%2$d)</string>
-    <string name="photal_album">相册</string>
+    <string name="photal_album">相册和图片</string>
     <string name="photal_all_photos">所有图片</string>
     <string name="photal_chosen_max">你只能最多选择%d张图片! </string>
+    <string name="photal_preview">预览</string>
+    <string name="photal_choose">选择</string>
+
 </resources>

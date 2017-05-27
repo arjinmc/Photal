@@ -5,10 +5,12 @@
     <string name="permission_setting_yes">Yes</string>
     <string name="permission_setting_no">No</string>
 
-    <string name="photal_photos">Photos</string>
+    <string name="photal_photos">Photos &amp; Images</string>
     <string name="photal_send">Send</string>
     <string name="photal_send_number">Send (%1$d/%2$d)</string>
-    <string name="photal_album">Album</string>
+    <string name="photal_album">Photos &amp; Images</string>
     <string name="photal_all_photos">All Photos</string>
     <string name="photal_chosen_max">You can only select up to %d images! </string>
+    <string name="photal_preview">Preview</string>
+    <string name="photal_choose">Choose</string>
 </resources>
