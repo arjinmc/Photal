@@ -134,13 +134,15 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             dispatchImages();
         } else if (i == R.id.tv_preview) {
             Intent previewIntent = new Intent(PhotoSelectorActivity.this, PreviewActivity.class);
+            previewIntent.setAction(mCurrentAction);
+            previewIntent.putExtra(Constant.BUNDLE_KEY, mPhotoAdapter.getChosenImagePaths());
             startActivity(previewIntent);
         }
 
     }
 
     /**
-     * dispatch images back to preview activity
+     * dispatch images back to preview
      */
     private void dispatchImages() {
         Intent intent = new Intent();
@@ -226,6 +228,16 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                 return chosenImagesPaths.keySet().toArray(paths);
             }
             return paths;
+        }
+
+        public void setChoosenImagePaths(String[] paths){
+            if(paths!=null && paths.length!=0){
+                chosenImagesPaths.clear();
+                for(int i=0;i<paths.length;i++){
+                    chosenImagesPaths.put(paths[i],paths[i]);
+                }
+                notifyDataSetChanged();
+            }
         }
     }
 

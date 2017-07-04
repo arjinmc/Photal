@@ -68,9 +68,9 @@ public class SelectBox extends View implements View.OnClickListener {
             canvas.drawCircle(mFullWidth / 2, mFullWidth / 2, mFullWidth / 2 - (int) (mThickness * 1.5), mPaint);
 
             Path path = new Path();
-            path.moveTo(mFullWidth / 3, mFullWidth / 2);
-            path.lineTo(mFullWidth * 2 / 5, mFullWidth * 2 / 3);
-            path.lineTo(mFullWidth * 2 / 3, mFullWidth / 3);
+            path.moveTo((int) (mFullWidth * 0.28), (int) (mFullWidth * 0.53));
+            path.lineTo((int) (mFullWidth * 0.43), (int) (mFullWidth * 0.68));
+            path.lineTo((int) (mFullWidth * 0.73), (int) (mFullWidth * 0.38));
 
             mPaint.setColor(mIconColor);
             mPaint.setStyle(Paint.Style.STROKE);

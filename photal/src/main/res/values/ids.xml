@@ -11,5 +11,7 @@
     <item name="tv_album" type="id"/>
     <item name="btn_send" type="id"/>
     <item name="tv_preview" type="id"/>
+    <item name="vp_image" type="id"/>
+    <item name="pv_image" type="id"/>
 
 </resources>

@@ -29,6 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/btn_back"
             android:text="@string/photal_photos"
+            android:layout_marginLeft="@dimen/margin_small"
             android:textSize="@dimen/txt_normal"
             android:textColor="@color/photal_title_text" />
 
