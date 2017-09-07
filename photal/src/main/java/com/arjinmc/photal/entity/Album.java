@@ -2,7 +2,7 @@ package com.arjinmc.photal.entity;
 
 /**
  * photo album
- * Created by Eminem Lu on 28/4/17.
+ * Created by Eminem Lo on 28/4/17.
  * Email arjinmc@hotmail.com
  */
 

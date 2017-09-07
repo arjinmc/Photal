@@ -17,7 +17,7 @@ import android.view.WindowManager;
 
 /**
  * select box function like checkbox with custom style
- * Created by Eminem Lu on 15/5/17.
+ * Created by Eminem Lo on 15/5/17.
  * Email arjinmc@hotmail.com
  */
 

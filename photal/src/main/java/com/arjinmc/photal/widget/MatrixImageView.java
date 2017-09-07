@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 /**
  * a imageview with gesture
- * Created by Eminem Lu on 27/5/17.
+ * Created by Eminem Lo on 27/5/17.
  * Email arjinmc@hotmail.com
  */
 

@@ -10,7 +10,7 @@ import com.arjinmc.photal.callback.PhotalLoaderCallback;
 import com.arjinmc.photal.config.Config;
 
 /**
- * Created by Eminem Lu on 25/5/17.
+ * Created by Eminem Lo on 25/5/17.
  * Email arjinmc@hotmail.com
  */
 

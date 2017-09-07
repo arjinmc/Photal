@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by Eminem Lu on 28/4/17.
+ * Created by Eminem Lo on 28/4/17.
  * Email arjinmc@hotmail.com
  */
 

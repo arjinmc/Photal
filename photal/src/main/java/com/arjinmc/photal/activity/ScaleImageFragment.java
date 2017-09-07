@@ -15,7 +15,7 @@ import uk.co.senab.photoview.PhotoView;
 
 /**
  * fragment for scalable image
- * Created by Eminem Lu on 14/6/17.
+ * Created by Eminem Lo on 14/6/17.
  * Email arjinmc@hotmail.com
  */
 

@@ -1,7 +1,7 @@
 package com.arjinmc.photal.entity;
 
 /**
- * Created by Eminem Lu on 11/5/17.
+ * Created by Eminem Lo on 11/5/17.
  * Email arjinmc@hotmail.com
  */
 

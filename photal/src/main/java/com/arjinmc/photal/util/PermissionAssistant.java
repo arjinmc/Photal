@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * Request permission assistant
- * Created by Eminem Lu on 6/4/17.
+ * Created by Eminem Lo on 6/4/17.
  * Email arjinmc@hotmail.com
  */
 

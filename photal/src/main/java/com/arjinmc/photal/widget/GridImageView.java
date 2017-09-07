@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 /**
- * Created by Eminem Lu on 26/5/17.
+ * Created by Eminem Lo on 26/5/17.
  * Email arjinmc@hotmail.com
  */
 

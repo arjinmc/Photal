@@ -9,7 +9,7 @@ import com.arjinmc.photal.widget.SelectBox;
 
 /**
  * PhotoViewHolder
- * Created by Eminem Lu on 11/5/17.
+ * Created by Eminem Lo on 11/5/17.
  * Email arjinmc@hotmail.com
  */
 

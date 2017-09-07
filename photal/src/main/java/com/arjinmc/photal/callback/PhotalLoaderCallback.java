@@ -4,7 +4,7 @@ import android.database.Cursor;
 
 /**
  * Album callback for loader
- * Created by Eminem Lu on 25/5/17.
+ * Created by Eminem Lo on 25/5/17.
  * Email arjinmc@hotmail.com
  */
 

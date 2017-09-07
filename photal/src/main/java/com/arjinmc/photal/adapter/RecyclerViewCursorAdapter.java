@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 /**
- * Created by Eminem Lu on 25/5/17.
+ * Created by Eminem Lo on 25/5/17.
  * Email arjinmc@hotmail.com
  */
 

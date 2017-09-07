@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * preview Activity with edit mode
- * Created by Eminem Lu on 11/5/17.
+ * Created by Eminem Lo on 11/5/17.
  * Email arjinmc@hotmail.com
  */
 

@@ -36,7 +36,7 @@ import java.util.Map;
 
 /**
  * photo selector
- * Created by Eminem Lu on 11/5/17.
+ * Created by Eminem Lo on 11/5/17.
  * Email arjinmc@hotmail.com
  */
 
