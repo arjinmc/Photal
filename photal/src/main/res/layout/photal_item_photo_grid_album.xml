@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/layout_mw"
-    android:padding="@dimen/margin_normal">
+    android:padding="@dimen/photal_margin_normal">
     
     <ImageView
         android:id="@id/iv_photo"
         android:layout_width="@dimen/phtoal_photo_grid_album_image"
         android:layout_height="@dimen/phtoal_photo_grid_album_image"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/margin_big"
+        android:layout_marginLeft="@dimen/photal_margin_big"
         android:background="@drawable/photal_album_border"
         />
 
@@ -16,7 +16,7 @@
         android:id="@id/tv_name"
         style="@style/photo_grid_item_album_title"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginLeft="@dimen/photal_margin_normal"
         android:layout_toRightOf="@id/iv_photo"
         android:text="title"
         />
@@ -24,7 +24,7 @@
         android:id="@id/tv_count"
         style="@style/photo_grid_item_album_title"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginLeft="@dimen/photal_margin_small"
         android:layout_toRightOf="@id/tv_name"
         android:text="count"
         />
@@ -33,6 +33,6 @@
         style="@style/layout_ww"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/margin_big"
+        android:layout_marginRight="@dimen/photal_margin_big"
         />
 </RelativeLayout>

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Photal</string>
 
-    <string name="permission_setting">权限设置</string>
-    <string name="permission_setting_tips">您有权限设置被系统限制.是否手动去设置？</string>
-    <string name="permission_setting_yes">是</string>
-    <string name="permission_setting_no">否</string>
+    <string name="photal_permission_setting">权限设置</string>
+    <string name="photal_permission_setting_tips">您有权限设置被系统限制.是否手动去设置？</string>
+    <string name="photal_permission_setting_yes">是</string>
+    <string name="photal_permission_setting_no">否</string>
 
     <string name="photal_photos">相册和图片</string>
     <string name="photal_send">发送</string>

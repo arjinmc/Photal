@@ -57,7 +57,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_grid_selector);
+        setContentView(R.layout.photal_activity_photo_grid_selector);
 
         mbtnBack = (ImageButton) findViewById(R.id.btn_back);
         mbtnBack.setOnClickListener(this);
@@ -88,7 +88,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         mRvPhoto.setLayoutManager(new GridLayoutManager(this, 3));
         mRvPhoto.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
                 .mode(RecyclerViewItemDecoration.MODE_GRID)
-                .color(ContextCompat.getColor(this, R.color.black))
+                .color(ContextCompat.getColor(this, R.color.photal_black))
                 .thickness(2).create());
         mPhotoAdapter = new PhotoGridSelctorAdapter();
         mRvPhoto.setAdapter(mPhotoAdapter);
@@ -177,7 +177,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         @Override
         public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new PhotoViewHolder(LayoutInflater.from(getBaseContext())
-                    .inflate(R.layout.item_photo_grid_photo, parent, false));
+                    .inflate(R.layout.photal_item_photo_grid_photo, parent, false));
         }
 
         @Override

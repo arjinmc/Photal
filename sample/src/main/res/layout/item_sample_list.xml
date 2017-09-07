@@ -7,7 +7,7 @@
     <TextView
         android:id="@id/tv_name"
         style="@style/layout_ww"
-        android:textSize="@dimen/txt_normal"
-        android:padding="@dimen/margin_big"
+        android:textSize="@dimen/photal_txt_normal"
+        android:padding="@dimen/photal_margin_big"
         />
 </LinearLayout>

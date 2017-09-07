@@ -202,15 +202,15 @@ public final class PermissionAssistant {
      */
     public static void showDialog(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.permission_setting))
-                .setMessage(context.getString(R.string.permission_setting_tips))
-                .setPositiveButton(context.getString(R.string.permission_setting_yes)
+                .setTitle(context.getString(R.string.photal_permission_setting))
+                .setMessage(context.getString(R.string.photal_permission_setting_tips))
+                .setPositiveButton(context.getString(R.string.photal_permission_setting_yes)
                         , new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 openSystemPermissionSettting(context);
                             }
-                        }).setNegativeButton(context.getString(R.string.permission_setting_no)
+                        }).setNegativeButton(context.getString(R.string.photal_permission_setting_no)
                         , new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

@@ -1,1 +1,1 @@
-include ':sample', ':photal', ':photoview'
+include ':sample', ':photal'

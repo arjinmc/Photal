@@ -44,7 +44,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preview);
+        setContentView(R.layout.photal_activity_preview);
 
         mBtnBack = (ImageButton) findViewById(R.id.btn_back);
         mBtnBack.setOnClickListener(this);

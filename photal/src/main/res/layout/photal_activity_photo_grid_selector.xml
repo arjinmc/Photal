@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rl_bottom"
-        android:background="@color/black"
+        android:background="@color/photal_black"
         android:paddingTop="@dimen/photal_title_bar_h" />
 
     <RelativeLayout
@@ -22,15 +22,15 @@
             android:layout_width="@dimen/photal_title_bar_h"
             android:layout_height="match_parent"
             android:background="@drawable/photal_action_btn_bg_selector"
-            android:src="@drawable/ic_photal_arrow_back" />
+            android:src="@drawable/photal_ic_arrow_back" />
 
         <TextView
             style="@style/layout_ww.single"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/btn_back"
             android:text="@string/photal_photos"
-            android:layout_marginLeft="@dimen/margin_small"
-            android:textSize="@dimen/txt_normal"
+            android:layout_marginLeft="@dimen/photal_margin_small"
+            android:textSize="@dimen/photal_txt_normal"
             android:textColor="@color/photal_title_text" />
 
         <Button
@@ -39,7 +39,7 @@
             android:layout_height="@dimen/photal_btn_send_h"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/photal_margin_normal"
             android:background="@drawable/photal_send_btn_bg_selector"
             android:text="@string/photal_send"
             android:textColor="@color/photal_title_text" />
@@ -50,23 +50,23 @@
         style="@style/layout_mw"
         android:layout_alignParentBottom="true"
         android:background="@color/photal_theme"
-        android:padding="@dimen/margin_big">
+        android:padding="@dimen/photal_margin_big">
 
         <TextView
             android:id="@id/tv_album"
             style="@style/layout_ww.single"
-            android:drawableRight="@drawable/ic_photal_album_drawable"
+            android:drawableRight="@drawable/photal_ic_album_drawable"
             android:gravity="center"
             android:layout_centerVertical="true"
             android:text="@string/photal_album"
             android:textColor="@color/photal_title_text"
-            android:textSize="@dimen/txt_normal" />
+            android:textSize="@dimen/photal_txt_normal" />
 
         <TextView
             android:id="@id/tv_preview"
             style="@style/layout_ww.single"
             android:textColor="@color/photal_title_text"
-            android:textSize="@dimen/txt_normal"
+            android:textSize="@dimen/photal_txt_normal"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="@string/photal_preview"/>

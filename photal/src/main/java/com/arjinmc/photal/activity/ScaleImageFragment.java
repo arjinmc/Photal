@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.arjinmc.photal.R;
-import com.github.chrisbanes.photoview.PhotoView;
+
+import uk.co.senab.photoview.PhotoView;
 
 /**
  * fragment for scalable image
@@ -43,7 +44,7 @@ public class ScaleImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(mRootView == null){
-            mRootView = inflater.inflate(R.layout.fragment_scale_image,null);
+            mRootView = inflater.inflate(R.layout.photal_fragment_scale_image,null);
         }
         return mRootView;
 
