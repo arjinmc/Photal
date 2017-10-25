@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("tag","onResume");
         PermissionAssistant.requestPermissions(this);
     }
 }
