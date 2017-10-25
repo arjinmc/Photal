@@ -1,8 +1,11 @@
 package com.arjinmc.photal.sample;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +20,18 @@ import android.widget.Toast;
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
+import com.arjinmc.photal.util.PermissionAssistant;
 import com.arjinmc.photal.widget.RecyclerViewItemDecoration;
 
 public class MainActivity extends AppCompatActivity {
 
     private String[] mSampleList;
     private RecyclerView mRecyclerView;
+    private String[] permissions = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            , Manifest.permission.READ_EXTERNAL_STORAGE
+            , Manifest.permission.CAMERA};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +46,10 @@ public class MainActivity extends AppCompatActivity {
                         .color(Color.BLACK).thickness(2).paddingStart(20).paddingEnd(20).create());
         mRecyclerView.setAdapter(new MyAdapter());
 
-    }
+        PermissionAssistant.addPermission(permissions);
+        PermissionAssistant.setForceGrantAllPermissions(true);
 
+    }
 
     private class MyAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
@@ -94,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+
     }
 
 
@@ -113,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private String getPath(String[] path) {
         StringBuilder stringBuilder = new StringBuilder();
         int len = path.length;
@@ -124,4 +135,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("tag","onResume");
+        PermissionAssistant.requestPermissions(this);
+    }
 }

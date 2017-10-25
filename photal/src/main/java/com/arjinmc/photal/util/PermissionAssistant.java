@@ -61,10 +61,10 @@ public final class PermissionAssistant {
                     if (shouldRequest == false && permissionResult == PackageManager.PERMISSION_DENIED) {
                         useDialog = true;
                     }
-                    Log.e("permissionResult", permissionResult + ":" + shouldRequest);
+//                    Log.e("permissionResult", permissionResult + ":" + shouldRequest);
                 }
             }
-            Log.e("mUngranted", mUngrantedPermissionList.size() + "");
+//            Log.e("mUngranted", mUngrantedPermissionList.size() + "");
             if (mUngrantedPermissionList.size() != 0) {
                 if (useDialog) {
                     showDialog(context);
@@ -72,6 +72,9 @@ public final class PermissionAssistant {
                     ActivityCompat.requestPermissions((Activity) context
                             , mUngrantedPermissionList.toArray(new String[mUngrantedPermissionList.size()]), 1);
                 }
+            } else {
+                if (mAlerDialog != null && mAlerDialog.isShowing())
+                    mAlerDialog.dismiss();
             }
         }
 
@@ -201,6 +204,7 @@ public final class PermissionAssistant {
      * @param context
      */
     public static void showDialog(final Context context) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.photal_permission_setting))
                 .setMessage(context.getString(R.string.photal_permission_setting_tips))
@@ -226,7 +230,9 @@ public final class PermissionAssistant {
             mAlerDialog.setCancelable(false);
             mAlerDialog.setCanceledOnTouchOutside(false);
         }
-        mAlerDialog.show();
+
+        if (!mAlerDialog.isShowing())
+            mAlerDialog.show();
     }
 
 
