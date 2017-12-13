@@ -12,7 +12,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.text.TextUtils;
 
 import com.arjinmc.photal.R;
 
@@ -29,7 +29,6 @@ import java.util.Map;
 
 public final class PermissionAssistant {
 
-
     private static Context mContext;
     private static Map<String, String> mRequestPermissionMap = new HashMap<>();
     private static List<String> mUngrantedPermissionList = new ArrayList<>();
@@ -44,6 +43,7 @@ public final class PermissionAssistant {
      * @param context
      */
     public static void requestPermissions(Context context) {
+
         mContext = context;
         mUngrantedPermissionList.clear();
         boolean useDialog = false;
@@ -56,15 +56,13 @@ public final class PermissionAssistant {
                 }
 
                 //judge if need to use our own dialog to request permission
-                if (!useDialog) {
+                if (!useDialog && mForceGrantAllPermissions) {
                     boolean shouldRequest = ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, permission);
                     if (shouldRequest == false && permissionResult == PackageManager.PERMISSION_DENIED) {
                         useDialog = true;
                     }
-//                    Log.e("permissionResult", permissionResult + ":" + shouldRequest);
                 }
             }
-//            Log.e("mUngranted", mUngrantedPermissionList.size() + "");
             if (mUngrantedPermissionList.size() != 0) {
                 if (useDialog) {
                     showDialog(context);
@@ -80,6 +78,20 @@ public final class PermissionAssistant {
 
     }
 
+    /**
+     * force request all permissions
+     *
+     * @param context
+     */
+    public static void forceRequestPermissions(Context context) {
+        if (mForceGrantAllPermissions) {
+            if (isGrantedAllPermissions(context) && mCallback != null) {
+                mCallback.onAllow(mRequestPermissionMap.keySet().toArray(new String[mRequestPermissionMap.size()]));
+            } else {
+                requestPermissions(context);
+            }
+        }
+    }
 
     /**
      * response callback for request permission result
@@ -93,10 +105,11 @@ public final class PermissionAssistant {
             List<String> grandtedList = new ArrayList<>();
             List<String> denyList = new ArrayList<>();
             for (int i = 0; i < permissionSize; i++) {
-                if (grantResults[i] == PackageManager.PERMISSION_GRANTED)
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                     grandtedList.add(permissions[i]);
-                else if (grantResults[i] == PackageManager.PERMISSION_DENIED)
+                } else if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
                     denyList.add(permissions[i]);
+                }
             }
 
             if (grandtedList.size() != 0)
@@ -133,11 +146,13 @@ public final class PermissionAssistant {
      * @param permission
      */
     public static void addPermission(String permission) {
-        mRequestPermissionMap.put(permission, permission);
+        if (!TextUtils.isEmpty(permission)) {
+            mRequestPermissionMap.put(permission, permission);
+        }
     }
 
     /**
-     * add permisions for request
+     * add permissions for request
      *
      * @param permission
      */
@@ -160,10 +175,33 @@ public final class PermissionAssistant {
     }
 
     /**
+     * remove permissions for request
+     *
+     * @param permission
+     */
+    public static void removePermission(String permission[]) {
+        if (permission != null && permission.length != 0) {
+            int len = permission.length;
+            for (int i = 0; i < len; i++) {
+                mRequestPermissionMap.remove(permission[i]);
+            }
+        }
+
+    }
+
+    /**
      * clear all permissions for request
      */
     public static void clearPermission() {
         mRequestPermissionMap.clear();
+    }
+
+    /**
+     * reset all permission setting
+     */
+    public static void reset() {
+        mRequestPermissionMap.clear();
+        mForceGrantAllPermissions = false;
     }
 
     /**
@@ -241,9 +279,9 @@ public final class PermissionAssistant {
      */
     public interface PermissionCallback {
 
-        public void onAllow(String[] permission);
+        void onAllow(String[] permission);
 
-        public void onDeny(String[] permission);
+        void onDeny(String[] permission);
 
     }
 
