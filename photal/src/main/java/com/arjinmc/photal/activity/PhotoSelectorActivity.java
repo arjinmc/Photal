@@ -25,11 +25,12 @@ import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.loader.PhotoCursorLoader;
 import com.arjinmc.photal.loader.PhotoLoader;
+import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.viewholder.PhotoViewHolder;
 import com.arjinmc.photal.widget.PhotoAlbumPopupWindow;
-import com.arjinmc.photal.widget.RecyclerViewItemDecoration;
 import com.arjinmc.photal.widget.SelectBox;
+import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,8 +88,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         mRvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
         mRvPhoto.setLayoutManager(new GridLayoutManager(this, 3));
         mRvPhoto.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
-                .mode(RecyclerViewItemDecoration.MODE_GRID)
-                .color(ContextCompat.getColor(this, R.color.photal_black))
+                .color(CommonUtil.getColor(this,R.color.photal_black))
                 .thickness(2).create());
         mPhotoAdapter = new PhotoGridSelctorAdapter();
         mRvPhoto.setAdapter(mPhotoAdapter);

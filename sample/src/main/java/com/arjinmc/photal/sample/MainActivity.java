@@ -3,9 +3,7 @@ package com.arjinmc.photal.sample;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +19,7 @@ import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.util.PermissionAssistant;
-import com.arjinmc.photal.widget.RecyclerViewItemDecoration;
+import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
 public class MainActivity extends AppCompatActivity {
 

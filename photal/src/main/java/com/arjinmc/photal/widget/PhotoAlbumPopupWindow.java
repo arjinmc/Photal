@@ -22,6 +22,7 @@ import com.arjinmc.photal.loader.AlbumLoader;
 import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.viewholder.AlbumViewHolder;
+import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
 /**
  * album chooser for photo grid style
@@ -69,7 +70,7 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
         mRvAlbum.addItemDecoration(new RecyclerViewItemDecoration.Builder(mContext)
                 .paddingStart(50)
                 .paddingEnd(50)
-                .color(ContextCompat.getColor(mContext, R.color.photal_album_diver))
+                .color(CommonUtil.getColor(mContext, R.color.photal_album_diver))
                 .thickness(2).create());
         mAlbumAdapter = new AlbumAdapter();
         mRvAlbum.setAdapter(mAlbumAdapter);

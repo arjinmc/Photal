@@ -2,6 +2,8 @@ package com.arjinmc.photal.util;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.os.Build;
+import android.support.annotation.ColorRes;
 import android.view.WindowManager;
 
 import java.util.HashMap;
@@ -28,23 +30,31 @@ public final class CommonUtil {
         return point.x;
     }
 
-    public static Map<String,String> toMap(String[] ts){
-        if(ts!=null && ts.length!=0){
+    public static Map<String, String> toMap(String[] ts) {
+        if (ts != null && ts.length != 0) {
             int len = ts.length;
-            Map<String,String> stringMap = new HashMap<>();
-            for(int i=0;i<len;i++){
-                stringMap.put(ts[i],ts[i]);
+            Map<String, String> stringMap = new HashMap<>();
+            for (int i = 0; i < len; i++) {
+                stringMap.put(ts[i], ts[i]);
             }
             return stringMap;
-        }else
+        } else
             return null;
     }
 
-    public static String[] toStrings(Map<String,String> map){
-        if(map==null || map.size()==0)
+    public static String[] toStrings(Map<String, String> map) {
+        if (map == null || map.size() == 0)
             return null;
         int size = map.size();
         String[] strings = new String[size];
         return map.keySet().toArray(strings);
+    }
+
+    public static int getColor(Context context, @ColorRes int colorId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getColor(colorId);
+        } else {
+            return context.getResources().getColor(colorId);
+        }
     }
 }
