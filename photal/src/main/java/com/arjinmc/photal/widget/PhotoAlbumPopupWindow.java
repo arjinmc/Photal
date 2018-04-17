@@ -3,7 +3,6 @@ package com.arjinmc.photal.widget;
 import android.database.Cursor;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +15,9 @@ import android.widget.PopupWindow;
 
 import com.arjinmc.photal.R;
 import com.arjinmc.photal.adapter.RecyclerViewCursorAdapter;
+import com.arjinmc.photal.callback.AlbumLoaderCallback;
 import com.arjinmc.photal.callback.PhotalLoaderCallback;
 import com.arjinmc.photal.loader.AlbumCursorLoader;
-import com.arjinmc.photal.loader.AlbumLoader;
 import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.viewholder.AlbumViewHolder;
@@ -75,7 +74,7 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
         mAlbumAdapter = new AlbumAdapter();
         mRvAlbum.setAdapter(mAlbumAdapter);
 
-        AlbumLoader albumLoader = new AlbumLoader(mContext, new PhotalLoaderCallback() {
+        AlbumLoaderCallback albumLoaderCallback = new AlbumLoaderCallback(mContext, new PhotalLoaderCallback() {
 
             @Override
             public void onLoadFinished(Cursor cursor) {
@@ -89,7 +88,7 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
 
             }
         });
-        albumLoader.load();
+        albumLoaderCallback.load();
         mDismissRunnable = new DismissRunnable();
     }
 

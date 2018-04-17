@@ -20,7 +20,8 @@ public final class Constant {
     public static final String ACTION_CHOOSE_SINGLE = "ACTION_CHOOSE_SINGLE";
     public static final String ACTION_CHOOSE_MULTIPLE = "ACTION_CHOOSE_MULTIPLE";
 
-    public static final String BUNDLE_KEY = "photal";
+    public static final String BUNDLE_KEY_SELECTED = "photal_selected";
+    public static final String BUNDLE_KEY_ALL = "photal_all";
     public static final String BUNDLE_USE_CAMERA = "use_camera";
 
     public static final Uri URI_IMAGE_MEDIA = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;

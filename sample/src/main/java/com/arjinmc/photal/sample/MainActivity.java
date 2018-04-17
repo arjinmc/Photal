@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Config.SELECTOR_RESULT_CODE) {
-            String[] paths = data.getStringArrayExtra(Constant.BUNDLE_KEY);
+            String[] paths = data.getStringArrayExtra(Constant.BUNDLE_KEY_SELECTED);
             String result = getPath(paths);
             Log.e("path", result);
             Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();

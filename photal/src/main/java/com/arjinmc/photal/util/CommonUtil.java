@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.ColorRes;
+import android.support.v4.util.ArrayMap;
 import android.view.WindowManager;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Eminem Lo on 26/5/17.
@@ -30,10 +28,10 @@ public final class CommonUtil {
         return point.x;
     }
 
-    public static Map<String, String> toMap(String[] ts) {
+    public static ArrayMap<String, String> toArrayMap(String[] ts) {
         if (ts != null && ts.length != 0) {
             int len = ts.length;
-            Map<String, String> stringMap = new HashMap<>();
+            ArrayMap<String, String> stringMap = new ArrayMap<>(len);
             for (int i = 0; i < len; i++) {
                 stringMap.put(ts[i], ts[i]);
             }
@@ -42,7 +40,7 @@ public final class CommonUtil {
             return null;
     }
 
-    public static String[] toStrings(Map<String, String> map) {
+    public static String[] toStrings(ArrayMap<String, String> map) {
         if (map == null || map.size() == 0)
             return null;
         int size = map.size();

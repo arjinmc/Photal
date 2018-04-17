@@ -53,8 +53,8 @@
             android:textColor="@color/photal_title_text"
             android:textSize="@dimen/photal_txt_normal" />
     </RelativeLayout>
-    <android.support.v4.view.ViewPager
-        android:id="@id/vp_image"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/rl_bottom"

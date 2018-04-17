@@ -1,4 +1,4 @@
-package com.arjinmc.photal.loader;
+package com.arjinmc.photal.callback;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -6,21 +6,21 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
-import com.arjinmc.photal.callback.PhotalLoaderCallback;
 import com.arjinmc.photal.config.Config;
+import com.arjinmc.photal.loader.AlbumCursorLoader;
 
 /**
  * Created by Eminem Lo on 25/5/17.
  * Email arjinmc@hotmail.com
  */
 
-public class AlbumLoader implements LoaderManager.LoaderCallbacks<Cursor> {
+public class AlbumLoaderCallback implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private FragmentActivity mContext;
     private PhotalLoaderCallback mPhotalLoaderCallback;
 
 
-    public AlbumLoader(FragmentActivity context, PhotalLoaderCallback photalLoaderCallback) {
+    public AlbumLoaderCallback(FragmentActivity context, PhotalLoaderCallback photalLoaderCallback) {
         mContext = context;
         mPhotalLoaderCallback = photalLoaderCallback;
     }
