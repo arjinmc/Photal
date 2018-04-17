@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +32,7 @@ import com.arjinmc.photal.widget.PhotoAlbumPopupWindow;
 import com.arjinmc.photal.widget.SelectBox;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * photo selector
@@ -106,7 +104,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                     for (int i = 0; i < cursorCount; i++) {
                         cursor.moveToPosition(i);
                         String key = cursor.getString(cursor.getColumnIndex(PhotoCursorLoader.PHOTO_DATA));
-                        mPhotoList.put(key,key);
+                        mPhotoList.put(key, key);
                     }
                 }
 
@@ -122,6 +120,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         if (mCurrentAction == null) mCurrentAction = Constant.ACTION_CHOOSE_MULTIPLE;
         if (mCurrentAction.equals(Constant.ACTION_CHOOSE_SINGLE)) {
             mBtnSend.setVisibility(View.GONE);
+            mTvPreview.setVisibility(View.GONE);
         }
         mPhotoLoaderCallback.load(null);
 
@@ -147,7 +146,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         } else if (i == R.id.tv_preview) {
             Intent previewIntent = new Intent(PhotoSelectorActivity.this, PreviewActivity.class);
             previewIntent.setAction(mCurrentAction);
-            previewIntent.putExtra(Constant.BUNDLE_KEY_SELECTED, mPhotoAdapter.getChosenImagePaths());
+            previewIntent.putIntegerArrayListExtra(Constant.BUNDLE_KEY_SELECTED, mPhotoAdapter.getChosenImagePosition());
             previewIntent.putExtra(Constant.BUNDLE_KEY_ALL, CommonUtil.toStrings(mPhotoList));
             startActivity(previewIntent);
         }
@@ -159,7 +158,16 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
      */
     private void dispatchImages() {
         Intent intent = new Intent();
-        intent.putExtra(Constant.BUNDLE_KEY_SELECTED, mPhotoAdapter.getChosenImagePaths());
+
+        String[] selectedPath = null;
+        if (mPhotoAdapter.getChosenImagePosition() != null && mPhotoAdapter.getChosenImagePosition().size() != 0) {
+            int selectedSize = mPhotoAdapter.getChosenImagePosition().size();
+            selectedPath = new String[selectedSize];
+            for (int i = 0; i < selectedSize; i++) {
+                selectedPath[i] = mPhotoList.get(mPhotoList.keyAt(mPhotoAdapter.getChosenImagePosition().get(i)));
+            }
+        }
+        intent.putExtra(Constant.BUNDLE_KEY_SELECTED, selectedPath);
         setResult(Config.SELECTOR_RESULT_CODE, intent);
         finish();
     }
@@ -168,10 +176,10 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
      * update button send status
      */
     private void updateBtnSend() {
-        if (mPhotoAdapter.getChosenImagePaths().length != 0) {
+        if (mPhotoAdapter.getChosenImagePosition().size() != 0) {
             if (!mBtnSend.isEnabled()) mBtnSend.setEnabled(true);
             mBtnSend.setText(String.format(getString(R.string.photal_send_number)
-                    , mPhotoAdapter.getChosenImagePaths().length, Constant.getMaxChoosePhotoCount()));
+                    , mPhotoAdapter.getChosenImagePosition().size(), Constant.getMaxChoosePhotoCount()));
         } else {
             mBtnSend.setEnabled(false);
             mBtnSend.setText(getString(R.string.photal_send));
@@ -181,10 +189,10 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
 
     private class PhotoGridSelectorAdapter extends RecyclerViewCursorAdapter<PhotoViewHolder> {
 
-        private Map<String, String> chosenImagesPaths;
+        private ArrayMap<Integer, String> chosenImagesPaths;
 
         public PhotoGridSelectorAdapter() {
-            chosenImagesPaths = new HashMap<>();
+            chosenImagesPaths = new ArrayMap<>();
         }
 
         @Override
@@ -195,12 +203,12 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         }
 
         @Override
-        public void onBindViewHolder(final PhotoViewHolder holder, int position) {
+        public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
             final String dataPath = mPhotoList.get(mPhotoList.keyAt(position));
             ImageLoader.loadThumbnail(getBaseContext()
                     , dataPath, holder.ivPhoto);
             if (mCurrentAction.equals(Constant.ACTION_CHOOSE_MULTIPLE)) {
-                if (chosenImagesPaths.containsKey(dataPath)) {
+                if (chosenImagesPaths.containsKey(position)) {
                     holder.sbCheck.setChecked(true);
                 } else {
                     holder.sbCheck.setChecked(false);
@@ -215,9 +223,9 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                                             , Constant.getMaxChoosePhotoCount()), Toast.LENGTH_SHORT).show();
                         } else {
                             if (change) {
-                                chosenImagesPaths.put(dataPath, dataPath);
+                                chosenImagesPaths.put(position, dataPath);
                             } else {
-                                chosenImagesPaths.remove(dataPath);
+                                chosenImagesPaths.remove(position);
                             }
                         }
                         updateBtnSend();
@@ -228,26 +236,30 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                 holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        chosenImagesPaths.put(dataPath, dataPath);
+                        chosenImagesPaths.put(position, dataPath);
                         dispatchImages();
                     }
                 });
             }
         }
 
-        public String[] getChosenImagePaths() {
-            String[] paths = new String[]{};
-            if (chosenImagesPaths.size() != 0) {
-                return chosenImagesPaths.keySet().toArray(paths);
+        public ArrayList<Integer> getChosenImagePosition() {
+            if (chosenImagesPaths != null && chosenImagesPaths.size() != 0) {
+                ArrayList<Integer> paths = new ArrayList<>();
+                int chosenSize = chosenImagesPaths.size();
+                for (int i = 0; i < chosenSize; i++) {
+                    paths.add(chosenImagesPaths.keyAt(i));
+                }
+                return paths;
             }
-            return paths;
+            return null;
         }
 
-        public void setChoosenImagePaths(String[] paths) {
+        public void setChoosenImagePaths(Integer[] paths) {
             if (paths != null && paths.length != 0) {
                 chosenImagesPaths.clear();
                 for (int i = 0; i < paths.length; i++) {
-                    chosenImagesPaths.put(paths[i], paths[i]);
+                    chosenImagesPaths.put(paths[i], mPhotoList.get(mPhotoList.keyAt(paths[i])));
                 }
                 notifyDataSetChanged();
             }

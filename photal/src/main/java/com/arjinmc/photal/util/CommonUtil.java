@@ -28,18 +28,6 @@ public final class CommonUtil {
         return point.x;
     }
 
-    public static ArrayMap<String, String> toArrayMap(String[] ts) {
-        if (ts != null && ts.length != 0) {
-            int len = ts.length;
-            ArrayMap<String, String> stringMap = new ArrayMap<>(len);
-            for (int i = 0; i < len; i++) {
-                stringMap.put(ts[i], ts[i]);
-            }
-            return stringMap;
-        } else
-            return null;
-    }
-
     public static String[] toStrings(ArrayMap<String, String> map) {
         if (map == null || map.size() == 0)
             return null;
