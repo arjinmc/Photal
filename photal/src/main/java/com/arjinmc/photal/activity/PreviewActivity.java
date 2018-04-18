@@ -1,7 +1,6 @@
 package com.arjinmc.photal.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -24,6 +22,7 @@ import com.arjinmc.expandrecyclerview.style.RecyclerViewStyleHelper;
 import com.arjinmc.photal.R;
 import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
+import com.arjinmc.photal.util.ImageLoader;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.Arrays;
@@ -44,9 +43,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     private RecyclerViewAdapter mImageAdapter;
 
     private String mCurrentAction;
-    private ArrayMap<Integer, String> mChosenImagePathMap;
-    private int[] mChosenImagePaths;
-    private String[] mAllImagePaths;
+    private ArrayMap<String, String> mChosenImagePathMap;
+    private String[] mChosenImagePaths;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,10 +70,9 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         }
 
         if (mCurrentAction == Constant.ACTION_CHOOSE_MULTIPLE) {
-            mChosenImagePaths = getIntent().getIntArrayExtra(Constant.BUNDLE_KEY_SELECTED);
-            mAllImagePaths = getIntent().getStringArrayExtra(Constant.BUNDLE_KEY_ALL);
+            mChosenImagePaths = getIntent().getStringArrayExtra(Constant.BUNDLE_KEY_SELECTED);
 
-            if (mAllImagePaths == null || mAllImagePaths.length == 0) {
+            if (mChosenImagePaths == null || mChosenImagePaths.length == 0) {
                 return;
             }
             mRlBottom.setVisibility(View.VISIBLE);
@@ -84,7 +81,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 int chosenSize = mChosenImagePaths.length;
                 mChosenImagePathMap = new ArrayMap<>(chosenSize);
                 for (int i = 0; i < chosenSize; i++) {
-                    mChosenImagePathMap.put(mChosenImagePaths[i], mAllImagePaths[mChosenImagePaths[i]]);
+                    mChosenImagePathMap.put(mChosenImagePaths[i], mChosenImagePaths[i]);
                 }
             } else {
                 mChosenImagePathMap = new ArrayMap<>();
@@ -93,7 +90,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             mRlBottom.setVisibility(View.GONE);
         }
 
-        mImageAdapter = new RecyclerViewAdapter<>(this, Arrays.asList(mAllImagePaths)
+        mImageAdapter = new RecyclerViewAdapter<>(this, Arrays.asList(mChosenImagePaths)
                 , R.layout.photal_item_scale_image
                 , new RecyclerViewSingleTypeProcessor<String>() {
             @Override
@@ -101,11 +98,10 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
                 PhotoView photoView = holder.getView(R.id.pv_image);
                 photoView.setZoomable(true);
-                photoView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                photoView.setImageURI(Uri.parse(uri));
+                ImageLoader.load(PreviewActivity.this, uri, photoView);
 
                 if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()
-                        && mChosenImagePathMap.containsKey(position)) {
+                        && mChosenImagePathMap.containsKey(mChosenImagePaths[position])) {
                     mCbSelected.setChecked(true);
                 } else {
                     mCbSelected.setChecked(false);
@@ -120,7 +116,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()
-                            && mChosenImagePathMap.containsKey(getCurrentPosition())) {
+                            && getCurrentPosition() != -1
+                            && mChosenImagePathMap.containsKey(mChosenImagePaths[getCurrentPosition()])) {
                         mCbSelected.setChecked(true);
                     } else {
                         mCbSelected.setChecked(false);
@@ -139,7 +136,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 int position = getCurrentPosition();
-                boolean checked = mChosenImagePathMap.containsKey(position);
+                boolean checked = mChosenImagePathMap.containsKey(mChosenImagePaths[position]);
                 if (mChosenImagePathMap.size() >= Constant.getMaxChoosePhotoCount() && checked) {
                     mCbSelected.setChecked(!checked);
                     Toast.makeText(getBaseContext()
@@ -147,9 +144,9 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                                     , Constant.getMaxChoosePhotoCount()), Toast.LENGTH_SHORT).show();
                 } else {
                     if (checked) {
-                        mChosenImagePathMap.remove(position);
+                        mChosenImagePathMap.remove(mChosenImagePaths[position]);
                     } else {
-                        mChosenImagePathMap.put(position, mAllImagePaths[position]);
+                        mChosenImagePathMap.put(mChosenImagePaths[position], mChosenImagePaths[position]);
                     }
                 }
                 updateBtnSend();
@@ -188,10 +185,10 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     private void dispatchImages(int resultCode) {
         Intent intent = new Intent();
 
-        int[] selectedPosition = null;
+        String[] selectedPosition = null;
         if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()) {
             int selectedSize = mChosenImagePathMap.size();
-            selectedPosition = new int[selectedSize];
+            selectedPosition = new String[selectedSize];
             for (int i = 0; i < selectedSize; i++) {
                 selectedPosition[i] = mChosenImagePathMap.keyAt(i);
             }

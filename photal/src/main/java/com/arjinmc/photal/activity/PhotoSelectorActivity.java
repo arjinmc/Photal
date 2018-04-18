@@ -165,7 +165,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             int selectedSize = mPhotoAdapter.getChosenImagePosition().length;
             selectedPath = new String[selectedSize];
             for (int i = 0; i < selectedSize; i++) {
-                selectedPath[i] = mPhotoList.get(mPhotoList.keyAt(mPhotoAdapter.getChosenImagePosition()[i]));
+                selectedPath[i] = mPhotoAdapter.getChosenImagePosition()[i];
             }
         }
         intent.putExtra(Constant.BUNDLE_KEY_SELECTED, selectedPath);
@@ -191,7 +191,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
 
     private class PhotoGridSelectorAdapter extends RecyclerViewCursorAdapter<PhotoViewHolder> {
 
-        public ArrayMap<Integer, String> chosenImagesPaths;
+        public ArrayMap<String, String> chosenImagesPaths;
 
         public PhotoGridSelectorAdapter() {
             chosenImagesPaths = new ArrayMap<>();
@@ -210,7 +210,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             ImageLoader.loadThumbnail(getBaseContext()
                     , dataPath, holder.ivPhoto);
             if (mCurrentAction.equals(Constant.ACTION_CHOOSE_MULTIPLE)) {
-                if (chosenImagesPaths.containsKey(position)) {
+                if (chosenImagesPaths.containsKey(mPhotoList.keyAt(position))) {
                     holder.sbCheck.setChecked(true);
                 } else {
                     holder.sbCheck.setChecked(false);
@@ -225,9 +225,9 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                                             , Constant.getMaxChoosePhotoCount()), Toast.LENGTH_SHORT).show();
                         } else {
                             if (change) {
-                                chosenImagesPaths.put(position, dataPath);
+                                chosenImagesPaths.put(dataPath, dataPath);
                             } else {
-                                chosenImagesPaths.remove(position);
+                                chosenImagesPaths.remove(dataPath);
                             }
                         }
                         updateBtnSend();
@@ -238,17 +238,17 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                 holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        chosenImagesPaths.put(position, dataPath);
+                        chosenImagesPaths.put(dataPath, dataPath);
                         dispatchImages();
                     }
                 });
             }
         }
 
-        public int[] getChosenImagePosition() {
+        public String[] getChosenImagePosition() {
             if (chosenImagesPaths != null && chosenImagesPaths.size() != 0) {
                 int chosenSize = chosenImagesPaths.size();
-                int[] paths = new int[chosenSize];
+                String[] paths = new String[chosenSize];
                 for (int i = 0; i < chosenSize; i++) {
                     paths[i] = chosenImagesPaths.keyAt(i);
                 }
@@ -264,15 +264,16 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Config.SELECTOR_RESULT_CODE ||
                 resultCode == Config.SELECTOR_PREVIEW_RESULT_CODE) {
-            int[] newSeletedPosition = data.getIntArrayExtra(Constant.BUNDLE_KEY_SELECTED);
+            String[] newSeletedImages = data.getStringArrayExtra(Constant.BUNDLE_KEY_SELECTED);
             mPhotoAdapter.chosenImagesPaths.clear();
-            if (newSeletedPosition != null && newSeletedPosition.length != 0) {
-                int selectedSize = newSeletedPosition.length;
+            if (newSeletedImages != null && newSeletedImages.length != 0) {
+                int selectedSize = newSeletedImages.length;
                 for (int i = 0; i < selectedSize; i++) {
-                    mPhotoAdapter.chosenImagesPaths.put(newSeletedPosition[i], mPhotoList.get(newSeletedPosition[i]));
+                    mPhotoAdapter.chosenImagesPaths.put(newSeletedImages[i], newSeletedImages[i]);
                 }
             }
             mPhotoAdapter.notifyDataSetChanged();
+            updateBtnSend();
         }
         if (resultCode == Config.SELECTOR_RESULT_CODE) {
             dispatchImages();

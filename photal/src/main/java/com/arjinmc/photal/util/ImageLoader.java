@@ -30,5 +30,15 @@ public final class ImageLoader {
         }
     }
 
+    public static void load(Context context, String uri, ImageView imageView) {
+        switch (mode) {
+            case MODE_GLIDE:
+                Glide.with(context).load(uri).into(imageView);
+                break;
+            case MODE_PICASSO:
+                Picasso.with(context).load(uri).into(imageView);
+                break;
+        }
+    }
 
 }
