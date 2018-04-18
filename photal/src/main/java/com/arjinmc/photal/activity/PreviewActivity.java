@@ -104,6 +104,13 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 photoView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 photoView.setImageURI(Uri.parse(uri));
 
+                if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()
+                        && mChosenImagePathMap.containsKey(position)) {
+                    mCbSelected.setChecked(true);
+                } else {
+                    mCbSelected.setChecked(false);
+                }
+
             }
         });
         mRvImages.setAdapter(mImageAdapter);
