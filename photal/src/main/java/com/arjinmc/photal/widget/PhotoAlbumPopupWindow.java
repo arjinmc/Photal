@@ -48,7 +48,7 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
     private void init() {
 
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = CommonUtil.getScreenHeight(mContext) * 4 / 5;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
         setWidth(width);
         setHeight(height);
 

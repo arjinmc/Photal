@@ -3,6 +3,7 @@
 
     <color name="photal_white">#ffffff</color>
     <color name="photal_black">#000000</color>
+    <color name="photal_translucent">#b0000000</color>
 
     <color name="photal_theme">#555555</color>
     <color name="photal_theme_dark">#111111</color>
