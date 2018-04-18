@@ -21,6 +21,7 @@
         <TextView
             style="@style/layout_ww.single"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/photal_margin_small"
             android:layout_toRightOf="@id/btn_back"
             android:text="@string/photal_preview"
             android:textColor="@color/photal_title_text"
@@ -54,12 +55,13 @@
             android:textColor="@color/photal_title_text"
             android:textSize="@dimen/photal_txt_normal" />
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/rl_bottom"
         android:layout_below="@id/rl_title"
-        />
+        android:overScrollMode="never" />
 
 </RelativeLayout>

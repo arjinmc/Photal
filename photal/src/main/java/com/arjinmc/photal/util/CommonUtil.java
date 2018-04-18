@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.ColorRes;
 import android.support.v4.util.ArrayMap;
 import android.view.WindowManager;
@@ -46,7 +47,7 @@ public final class CommonUtil {
     }
 
     public static Intent newCaptureIntent(){
-        Intent intent = new Intent();
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         return intent;
     }
 }

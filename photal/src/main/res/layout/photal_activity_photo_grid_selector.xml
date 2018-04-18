@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/rl_bottom"
         android:background="@color/photal_black"
+        android:overScrollMode="never"
         android:paddingTop="@dimen/photal_title_bar_h" />
 
     <RelativeLayout
