@@ -117,9 +117,14 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Config.SELECTOR_RESULT_CODE) {
             String[] paths = data.getStringArrayExtra(Constant.BUNDLE_KEY_SELECTED);
-            String result = getPath(paths);
-            Log.e("path", result);
-            Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
+            if (paths == null || paths.length == 0) {
+                Log.e("path", "empty");
+            } else {
+                String result = getPath(paths);
+                Log.e("path", result);
+                Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 

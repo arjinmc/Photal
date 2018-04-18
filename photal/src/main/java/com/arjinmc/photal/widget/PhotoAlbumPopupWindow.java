@@ -15,9 +15,9 @@ import android.widget.PopupWindow;
 
 import com.arjinmc.photal.R;
 import com.arjinmc.photal.adapter.RecyclerViewCursorAdapter;
-import com.arjinmc.photal.callback.AlbumLoaderCallback;
 import com.arjinmc.photal.callback.PhotalLoaderCallback;
 import com.arjinmc.photal.loader.AlbumCursorLoader;
+import com.arjinmc.photal.loader.AlbumLoader;
 import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.viewholder.AlbumViewHolder;
@@ -74,7 +74,7 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
         mAlbumAdapter = new AlbumAdapter();
         mRvAlbum.setAdapter(mAlbumAdapter);
 
-        AlbumLoaderCallback albumLoaderCallback = new AlbumLoaderCallback(mContext, new PhotalLoaderCallback() {
+        AlbumLoader albumLoader = new AlbumLoader(mContext, new PhotalLoaderCallback() {
 
             @Override
             public void onLoadFinished(Cursor cursor) {
@@ -88,7 +88,7 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
 
             }
         });
-        albumLoaderCallback.load();
+        albumLoader.load();
         mDismissRunnable = new DismissRunnable();
     }
 
