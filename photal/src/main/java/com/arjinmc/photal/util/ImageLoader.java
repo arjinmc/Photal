@@ -3,7 +3,7 @@ package com.arjinmc.photal.util;
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.arjinmc.photal.config.Config;
+import com.arjinmc.photal.config.PhotalConfig;
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
@@ -18,7 +18,7 @@ public final class ImageLoader {
     public static final int MODE_GLIDE = 1;
     public static final int MODE_PICASSO = 2;
 
-    private static int mode = Config.IMAGE_MODE;
+    private static int mode = PhotalConfig.IMAGE_MODE;
 
     public static void loadThumbnail(Context context, String uri, ImageView imageView) {
         switch (mode) {

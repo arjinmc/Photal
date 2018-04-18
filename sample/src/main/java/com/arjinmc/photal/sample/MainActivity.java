@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
-import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Config.SELECTOR_RESULT_CODE) {
+        if (resultCode == Constant.SELECTOR_RESULT_CODE) {
             String[] paths = data.getStringArrayExtra(Constant.BUNDLE_KEY_SELECTED);
             if (paths == null || paths.length == 0) {
                 Log.e("path", "empty");

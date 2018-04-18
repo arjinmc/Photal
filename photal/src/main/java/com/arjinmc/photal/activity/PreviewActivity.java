@@ -19,7 +19,6 @@ import com.arjinmc.expandrecyclerview.adapter.RecyclerViewSingleTypeProcessor;
 import com.arjinmc.expandrecyclerview.adapter.RecyclerViewViewHolder;
 import com.arjinmc.expandrecyclerview.style.RecyclerViewStyleHelper;
 import com.arjinmc.photal.R;
-import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.util.ToastUtil;
@@ -202,16 +201,16 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btn_back) {
-            dispatchImages(Config.SELECTOR_PREVIEW_RESULT_CODE);
+            dispatchImages(Constant.SELECTOR_PREVIEW_RESULT_CODE);
         } else if (id == R.id.btn_send) {
-            dispatchImages(Config.SELECTOR_RESULT_CODE);
+            dispatchImages(Constant.SELECTOR_RESULT_CODE);
         }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            dispatchImages(Config.SELECTOR_PREVIEW_RESULT_CODE);
+            dispatchImages(Constant.SELECTOR_PREVIEW_RESULT_CODE);
             return true;
         } else {
             return super.onKeyDown(keyCode, event);

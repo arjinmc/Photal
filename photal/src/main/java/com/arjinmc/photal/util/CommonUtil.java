@@ -1,6 +1,7 @@
 package com.arjinmc.photal.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.ColorRes;
@@ -42,5 +43,10 @@ public final class CommonUtil {
         } else {
             return context.getResources().getColor(colorId);
         }
+    }
+
+    public static Intent newCaptureIntent(){
+        Intent intent = new Intent();
+        return intent;
     }
 }

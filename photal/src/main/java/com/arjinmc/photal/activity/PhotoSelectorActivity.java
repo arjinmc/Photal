@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.arjinmc.photal.R;
 import com.arjinmc.photal.adapter.RecyclerViewCursorAdapter;
 import com.arjinmc.photal.callback.PhotalLoaderCallback;
-import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.loader.PhotoCursorLoader;
 import com.arjinmc.photal.loader.PhotoLoader;
@@ -149,7 +148,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             previewIntent.setAction(mCurrentAction);
             previewIntent.putExtra(Constant.BUNDLE_KEY_SELECTED, mPhotoAdapter.getChosenImagePosition());
             previewIntent.putExtra(Constant.BUNDLE_KEY_ALL, CommonUtil.toStrings(mPhotoList));
-            startActivityForResult(previewIntent, Config.SELECTOR_REQUEST_CODE);
+            startActivityForResult(previewIntent, Constant.SELECTOR_REQUEST_CODE);
         }
 
     }
@@ -169,7 +168,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             }
         }
         intent.putExtra(Constant.BUNDLE_KEY_SELECTED, selectedPath);
-        setResult(Config.SELECTOR_RESULT_CODE, intent);
+        setResult(Constant.SELECTOR_RESULT_CODE, intent);
         finish();
     }
 
@@ -262,8 +261,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Config.SELECTOR_RESULT_CODE ||
-                resultCode == Config.SELECTOR_PREVIEW_RESULT_CODE) {
+        if (resultCode == Constant.SELECTOR_RESULT_CODE ||
+                resultCode == Constant.SELECTOR_PREVIEW_RESULT_CODE) {
             String[] newSeletedImages = data.getStringArrayExtra(Constant.BUNDLE_KEY_SELECTED);
             mPhotoAdapter.chosenImagesPaths.clear();
             if (newSeletedImages != null && newSeletedImages.length != 0) {
@@ -275,7 +274,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             mPhotoAdapter.notifyDataSetChanged();
             updateBtnSend();
         }
-        if (resultCode == Config.SELECTOR_RESULT_CODE) {
+        if (resultCode == Constant.SELECTOR_RESULT_CODE) {
             dispatchImages();
         }
     }

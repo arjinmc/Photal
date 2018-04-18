@@ -7,7 +7,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
 import com.arjinmc.photal.callback.PhotalLoaderCallback;
-import com.arjinmc.photal.config.Config;
+import com.arjinmc.photal.config.Constant;
 
 /**
  * Created by Eminem Lo on 25/5/17.
@@ -29,11 +29,11 @@ public class PhotoLoader implements LoaderManager.LoaderCallbacks<Cursor> {
         if (albumId == null) albumId = -1;
         Bundle bundle = new Bundle();
         bundle.putInt("id", albumId);
-        mContext.getSupportLoaderManager().initLoader(Config.LOADER_ID_PHOTO, bundle, this);
+        mContext.getSupportLoaderManager().initLoader(Constant.LOADER_ID_PHOTO, bundle, this);
     }
 
     public void destroyLoader() {
-        mContext.getSupportLoaderManager().destroyLoader(Config.LOADER_ID_PHOTO);
+        mContext.getSupportLoaderManager().destroyLoader(Constant.LOADER_ID_PHOTO);
     }
 
     @Override

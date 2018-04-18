@@ -7,7 +7,7 @@ import com.arjinmc.photal.util.ImageLoader;
  * Email arjinmc@hotmail.com
  */
 
-public final class Config {
+public final class PhotalConfig {
 
     public static final String CAMERA_FILE_DIRECTORY = "photal";
     public static final String IMAGE_NAME_PREFIX = "IMAGE";
@@ -16,10 +16,6 @@ public final class Config {
     //change this mode for use different image framework
     public static final int IMAGE_MODE = ImageLoader.MODE_GLIDE;
 
-    public static final int LOADER_ID_ALBUM = 0xff10001;
-    public static final int LOADER_ID_PHOTO = 0xff10002;
-    public static final int SELECTOR_REQUEST_CODE = 1;
-    public static final int SELECTOR_RESULT_CODE = 0xff10004;
-    public static final int SELECTOR_PREVIEW_RESULT_CODE = 0xff10005;
+
 
 }
