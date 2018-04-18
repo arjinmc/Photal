@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.arjinmc.expandrecyclerview.adapter.RecyclerViewAdapter;
 import com.arjinmc.expandrecyclerview.adapter.RecyclerViewSingleTypeProcessor;
@@ -23,6 +22,7 @@ import com.arjinmc.photal.R;
 import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.util.ImageLoader;
+import com.arjinmc.photal.util.ToastUtil;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.Arrays;
@@ -139,9 +139,9 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 boolean checked = mChosenImagePathMap.containsKey(mChosenImagePaths[position]);
                 if (mChosenImagePathMap.size() >= Constant.getMaxChoosePhotoCount() && checked) {
                     mCbSelected.setChecked(!checked);
-                    Toast.makeText(getBaseContext()
+                    ToastUtil.show(getBaseContext()
                             , String.format(getString(R.string.photal_chosen_max)
-                                    , Constant.getMaxChoosePhotoCount()), Toast.LENGTH_SHORT).show();
+                                    , Constant.getMaxChoosePhotoCount()));
                 } else {
                     if (checked) {
                         mChosenImagePathMap.remove(mChosenImagePaths[position]);

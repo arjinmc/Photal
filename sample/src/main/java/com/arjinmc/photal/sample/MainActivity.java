@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Config;
 import com.arjinmc.photal.config.Constant;
-import com.arjinmc.photal.util.PermissionAssistant;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
 public class MainActivity extends AppCompatActivity {

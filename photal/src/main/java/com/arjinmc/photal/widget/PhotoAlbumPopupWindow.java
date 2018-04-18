@@ -55,8 +55,10 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
         LinearLayout rootView = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.photal_pop_photo_grid_album, null);
         rootView.setLayoutParams(new LinearLayoutCompat.LayoutParams(width, height));
         mRvAlbum = (RecyclerView) rootView.findViewById(R.id.rv_album);
-        mRvAlbum.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT
-                , CommonUtil.getScreenHeight(mContext) * 2 / 3));
+
+        LinearLayout.LayoutParams rvLayoutParams = (LinearLayout.LayoutParams) mRvAlbum.getLayoutParams();
+        rvLayoutParams.height = CommonUtil.getScreenHeight(mContext) * 2 / 3;
+        mRvAlbum.setLayoutParams(rvLayoutParams);
         setContentView(rootView);
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +96,7 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
 
 
     public void show(View view) {
-        showAtLocation(view, Gravity.BOTTOM, 0, view.getHeight());
+        showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
     }
 
     public int getChosenAlbumId() {

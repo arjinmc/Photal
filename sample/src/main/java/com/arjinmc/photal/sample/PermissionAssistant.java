@@ -1,4 +1,4 @@
-package com.arjinmc.photal.util;
+package com.arjinmc.photal.sample;
 
 import android.app.Activity;
 import android.app.AlertDialog;

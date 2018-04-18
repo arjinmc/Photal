@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 /**
+ * ImageLoader
  * Created by Eminem Lo on 28/4/17.
  * Email arjinmc@hotmail.com
  */

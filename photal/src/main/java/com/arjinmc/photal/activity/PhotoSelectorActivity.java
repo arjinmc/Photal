@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arjinmc.photal.R;
 import com.arjinmc.photal.adapter.RecyclerViewCursorAdapter;
@@ -27,6 +26,7 @@ import com.arjinmc.photal.loader.PhotoCursorLoader;
 import com.arjinmc.photal.loader.PhotoLoader;
 import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
+import com.arjinmc.photal.util.ToastUtil;
 import com.arjinmc.photal.viewholder.PhotoViewHolder;
 import com.arjinmc.photal.widget.PhotoAlbumPopupWindow;
 import com.arjinmc.photal.widget.SelectBox;
@@ -129,7 +129,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         int i = v.getId();
         if (i == R.id.tv_album) {
             if (!mPopAlbum.isShowing()) {
-                mPopAlbum.show(findViewById(R.id.rl_bottom));
+                mPopAlbum.show(findViewById(R.id.rl_parent));
             } else {
                 mPopAlbum.dismiss();
             }
@@ -220,9 +220,9 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                     public void onChange(boolean change) {
                         if (chosenImagesPaths.size() >= Constant.getMaxChoosePhotoCount() && change) {
                             holder.sbCheck.setChecked(!change);
-                            Toast.makeText(getBaseContext()
+                            ToastUtil.show(getBaseContext()
                                     , String.format(getString(R.string.photal_chosen_max)
-                                            , Constant.getMaxChoosePhotoCount()), Toast.LENGTH_SHORT).show();
+                                            , Constant.getMaxChoosePhotoCount()));
                         } else {
                             if (change) {
                                 chosenImagesPaths.put(dataPath, dataPath);
