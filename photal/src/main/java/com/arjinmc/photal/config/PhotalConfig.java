@@ -52,6 +52,7 @@ public final class PhotalConfig {
     private int previewTextColor = -1;
     private int previewTextSize = -1;
     private int headerHeight = -1;
+    private int bottomHeight = -1;
     private String fileProviderAuthorities;
     private String saveFileRegex;
     private int imageLoaderType = -1;
@@ -249,6 +250,14 @@ public final class PhotalConfig {
 
     public void setHeaderHeight(int headerHeight) {
         this.headerHeight = headerHeight;
+    }
+
+    public int getBottomHeight() {
+        return bottomHeight;
+    }
+
+    public void setBottomHeight(int bottomHeight) {
+        this.bottomHeight = bottomHeight;
     }
 
     public String getFileProviderAuthorities() {
