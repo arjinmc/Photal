@@ -5,23 +5,30 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.ArrayMap;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.arjinmc.expandrecyclerview.adapter.RecyclerViewAdapter;
 import com.arjinmc.expandrecyclerview.adapter.RecyclerViewSingleTypeProcessor;
 import com.arjinmc.expandrecyclerview.adapter.RecyclerViewViewHolder;
 import com.arjinmc.expandrecyclerview.style.RecyclerViewStyleHelper;
+import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.R;
 import com.arjinmc.photal.config.Constant;
+import com.arjinmc.photal.config.PhotalConfig;
+import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.util.ToastUtil;
+import com.arjinmc.photal.widget.PressSelectorDrawable;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.Arrays;
@@ -60,6 +67,9 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         mCbSelected.setOnClickListener(this);
 
         mRvImages = findViewById(R.id.rv_image);
+
+        initConfig();
+
         RecyclerViewStyleHelper.toViewPager(mRvImages, LinearLayoutManager.HORIZONTAL);
 
         if (getIntent().getAction() == null) {
@@ -151,6 +161,35 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 updateBtnSend();
             }
         });
+
+    }
+
+    private void initConfig() {
+
+        PhotalConfig photalConfig = Photal.getInstance().getConfig();
+        if (photalConfig == null) {
+            try {
+                throw new ConfigException();
+            } catch (ConfigException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
+
+        RelativeLayout rlHead = findViewById(R.id.rl_head);
+        rlHead.setBackgroundColor(photalConfig.getThemeColor());
+        RelativeLayout rlBottom = findViewById(R.id.rl_bottom);
+        rlBottom.setBackgroundColor(photalConfig.getThemeColor());
+        ViewCompat.setBackground(mBtnBack
+                , new PressSelectorDrawable(photalConfig.getThemeColor(), photalConfig.getThemeDarkColor()));
+        TextView tvHeadTitle =  findViewById(R.id.tv_head_title);
+        tvHeadTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX,photalConfig.getTextTitleSize());
+        tvHeadTitle.setTextColor(photalConfig.getTextTitleColor());
+        mBtnBack.setImageResource(photalConfig.getBtnBackIcon());
+        mBtnSend.setBackgroundResource(photalConfig.getBtnDoneBackground());
+        mBtnSend.setTextColor(photalConfig.getBtnDoneTextColor());
+        mBtnSend.setTextSize(TypedValue.COMPLEX_UNIT_PX, photalConfig.getBtnDoneTextSize());
 
     }
 

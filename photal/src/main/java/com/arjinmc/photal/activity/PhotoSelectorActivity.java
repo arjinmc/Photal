@@ -5,9 +5,12 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,18 +18,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.R;
 import com.arjinmc.photal.adapter.RecyclerViewCursorAdapter;
 import com.arjinmc.photal.callback.PhotalLoaderCallback;
 import com.arjinmc.photal.config.Constant;
+import com.arjinmc.photal.config.PhotalConfig;
+import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.loader.PhotoCursorLoader;
 import com.arjinmc.photal.loader.PhotoLoader;
 import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.util.ToastUtil;
 import com.arjinmc.photal.viewholder.PhotoViewHolder;
+import com.arjinmc.photal.widget.PressSelectorDrawable;
 import com.arjinmc.photal.widget.PhotoAlbumPopupWindow;
 import com.arjinmc.photal.widget.SelectBox;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
@@ -39,7 +47,7 @@ import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
 public class PhotoSelectorActivity extends FragmentActivity implements View.OnClickListener {
 
-    private ImageButton mbtnBack;
+    private ImageButton mBtnBack;
     private PhotoAlbumPopupWindow mPopAlbum;
     private RecyclerView mRvPhoto;
     private PhotoGridSelectorAdapter mPhotoAdapter;
@@ -57,8 +65,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photal_activity_photo_grid_selector);
 
-        mbtnBack = findViewById(R.id.btn_back);
-        mbtnBack.setOnClickListener(this);
+        mBtnBack = findViewById(R.id.btn_back);
+        mBtnBack.setOnClickListener(this);
 
         mBtnSend = findViewById(R.id.btn_send);
         mBtnSend.setOnClickListener(this);
@@ -83,9 +91,12 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         mTvPreview.setOnClickListener(this);
 
         mRvPhoto = findViewById(R.id.rv_photo);
+
+        initConfig();
+
         mRvPhoto.setLayoutManager(new GridLayoutManager(this, 3));
         mRvPhoto.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
-                .color(CommonUtil.getColor(this, R.color.photal_black))
+                .color(ContextCompat.getColor(this, R.color.photal_black))
                 .thickness(2).create());
         mPhotoAdapter = new PhotoGridSelectorAdapter();
         mRvPhoto.setAdapter(mPhotoAdapter);
@@ -120,6 +131,34 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             mTvPreview.setVisibility(View.GONE);
         }
         mPhotoLoader.load(null);
+
+    }
+
+    private void initConfig() {
+
+        PhotalConfig photalConfig = Photal.getInstance().getConfig();
+        if (photalConfig == null) {
+            try {
+                throw new ConfigException();
+            } catch (ConfigException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        RelativeLayout rlHead = findViewById(R.id.rl_head);
+        rlHead.setBackgroundColor(photalConfig.getThemeColor());
+        RelativeLayout rlBottom = findViewById(R.id.rl_bottom);
+        rlBottom.setBackgroundColor(photalConfig.getThemeColor());
+        ViewCompat.setBackground(mBtnBack
+                , new PressSelectorDrawable(photalConfig.getThemeColor(), photalConfig.getThemeDarkColor()));
+        TextView tvHeadTitle =  findViewById(R.id.tv_head_title);
+        tvHeadTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, photalConfig.getTextTitleSize());
+        tvHeadTitle.setTextColor(photalConfig.getTextTitleColor());
+        mBtnBack.setImageResource(photalConfig.getBtnBackIcon());
+        mBtnSend.setBackgroundResource(photalConfig.getBtnDoneBackground());
+        mBtnSend.setTextColor(photalConfig.getBtnDoneTextColor());
+        mBtnSend.setTextSize(TypedValue.COMPLEX_UNIT_PX, photalConfig.getBtnDoneTextSize());
 
     }
 

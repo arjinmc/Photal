@@ -3,6 +3,7 @@ package com.arjinmc.photal.widget;
 import android.database.Cursor;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -71,7 +72,7 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
         mRvAlbum.addItemDecoration(new RecyclerViewItemDecoration.Builder(mContext)
                 .paddingStart(50)
                 .paddingEnd(50)
-                .color(CommonUtil.getColor(mContext, R.color.photal_album_diver))
+                .color(ContextCompat.getColor(mContext, R.color.photal_album_diver))
                 .thickness(2).create());
         mAlbumAdapter = new AlbumAdapter();
         mRvAlbum.setAdapter(mAlbumAdapter);

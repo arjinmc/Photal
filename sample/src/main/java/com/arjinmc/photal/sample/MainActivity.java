@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Constant;
+import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +44,19 @@ public class MainActivity extends AppCompatActivity {
                 new RecyclerViewItemDecoration.Builder(this)
                         .color(Color.BLACK).thickness(2).paddingStart(20).paddingEnd(20).create());
         mRecyclerView.setAdapter(new MyAdapter());
+
+        //init config
+        PhotalConfig photalConfig = new PhotalConfig(this);
+//        photalConfig.setThemeColor(ContextCompat.getColor(this,R.color.colorAccent));
+//        photalConfig.setThemeDarkColor(ContextCompat.getColor(this,R.color.red));
+//        photalConfig.setTextTitleSize(R.dimen.text_title);
+//        photalConfig.setTextTitleColor(ContextCompat.getColor(this,R.color.colorAccent));
+//        photalConfig.setBtnBackIcon(android.R.drawable.ic_menu_more);
+//        photalConfig.setBtnDoneBackground(R.drawable.btn_done);
+//        photalConfig.setBtnDoneTextColor(ContextCompat.getColor(this,R.color.colorAccent));
+//        photalConfig.setBtnDoneTextSize(R.dimen.text_send);
+        photalConfig.setAlbumBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        Photal.getInstance().setConfig(photalConfig);
 
         PermissionAssistant.addPermission(permissions);
         PermissionAssistant.setForceGrantAllPermissions(true);

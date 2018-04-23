@@ -3,11 +3,18 @@ package com.arjinmc.photal.util;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.ColorRes;
+import android.support.v4.content.FileProvider;
 import android.support.v4.util.ArrayMap;
+import android.support.v4.view.ViewCompat;
+import android.view.View;
 import android.view.WindowManager;
+
+import java.io.File;
 
 /**
  * Created by Eminem Lo on 26/5/17.
@@ -38,16 +45,14 @@ public final class CommonUtil {
         return map.keySet().toArray(strings);
     }
 
-    public static int getColor(Context context, @ColorRes int colorId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return context.getColor(colorId);
+    public static Intent newCaptureIntent(Context context, String authority, File file) {
+        Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri uri = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(context, authority, file);
         } else {
-            return context.getResources().getColor(colorId);
+            uri = Uri.parse(file.getAbsolutePath());
         }
-    }
-
-    public static Intent newCaptureIntent(){
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        return intent;
+        return captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
     }
 }

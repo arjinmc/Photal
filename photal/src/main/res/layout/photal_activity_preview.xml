@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true">
 
     <RelativeLayout
-        android:id="@+id/rl_title"
+        android:id="@+id/rl_head"
         style="@style/layout_mw.h"
         android:layout_height="@dimen/photal_title_bar_h"
         android:background="@color/photal_theme">
@@ -14,11 +14,13 @@
         <ImageButton
             android:id="@id/btn_back"
             android:layout_width="@dimen/photal_title_bar_h"
-            android:layout_height="match_parent"
-            android:background="@drawable/photal_action_btn_bg_selector"
+            android:layout_height="@dimen/photal_title_bar_h"
+            android:padding="@dimen/photal_margin_normal"
+            android:scaleType="fitXY"
             android:src="@drawable/photal_ic_arrow_back" />
 
         <TextView
+            android:id="@+id/tv_head_title"
             style="@style/layout_ww.single"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/photal_margin_small"
@@ -61,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/rl_bottom"
-        android:layout_below="@id/rl_title"
+        android:layout_below="@id/rl_head"
         android:overScrollMode="never" />
 
 </RelativeLayout>

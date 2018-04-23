@@ -26,7 +26,7 @@ public final class ImageLoader {
                 Glide.with(context).load(uri).centerCrop().into(imageView);
                 break;
             case MODE_PICASSO:
-                Picasso.with(context).load(uri).centerCrop().into(imageView);
+                Picasso.with(context).load(uri).into(imageView);
                 break;
         }
     }
