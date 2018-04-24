@@ -22,11 +22,6 @@ public final class PhotalConfig {
     public static final String CAMERA_FILE_DIRECTORY = "photal";
     public static final String IMAGE_NAME_PREFIX = "IMAGE";
 
-    public static final int MAX_CHOOSE_PHOTO = 9;
-    //change this mode for use different image framework
-    public static final int IMAGE_MODE = ImageLoader.MODE_GLIDE;
-//    public static final int IMAGE_MODE = ImageLoader.MODE_PICASSO;
-
     @IntDef({ImageLoader.MODE_GLIDE, ImageLoader.MODE_PICASSO})
     @interface ImageLoaderType {
     }

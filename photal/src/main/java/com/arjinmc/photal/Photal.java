@@ -1,7 +1,10 @@
 package com.arjinmc.photal;
 
 import android.app.Activity;
+import android.content.Intent;
 
+import com.arjinmc.photal.activity.PhotoSelectorActivity;
+import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.util.CommonUtil;
@@ -34,8 +37,17 @@ public final class Photal {
         return mConfig;
     }
 
-    public void startMultipleSelector(int resultCode, String imageArrayKey, int maxCount) {
+    public void startMultipleSelector(Activity activity, int resultCode, String imageArrayKey
+            , int selectMaxCount, boolean useCamera) {
 
+        if (selectMaxCount <= 1) {
+            try {
+                throw new IllegalAccessException("selectMaxCount must above 2");
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         if (!isSetConfig()) {
             try {
                 throw new ConfigException();
@@ -44,9 +56,17 @@ public final class Photal {
                 return;
             }
         }
+
+        Intent intent = new Intent(activity, PhotoSelectorActivity.class);
+        intent.setAction(Constant.ACTION_CHOOSE_MULTIPLE);
+        intent.putExtra(Constant.BUNDLE_KEY_MAX_COUNT, selectMaxCount);
+        intent.putExtra(Constant.BUNDLE_KEY_RESULT_KEY, imageArrayKey);
+        intent.putExtra(Constant.BUNDLE_KEY_RESULT_CODE, resultCode);
+        activity.startActivityForResult(intent, resultCode);
     }
 
-    public void startSingleSelector(int resultCode, String imageKey, boolean useCrop) {
+    public void startSingleSelector(Activity activity, int resultCode, String imageKey
+            , boolean useCamera, boolean useCrop) {
 
         if (!isSetConfig()) {
             try {
@@ -56,6 +76,12 @@ public final class Photal {
                 return;
             }
         }
+
+        Intent intent = new Intent(activity, PhotoSelectorActivity.class);
+        intent.setAction(Constant.ACTION_CHOOSE_SINGLE);
+        intent.putExtra(Constant.BUNDLE_KEY_RESULT_KEY, imageKey);
+        intent.putExtra(Constant.BUNDLE_KEY_RESULT_CODE, resultCode);
+        activity.startActivityForResult(intent, resultCode);
     }
 
     public void capture(Activity activity, int resultCode, String imageKey, boolean useCrop, File file) {

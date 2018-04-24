@@ -21,8 +21,11 @@ public final class Constant {
     public static final String ACTION_CHOOSE_MULTIPLE = "ACTION_CHOOSE_MULTIPLE";
 
     public static final String BUNDLE_KEY_SELECTED = "photal_selected";
-    public static final String BUNDLE_KEY_ALL = "photal_all";
-    public static final String BUNDLE_USE_CAMERA = "use_camera";
+    public static final String BUNDLE_KEY_RESULT_KEY = "photal_result_key";
+    public static final String BUNDLE_KEY_RESULT_CODE = "photal_result_code";
+    public static final String BUNDLE_KEY_MAX_COUNT = "photal_max_count";
+    public static final String BUNDLE_KEY_USE_CAMERA = "photal_use_camera";
+    public static final String BUNDLE_KEY_USE_CROP = "photal_use_crop";
 
     public static final Uri URI_IMAGE_MEDIA = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
@@ -51,13 +54,5 @@ public final class Constant {
         imageName = PhotalConfig.IMAGE_NAME_PREFIX + simpleDateFormat.format(new Date());
         return imageName;
     }
-
-    public static int getMaxChoosePhotoCount() {
-        int count = PhotalConfig.MAX_CHOOSE_PHOTO;
-        if (count < 1)
-            return 1;
-        return count;
-    }
-
 
 }

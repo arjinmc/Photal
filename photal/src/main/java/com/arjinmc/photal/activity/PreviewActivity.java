@@ -28,7 +28,6 @@ import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.util.ImageLoader;
-import com.arjinmc.photal.util.ToastUtil;
 import com.arjinmc.photal.widget.PressSelectorDrawable;
 import com.github.chrisbanes.photoview.PhotoView;
 
@@ -52,6 +51,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     private String mCurrentAction;
     private ArrayMap<String, String> mChosenImagePathMap;
     private String[] mChosenImagePaths;
+    private int mMaxCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +85,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
         if (mCurrentAction == Constant.ACTION_CHOOSE_MULTIPLE) {
             mChosenImagePaths = getIntent().getStringArrayExtra(Constant.BUNDLE_KEY_SELECTED);
+            mMaxCount = getIntent().getIntExtra(Constant.BUNDLE_KEY_MAX_COUNT, 1);
 
             if (mChosenImagePaths == null || mChosenImagePaths.length == 0) {
                 return;
@@ -151,18 +152,13 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             public void onClick(View view) {
                 int position = getCurrentPosition();
                 boolean checked = mChosenImagePathMap.containsKey(mChosenImagePaths[position]);
-                if (mChosenImagePathMap.size() >= Constant.getMaxChoosePhotoCount() && checked) {
-                    mCbSelected.setChecked(!checked);
-                    ToastUtil.show(getBaseContext()
-                            , String.format(getString(R.string.photal_chosen_max)
-                                    , Constant.getMaxChoosePhotoCount()));
+
+                if (checked) {
+                    mChosenImagePathMap.remove(mChosenImagePaths[position]);
                 } else {
-                    if (checked) {
-                        mChosenImagePathMap.remove(mChosenImagePaths[position]);
-                    } else {
-                        mChosenImagePathMap.put(mChosenImagePaths[position], mChosenImagePaths[position]);
-                    }
+                    mChosenImagePathMap.put(mChosenImagePaths[position], mChosenImagePaths[position]);
                 }
+
                 updateBtnSend();
             }
         });
@@ -208,7 +204,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()) {
             if (!mBtnSend.isEnabled()) mBtnSend.setEnabled(true);
             mBtnSend.setText(String.format(getString(R.string.photal_send_number)
-                    , mChosenImagePathMap.size(), Constant.getMaxChoosePhotoCount()));
+                    , mChosenImagePathMap.size(), mMaxCount));
         } else {
             mBtnSend.setEnabled(false);
             mBtnSend.setText(getString(R.string.photal_send));

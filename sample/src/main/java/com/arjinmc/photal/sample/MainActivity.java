@@ -16,10 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arjinmc.photal.Photal;
-import com.arjinmc.photal.activity.PhotoSelectorActivity;
-import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
-import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
             , Manifest.permission.READ_EXTERNAL_STORAGE
             , Manifest.permission.CAMERA};
+
+    private final int RESULT_CODE_MUTILPLE_SELECTED = 1;
+    private final int RESULT_CODE_SINGLE_SELECTED = 2;
+    private final int RESULT_CODE_CAPURE_SELECTED = 3;
+    private final String BUNDLE_KEY_IMAGE = "image_selected";
 
 
     @Override
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 //        photalConfig.setPreviewTextColor(Color.RED);
 //        photalConfig.setPreviewTextSize(R.dimen.text_send);
         photalConfig.setFileProviderAuthorities("com.arjinmc.photal.fileprovider");
-        photalConfig.setImageLoaderType(ImageLoader.MODE_PICASSO);
+//        photalConfig.setImageLoaderType(ImageLoader.MODE_PICASSO);
         Photal.getInstance().setConfig(photalConfig);
 
         PermissionAssistant.addPermission(permissions);
@@ -125,12 +127,12 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (position) {
                 case 0:
-                    startActivityForResult(new Intent(MainActivity.this, PhotoSelectorActivity.class), 1);
+                    Photal.getInstance().startMultipleSelector(MainActivity.this
+                            , RESULT_CODE_MUTILPLE_SELECTED, BUNDLE_KEY_IMAGE, 3, false);
                     break;
                 case 1:
-                    Intent selectOneIntent = new Intent(MainActivity.this, PhotoSelectorActivity.class);
-                    selectOneIntent.setAction(Constant.ACTION_CHOOSE_SINGLE);
-                    startActivityForResult(selectOneIntent, 1);
+                    Photal.getInstance().startSingleSelector(MainActivity.this
+                            , RESULT_CODE_SINGLE_SELECTED, BUNDLE_KEY_IMAGE, false, false);
                     break;
             }
         }
@@ -146,8 +148,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constant.SELECTOR_RESULT_CODE) {
-            String[] paths = data.getStringArrayExtra(Constant.BUNDLE_KEY_SELECTED);
+        if (resultCode == RESULT_CODE_MUTILPLE_SELECTED
+                || requestCode == RESULT_CODE_SINGLE_SELECTED) {
+            String[] paths = data.getStringArrayExtra(BUNDLE_KEY_IMAGE);
             if (paths == null || paths.length == 0) {
                 Log.e("path", "empty");
             } else {

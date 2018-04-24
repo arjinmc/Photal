@@ -30,7 +30,6 @@ import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.loader.PhotoCursorLoader;
 import com.arjinmc.photal.loader.PhotoLoader;
-import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.util.ToastUtil;
 import com.arjinmc.photal.viewholder.PhotoViewHolder;
@@ -61,6 +60,10 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
     private String mCurrentAction;
 
     private PhotalConfig mPhotalConfig;
+
+    private String mResultKey;
+    private int mMaxCount = 1;
+    private int mResultCode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,7 +143,12 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         if (mCurrentAction.equals(Constant.ACTION_CHOOSE_SINGLE)) {
             mBtnSend.setVisibility(View.GONE);
             mTvPreview.setVisibility(View.GONE);
+        } else {
+            mMaxCount = getIntent().getIntExtra(Constant.BUNDLE_KEY_MAX_COUNT, 9);
         }
+        mResultKey = getIntent().getStringExtra(Constant.BUNDLE_KEY_RESULT_KEY);
+        mResultCode = getIntent().getIntExtra(Constant.BUNDLE_KEY_RESULT_CODE, 0);
+
         mPhotoLoader.load(null);
 
     }
@@ -201,7 +209,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             Intent previewIntent = new Intent(PhotoSelectorActivity.this, PreviewActivity.class);
             previewIntent.setAction(mCurrentAction);
             previewIntent.putExtra(Constant.BUNDLE_KEY_SELECTED, mPhotoAdapter.getChosenImagePosition());
-            previewIntent.putExtra(Constant.BUNDLE_KEY_ALL, CommonUtil.toStrings(mPhotoList));
+            previewIntent.putExtra(Constant.BUNDLE_KEY_MAX_COUNT, mMaxCount);
+
             startActivityForResult(previewIntent, Constant.SELECTOR_REQUEST_CODE);
         }
 
@@ -221,8 +230,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                 selectedPath[i] = mPhotoAdapter.getChosenImagePosition()[i];
             }
         }
-        intent.putExtra(Constant.BUNDLE_KEY_SELECTED, selectedPath);
-        setResult(Constant.SELECTOR_RESULT_CODE, intent);
+        intent.putExtra(mResultKey, selectedPath);
+        setResult(mResultCode, intent);
         finish();
     }
 
@@ -234,7 +243,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                 && mPhotoAdapter.getChosenImagePosition().length != 0) {
             if (!mBtnSend.isEnabled()) mBtnSend.setEnabled(true);
             mBtnSend.setText(String.format(getString(R.string.photal_send_number)
-                    , mPhotoAdapter.getChosenImagePosition().length, Constant.getMaxChoosePhotoCount()));
+                    , mPhotoAdapter.getChosenImagePosition().length, mMaxCount));
         } else {
             mBtnSend.setEnabled(false);
             mBtnSend.setText(getString(R.string.photal_send));
@@ -274,11 +283,11 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                 holder.sbCheck.setOnCheckChangeListener(new SelectBox.OnCheckChangeListener() {
                     @Override
                     public void onChange(boolean change) {
-                        if (chosenImagesPaths.size() >= Constant.getMaxChoosePhotoCount() && change) {
+                        if (chosenImagesPaths.size() >= mMaxCount && change) {
                             holder.sbCheck.setChecked(!change);
                             ToastUtil.show(getBaseContext()
                                     , String.format(getString(R.string.photal_chosen_max)
-                                            , Constant.getMaxChoosePhotoCount()));
+                                            , mMaxCount));
                         } else {
                             if (change) {
                                 chosenImagesPaths.put(dataPath, dataPath);
