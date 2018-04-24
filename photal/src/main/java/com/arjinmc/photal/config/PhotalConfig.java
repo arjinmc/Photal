@@ -155,7 +155,7 @@ public final class PhotalConfig {
 
     public int getAlbumBackgroundColor() {
         if (albumBackgroundColor == -1) {
-            return R.color.photal_white;
+            return ContextCompat.getColor(mContext, R.color.photal_white);
         }
         return albumBackgroundColor;
     }
@@ -165,14 +165,20 @@ public final class PhotalConfig {
     }
 
     public int getAlbumTextSize() {
+        if (albumTextSize == -1) {
+            return mContext.getResources().getDimensionPixelSize(R.dimen.photal_txt_small);
+        }
         return albumTextSize;
     }
 
     public void setAlbumTextSize(@DimenRes int albumTextSize) {
-        this.albumTextSize = albumTextSize;
+        this.albumTextSize = mContext.getResources().getDimensionPixelSize(albumTextSize);
     }
 
     public int getAlbumTextColor() {
+        if (albumTextColor == -1) {
+            return ContextCompat.getColor(mContext, R.color.photal_black);
+        }
         return albumTextColor;
     }
 

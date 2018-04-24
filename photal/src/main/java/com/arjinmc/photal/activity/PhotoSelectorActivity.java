@@ -66,6 +66,10 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         setContentView(R.layout.photal_activity_photo_grid_selector);
 
         mBtnBack = findViewById(R.id.btn_back);
+        ViewCompat.setBackground(mBtnBack
+                , new PressSelectorDrawable(
+                        ContextCompat.getColor(this,R.color.photal_theme)
+                        , ContextCompat.getColor(this,R.color.photal_theme_dark)));
         mBtnBack.setOnClickListener(this);
 
         mBtnSend = findViewById(R.id.btn_send);

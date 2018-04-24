@@ -47,15 +47,21 @@ public class MainActivity extends AppCompatActivity {
 
         //init config
         PhotalConfig photalConfig = new PhotalConfig(this);
-//        photalConfig.setThemeColor(ContextCompat.getColor(this,R.color.colorAccent));
-//        photalConfig.setThemeDarkColor(ContextCompat.getColor(this,R.color.red));
+//        photalConfig.setThemeColor(ContextCompat.getColor(this, R.color.colorAccent));
+//        photalConfig.setThemeDarkColor(ContextCompat.getColor(this, R.color.red));
 //        photalConfig.setTextTitleSize(R.dimen.text_title);
-//        photalConfig.setTextTitleColor(ContextCompat.getColor(this,R.color.colorAccent));
+//        photalConfig.setTextTitleColor(ContextCompat.getColor(this, R.color.colorAccent));
 //        photalConfig.setBtnBackIcon(android.R.drawable.ic_menu_more);
 //        photalConfig.setBtnDoneBackground(R.drawable.btn_done);
-//        photalConfig.setBtnDoneTextColor(ContextCompat.getColor(this,R.color.colorAccent));
+//        photalConfig.setBtnDoneTextColor(ContextCompat.getColor(this, R.color.colorAccent));
 //        photalConfig.setBtnDoneTextSize(R.dimen.text_send);
-        photalConfig.setAlbumBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
+//        photalConfig.setAlbumBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+//        photalConfig.setAlbumTextSize(R.dimen.text_send);
+//        photalConfig.setAlbumTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+//        photalConfig.setAlbumCheckBox(R.drawable.cb_album);
+//        photalConfig.setAlbumDiver(new RecyclerViewItemDecoration.Builder(this)
+//                .color(ContextCompat.getColor(this, com.arjinmc.photal.R.color.photal_album_background))
+//                .thickness(2).create());
         Photal.getInstance().setConfig(photalConfig);
 
         PermissionAssistant.addPermission(permissions);

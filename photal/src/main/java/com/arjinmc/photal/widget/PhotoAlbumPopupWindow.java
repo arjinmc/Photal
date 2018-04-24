@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.R;
 import com.arjinmc.photal.adapter.RecyclerViewCursorAdapter;
 import com.arjinmc.photal.callback.PhotalLoaderCallback;
+import com.arjinmc.photal.config.PhotalConfig;
+import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.loader.AlbumCursorLoader;
 import com.arjinmc.photal.loader.AlbumLoader;
 import com.arjinmc.photal.util.CommonUtil;
@@ -40,6 +44,8 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
     private Handler mHandler = new Handler();
     private int mAlbumId = -1;
 
+    private PhotalConfig mPhotalConfig;
+
 
     public PhotoAlbumPopupWindow(FragmentActivity context) {
         mContext = context;
@@ -61,6 +67,9 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
         rvLayoutParams.height = CommonUtil.getScreenHeight(mContext) * 2 / 3;
         mRvAlbum.setLayoutParams(rvLayoutParams);
         setContentView(rootView);
+
+        initConfig();
+
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,11 +78,15 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
         });
 
         mRvAlbum.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        mRvAlbum.addItemDecoration(new RecyclerViewItemDecoration.Builder(mContext)
-                .paddingStart(50)
-                .paddingEnd(50)
-                .color(ContextCompat.getColor(mContext, R.color.photal_album_diver))
-                .thickness(2).create());
+        if (mPhotalConfig != null && mPhotalConfig.getAlbumDiver() != null) {
+            mRvAlbum.addItemDecoration(mPhotalConfig.getAlbumDiver());
+        } else {
+            mRvAlbum.addItemDecoration(new RecyclerViewItemDecoration.Builder(mContext)
+                    .paddingStart(50)
+                    .paddingEnd(50)
+                    .color(ContextCompat.getColor(mContext, R.color.photal_album_diver))
+                    .thickness(2).create());
+        }
         mAlbumAdapter = new AlbumAdapter();
         mRvAlbum.setAdapter(mAlbumAdapter);
 
@@ -93,6 +106,19 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
         });
         albumLoader.load();
         mDismissRunnable = new DismissRunnable();
+    }
+
+    private void initConfig() {
+        mPhotalConfig = Photal.getInstance().getConfig();
+        if (mPhotalConfig == null) {
+            try {
+                throw new ConfigException();
+            } catch (ConfigException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
     }
 
 
@@ -117,6 +143,16 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
         @Override
         public void onBindViewHolder(AlbumViewHolder holder, final int position) {
             if (mCusor != null) {
+                if (mPhotalConfig != null) {
+                    holder.rlRoot.setBackgroundColor(mPhotalConfig.getAlbumBackgroundColor());
+                    holder.tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getAlbumTextSize());
+                    holder.tvName.setTextColor(mPhotalConfig.getAlbumTextColor());
+                    holder.tvCount.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getAlbumTextSize());
+                    holder.tvCount.setTextColor(mPhotalConfig.getAlbumTextColor());
+                    if (mPhotalConfig.getAlbumCheckBox() != -1) {
+                        holder.rbChoose.setButtonDrawable(mPhotalConfig.getAlbumCheckBox());
+                    }
+                }
                 mCusor.moveToPosition(position);
                 final int albumId = mCusor.getInt(mCusor.getColumnIndex(AlbumCursorLoader.ALBUM_ID));
                 holder.tvName.setText(mCusor.getString(mCusor.getColumnIndex(AlbumCursorLoader.ALBUM_NAME)));

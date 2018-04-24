@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,6 +59,10 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         setContentView(R.layout.photal_activity_preview);
 
         mBtnBack = findViewById(R.id.btn_back);
+        ViewCompat.setBackground(mBtnBack
+                , new PressSelectorDrawable(
+                        ContextCompat.getColor(this, R.color.photal_theme)
+                        , ContextCompat.getColor(this, R.color.photal_theme_dark)));
         mBtnBack.setOnClickListener(this);
 
         mBtnSend = findViewById(R.id.btn_send);
@@ -183,8 +188,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         rlBottom.setBackgroundColor(photalConfig.getThemeColor());
         ViewCompat.setBackground(mBtnBack
                 , new PressSelectorDrawable(photalConfig.getThemeColor(), photalConfig.getThemeDarkColor()));
-        TextView tvHeadTitle =  findViewById(R.id.tv_head_title);
-        tvHeadTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX,photalConfig.getTextTitleSize());
+        TextView tvHeadTitle = findViewById(R.id.tv_head_title);
+        tvHeadTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, photalConfig.getTextTitleSize());
         tvHeadTitle.setTextColor(photalConfig.getTextTitleColor());
         mBtnBack.setImageResource(photalConfig.getBtnBackIcon());
         mBtnSend.setBackgroundResource(photalConfig.getBtnDoneBackground());
