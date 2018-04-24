@@ -53,7 +53,7 @@
     <RelativeLayout
         android:id="@+id/rl_bottom"
         style="@style/layout_mw"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/photal_bottom_bar_h"
         android:layout_alignParentBottom="true"
         android:background="@color/photal_theme"
         android:paddingBottom="@dimen/photal_margin_normal"

@@ -44,6 +44,7 @@
     <RelativeLayout
         android:id="@+id/rl_bottom"
         style="@style/layout_mw"
+        android:layout_height="@dimen/photal_bottom_bar_h"
         android:layout_alignParentBottom="true"
         android:background="@color/photal_theme"
         android:padding="@dimen/photal_margin_big">
@@ -51,6 +52,7 @@
         <CheckBox
             android:id="@id/cb_check"
             style="@style/layout_ww.single"
+            android:paddingLeft="@dimen/photal_margin_small"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="@string/photal_choose"

@@ -196,6 +196,9 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         mBtnSend.setTextColor(photalConfig.getBtnDoneTextColor());
         mBtnSend.setTextSize(TypedValue.COMPLEX_UNIT_PX, photalConfig.getBtnDoneTextSize());
 
+        if (photalConfig.getPreviewCheckbox() != -1) {
+            mCbSelected.setButtonDrawable(photalConfig.getPreviewCheckbox());
+        }
     }
 
     /**

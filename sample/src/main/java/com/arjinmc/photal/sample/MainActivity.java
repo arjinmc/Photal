@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +19,7 @@ import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
+import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
 public class MainActivity extends AppCompatActivity {
@@ -62,6 +62,17 @@ public class MainActivity extends AppCompatActivity {
 //        photalConfig.setAlbumDiver(new RecyclerViewItemDecoration.Builder(this)
 //                .color(ContextCompat.getColor(this, com.arjinmc.photal.R.color.photal_album_background))
 //                .thickness(2).create());
+//        photalConfig.setGalleryDiver(new RecyclerViewItemDecoration.Builder(this)
+//                .color(ContextCompat.getColor(this, R.color.photal_send_disable))
+//                .thickness(2).create());
+//        photalConfig.setGalleryColumnCount(4);
+//        photalConfig.setGalleryCheckboxColor(Color.YELLOW);
+//        photalConfig.setGalleryBackgroundColor(Color.WHITE);
+//        photalConfig.setPreviewCheckbox(R.drawable.cb_album);
+//        photalConfig.setPreviewTextColor(Color.RED);
+//        photalConfig.setPreviewTextSize(R.dimen.text_send);
+        photalConfig.setFileProviderAuthorities("com.arjinmc.photal.fileprovider");
+        photalConfig.setImageLoaderType(ImageLoader.MODE_PICASSO);
         Photal.getInstance().setConfig(photalConfig);
 
         PermissionAssistant.addPermission(permissions);

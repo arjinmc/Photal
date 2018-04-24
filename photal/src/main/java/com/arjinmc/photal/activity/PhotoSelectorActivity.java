@@ -34,8 +34,8 @@ import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.util.ToastUtil;
 import com.arjinmc.photal.viewholder.PhotoViewHolder;
-import com.arjinmc.photal.widget.PressSelectorDrawable;
 import com.arjinmc.photal.widget.PhotoAlbumPopupWindow;
+import com.arjinmc.photal.widget.PressSelectorDrawable;
 import com.arjinmc.photal.widget.SelectBox;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
@@ -60,6 +60,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
     private int mCurrentAlbumId = -1;
     private String mCurrentAction;
 
+    private PhotalConfig mPhotalConfig;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +70,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         mBtnBack = findViewById(R.id.btn_back);
         ViewCompat.setBackground(mBtnBack
                 , new PressSelectorDrawable(
-                        ContextCompat.getColor(this,R.color.photal_theme)
-                        , ContextCompat.getColor(this,R.color.photal_theme_dark)));
+                        ContextCompat.getColor(this, R.color.photal_theme)
+                        , ContextCompat.getColor(this, R.color.photal_theme_dark)));
         mBtnBack.setOnClickListener(this);
 
         mBtnSend = findViewById(R.id.btn_send);
@@ -98,10 +100,15 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
 
         initConfig();
 
-        mRvPhoto.setLayoutManager(new GridLayoutManager(this, 3));
-        mRvPhoto.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
-                .color(ContextCompat.getColor(this, R.color.photal_black))
-                .thickness(2).create());
+        mRvPhoto.setLayoutManager(new GridLayoutManager(this
+                , mPhotalConfig == null ? 3 : mPhotalConfig.getGalleryColumnCount()));
+        if (mPhotalConfig != null && mPhotalConfig.getGalleryDiver() != null) {
+            mRvPhoto.addItemDecoration(mPhotalConfig.getGalleryDiver());
+        } else {
+            mRvPhoto.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
+                    .color(ContextCompat.getColor(this, R.color.photal_black))
+                    .thickness(2).create());
+        }
         mPhotoAdapter = new PhotoGridSelectorAdapter();
         mRvPhoto.setAdapter(mPhotoAdapter);
 
@@ -140,8 +147,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
 
     private void initConfig() {
 
-        PhotalConfig photalConfig = Photal.getInstance().getConfig();
-        if (photalConfig == null) {
+        mPhotalConfig = Photal.getInstance().getConfig();
+        if (mPhotalConfig == null) {
             try {
                 throw new ConfigException();
             } catch (ConfigException e) {
@@ -151,18 +158,21 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         }
 
         RelativeLayout rlHead = findViewById(R.id.rl_head);
-        rlHead.setBackgroundColor(photalConfig.getThemeColor());
+        rlHead.setBackgroundColor(mPhotalConfig.getThemeColor());
         RelativeLayout rlBottom = findViewById(R.id.rl_bottom);
-        rlBottom.setBackgroundColor(photalConfig.getThemeColor());
+        rlBottom.setBackgroundColor(mPhotalConfig.getThemeColor());
         ViewCompat.setBackground(mBtnBack
-                , new PressSelectorDrawable(photalConfig.getThemeColor(), photalConfig.getThemeDarkColor()));
-        TextView tvHeadTitle =  findViewById(R.id.tv_head_title);
-        tvHeadTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, photalConfig.getTextTitleSize());
-        tvHeadTitle.setTextColor(photalConfig.getTextTitleColor());
-        mBtnBack.setImageResource(photalConfig.getBtnBackIcon());
-        mBtnSend.setBackgroundResource(photalConfig.getBtnDoneBackground());
-        mBtnSend.setTextColor(photalConfig.getBtnDoneTextColor());
-        mBtnSend.setTextSize(TypedValue.COMPLEX_UNIT_PX, photalConfig.getBtnDoneTextSize());
+                , new PressSelectorDrawable(mPhotalConfig.getThemeColor(), mPhotalConfig.getThemeDarkColor()));
+        TextView tvHeadTitle = findViewById(R.id.tv_head_title);
+        tvHeadTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getTextTitleSize());
+        tvHeadTitle.setTextColor(mPhotalConfig.getTextTitleColor());
+        mBtnBack.setImageResource(mPhotalConfig.getBtnBackIcon());
+        mBtnSend.setBackgroundResource(mPhotalConfig.getBtnDoneBackground());
+        mBtnSend.setTextColor(mPhotalConfig.getBtnDoneTextColor());
+        mBtnSend.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getBtnDoneTextSize());
+        mRvPhoto.setBackgroundColor(mPhotalConfig.getGalleryBackgroundColor());
+        mTvPreview.setTextColor(mPhotalConfig.getPreviewTextColor());
+        mTvPreview.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getPreviewTextSize());
 
     }
 
@@ -184,7 +194,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         } else if (i == R.id.btn_send) {
             dispatchImages();
         } else if (i == R.id.tv_preview) {
-            if (mPhotoList == null && mPhotoList.isEmpty()) {
+            if (mPhotoList == null || mPhotoList.isEmpty()
+                    || mPhotoAdapter.getChosenImagePosition() == null) {
                 return;
             }
             Intent previewIntent = new Intent(PhotoSelectorActivity.this, PreviewActivity.class);
@@ -252,6 +263,9 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             ImageLoader.loadThumbnail(getBaseContext()
                     , dataPath, holder.ivPhoto);
             if (mCurrentAction.equals(Constant.ACTION_CHOOSE_MULTIPLE)) {
+                if (mPhotalConfig != null) {
+                    holder.sbCheck.setColor(mPhotalConfig.getGalleryCheckboxColor());
+                }
                 if (chosenImagesPaths.containsKey(mPhotoList.keyAt(position))) {
                     holder.sbCheck.setChecked(true);
                 } else {

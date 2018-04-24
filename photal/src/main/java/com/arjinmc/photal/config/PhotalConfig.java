@@ -1,6 +1,7 @@
 package com.arjinmc.photal.config;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
@@ -30,40 +31,39 @@ public final class PhotalConfig {
     @interface ImageLoaderType {
     }
 
+    private static final int UNEFFECTED_COLOR = 1;
+
     private Context mContext;
 
-    private int themeColor = -1;
-    private int themeDarkColor = -1;
-    private int textTitleColor = -1;
+    private int themeColor = UNEFFECTED_COLOR;
+    private int themeDarkColor = UNEFFECTED_COLOR;
+    private int textTitleColor = UNEFFECTED_COLOR;
     private int textTitleSize = -1;
     private int btnBackIcon = -1;
     private int btnDoneBackground = -1;
-    private int btnDoneTextColor = -1;
+    private int btnDoneTextColor = UNEFFECTED_COLOR;
     private int btnDoneTextSize = -1;
-    private int albumBackgroundColor = -1;
+    private int albumBackgroundColor = UNEFFECTED_COLOR;
     private int albumTextSize = -1;
-    private int albumTextColor = -1;
+    private int albumTextColor = UNEFFECTED_COLOR;
     private int albumCheckBox = -1;
     private RecyclerView.ItemDecoration albumDiver;
     private RecyclerView.ItemDecoration galleryDiver;
     private int galleryColumnCount = -1;
-    private int galleryCheckbox = -1;
+    private int galleryCheckboxColor = UNEFFECTED_COLOR;
+    private int galleryBackgroundColor = UNEFFECTED_COLOR;
     private int previewCheckbox = -1;
-    private int previewTextColor = -1;
+    private int previewTextColor = UNEFFECTED_COLOR;
     private int previewTextSize = -1;
-    private int headerHeight = -1;
-    private int bottomHeight = -1;
     private String fileProviderAuthorities;
-    private String saveFileRegex;
     private int imageLoaderType = -1;
-    private int choosePhotoMaxCount = -1;
 
     public PhotalConfig(Context context) {
         mContext = context;
     }
 
     public int getThemeColor() {
-        if (themeColor == -1) {
+        if (themeColor == UNEFFECTED_COLOR) {
             return ContextCompat.getColor(mContext, R.color.photal_theme);
         }
         return themeColor;
@@ -74,10 +74,10 @@ public final class PhotalConfig {
     }
 
     public int getThemeDarkColor() {
-        if (themeColor == -1 && themeDarkColor == -1) {
+        if (themeColor == UNEFFECTED_COLOR && themeDarkColor == UNEFFECTED_COLOR) {
             return ContextCompat.getColor(mContext, R.color.photal_theme_dark);
         }
-        if (themeDarkColor == -1) {
+        if (themeDarkColor == UNEFFECTED_COLOR) {
             return themeColor;
         }
         return themeDarkColor;
@@ -88,7 +88,7 @@ public final class PhotalConfig {
     }
 
     public int getTextTitleColor() {
-        if (textTitleColor == -1) {
+        if (textTitleColor == UNEFFECTED_COLOR) {
             return ContextCompat.getColor(mContext, R.color.photal_title_text);
         }
         return textTitleColor;
@@ -132,7 +132,7 @@ public final class PhotalConfig {
     }
 
     public int getBtnDoneTextColor() {
-        if (btnDoneTextColor == -1) {
+        if (btnDoneTextColor == UNEFFECTED_COLOR) {
             return ContextCompat.getColor(mContext, R.color.photal_title_text);
         }
         return btnDoneTextColor;
@@ -154,7 +154,7 @@ public final class PhotalConfig {
     }
 
     public int getAlbumBackgroundColor() {
-        if (albumBackgroundColor == -1) {
+        if (albumBackgroundColor == UNEFFECTED_COLOR) {
             return ContextCompat.getColor(mContext, R.color.photal_white);
         }
         return albumBackgroundColor;
@@ -176,7 +176,7 @@ public final class PhotalConfig {
     }
 
     public int getAlbumTextColor() {
-        if (albumTextColor == -1) {
+        if (albumTextColor == UNEFFECTED_COLOR) {
             return ContextCompat.getColor(mContext, R.color.photal_black);
         }
         return albumTextColor;
@@ -211,6 +211,9 @@ public final class PhotalConfig {
     }
 
     public int getGalleryColumnCount() {
+        if (galleryColumnCount == -1) {
+            return galleryColumnCount = 3;
+        }
         return galleryColumnCount;
     }
 
@@ -218,12 +221,26 @@ public final class PhotalConfig {
         this.galleryColumnCount = galleryColumnCount;
     }
 
-    public int getGalleryCheckbox() {
-        return galleryCheckbox;
+    public int getGalleryCheckboxColor() {
+        if (galleryCheckboxColor == UNEFFECTED_COLOR) {
+            return Color.BLUE;
+        }
+        return galleryCheckboxColor;
     }
 
-    public void setGalleryCheckbox(@DrawableRes int galleryCheckbox) {
-        this.galleryCheckbox = galleryCheckbox;
+    public void setGalleryCheckboxColor(@ColorInt int galleryCheckboxColor) {
+        this.galleryCheckboxColor = galleryCheckboxColor;
+    }
+
+    public int getGalleryBackgroundColor() {
+        if (galleryBackgroundColor == UNEFFECTED_COLOR) {
+            return ContextCompat.getColor(mContext, R.color.photal_black);
+        }
+        return galleryBackgroundColor;
+    }
+
+    public void setGalleryBackgroundColor(@ColorInt int galleryBackgroundColor) {
+        this.galleryBackgroundColor = galleryBackgroundColor;
     }
 
     public int getPreviewCheckbox() {
@@ -235,35 +252,25 @@ public final class PhotalConfig {
     }
 
     public int getPreviewTextColor() {
+        if (previewTextColor == UNEFFECTED_COLOR) {
+            return ContextCompat.getColor(mContext, R.color.photal_white);
+        }
         return previewTextColor;
     }
 
-    public void setPreviewTextColor(int previewTextColor) {
+    public void setPreviewTextColor(@ColorInt int previewTextColor) {
         this.previewTextColor = previewTextColor;
     }
 
     public int getPreviewTextSize() {
+        if (previewTextSize == -1) {
+            return mContext.getResources().getDimensionPixelSize(R.dimen.photal_txt_small);
+        }
         return previewTextSize;
     }
 
     public void setPreviewTextSize(int previewTextSize) {
-        this.previewTextSize = previewTextSize;
-    }
-
-    public int getHeaderHeight() {
-        return headerHeight;
-    }
-
-    public void setHeaderHeight(int headerHeight) {
-        this.headerHeight = headerHeight;
-    }
-
-    public int getBottomHeight() {
-        return bottomHeight;
-    }
-
-    public void setBottomHeight(int bottomHeight) {
-        this.bottomHeight = bottomHeight;
+        this.previewTextSize = mContext.getResources().getDimensionPixelSize(previewTextSize);
     }
 
     public String getFileProviderAuthorities() {
@@ -274,14 +281,6 @@ public final class PhotalConfig {
         this.fileProviderAuthorities = fileProviderAuthorities;
     }
 
-    public String getSaveFileRegex() {
-        return saveFileRegex;
-    }
-
-    public void setSaveFileRegex(String saveFileRegex) {
-        this.saveFileRegex = saveFileRegex;
-    }
-
     public int getImageLoaderType() {
         return imageLoaderType;
     }
@@ -290,11 +289,4 @@ public final class PhotalConfig {
         this.imageLoaderType = imageLoaderType;
     }
 
-    public int getChoosePhotoMaxCount() {
-        return choosePhotoMaxCount;
-    }
-
-    public void setChoosePhotoMaxCount(int choosePhotoMaxCount) {
-        this.choosePhotoMaxCount = choosePhotoMaxCount;
-    }
 }
