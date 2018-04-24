@@ -84,7 +84,7 @@ public final class Photal {
         activity.startActivityForResult(intent, resultCode);
     }
 
-    public void capture(Activity activity, int resultCode, String imageKey, boolean useCrop, File file) {
+    public void capture(Activity activity, int requestCode, File file, boolean useCrop) {
 
         if (!isSetConfig()) {
             try {
@@ -97,12 +97,12 @@ public final class Photal {
 
         activity.startActivityForResult(
                 CommonUtil.newCaptureIntent(activity, getConfig().getFileProviderAuthorities(), file)
-                , resultCode);
+                , requestCode);
 
     }
 
     private boolean isSetConfig() {
-        if (mConfig != null) {
+        if (mConfig != null || mConfig.getFileProviderAuthorities() != null) {
             return true;
         }
         return false;

@@ -19,9 +19,6 @@ import com.arjinmc.photal.util.ImageLoader;
 
 public final class PhotalConfig {
 
-    public static final String CAMERA_FILE_DIRECTORY = "photal";
-    public static final String IMAGE_NAME_PREFIX = "IMAGE";
-
     @IntDef({ImageLoader.MODE_GLIDE, ImageLoader.MODE_PICASSO})
     @interface ImageLoaderType {
     }

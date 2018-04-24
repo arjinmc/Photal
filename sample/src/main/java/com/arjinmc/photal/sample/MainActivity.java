@@ -1,9 +1,11 @@
 package com.arjinmc.photal.sample;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,10 @@ import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private String[] mSampleList;
@@ -30,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final int RESULT_CODE_MUTILPLE_SELECTED = 1;
     private final int RESULT_CODE_SINGLE_SELECTED = 2;
-    private final int RESULT_CODE_CAPURE_SELECTED = 3;
+    private final int REQUEST_CODE_CAPURE_SELECTED = 0;
     private final String BUNDLE_KEY_IMAGE = "image_selected";
 
 
@@ -134,16 +140,15 @@ public class MainActivity extends AppCompatActivity {
                     Photal.getInstance().startSingleSelector(MainActivity.this
                             , RESULT_CODE_SINGLE_SELECTED, BUNDLE_KEY_IMAGE, false, false);
                     break;
+                case 2:
+                    File file = FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
+                    Log.e("file", file.getAbsolutePath());
+                    Photal.getInstance().capture(MainActivity.this, REQUEST_CODE_CAPURE_SELECTED, file, false);
+                    break;
             }
         }
 
     }
-
-
-    private void startAct(Class clz) {
-        startActivity(new Intent(this, clz));
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -159,7 +164,30 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
             }
 
+        } else if (requestCode == REQUEST_CODE_CAPURE_SELECTED && resultCode == Activity.RESULT_OK) {
+            Log.e("capture", "done");
+
         }
+    }
+
+    public String getCameraPhotoPath() {
+
+        String path = null;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            path = Environment.getExternalStorageDirectory().getPath() + File.separator + "photal";
+        } else {
+            path = getFilesDir().getPath() + File.separator + "photal";
+        }
+        FileUtils.createDir(path);
+        return path;
+
+    }
+
+    public String createImageName() {
+        String imageName = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmsss");
+        imageName = "IMAGE_" + simpleDateFormat.format(new Date()) + ".jpg";
+        return imageName;
     }
 
     private String getPath(String[] path) {
