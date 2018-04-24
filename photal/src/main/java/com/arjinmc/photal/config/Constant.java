@@ -3,8 +3,6 @@ package com.arjinmc.photal.config;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.arjinmc.photal.util.FileUtils;
-
 /**
  * Created by Eminem Lo on 28/4/17.
  * Email arjinmc@hotmail.com
