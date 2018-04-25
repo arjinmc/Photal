@@ -41,16 +41,34 @@ public final class CommonUtil {
         return map.keySet().toArray(strings);
     }
 
+    /**
+     * call system capture
+     * @param context
+     * @param authority
+     * @param file
+     * @return
+     */
     public static Intent newCaptureIntent(Context context, String authority, File file) {
         Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         captureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, compatFileUri(context, authority, file));
+        return captureIntent;
+    }
+
+    /**
+     * compat file uri
+     * @param context
+     * @param authority
+     * @param file
+     * @return
+     */
+    public static Uri compatFileUri(Context context, String authority, File file) {
         Uri uri = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(context, authority, file);
         } else {
-            uri = Uri.parse("file:////"+file.getAbsolutePath());
+            uri = Uri.parse("file:////" + file.getAbsolutePath());
         }
-        captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        return captureIntent;
+        return uri;
     }
 }

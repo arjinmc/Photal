@@ -17,6 +17,7 @@ public final class Constant {
     public static final String BUNDLE_KEY_RESULT_KEY = "photal_result_key";
     public static final String BUNDLE_KEY_RESULT_CODE = "photal_result_code";
     public static final String BUNDLE_KEY_MAX_COUNT = "photal_max_count";
+    public static final String BUNDLE_KEY_ORIGINAL_FILE_PATH = "photal_original_file_path";
     public static final String BUNDLE_KEY_USE_CAMERA = "photal_use_camera";
     public static final String BUNDLE_KEY_USE_CROP = "photal_use_crop";
 

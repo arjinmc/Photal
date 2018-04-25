@@ -36,8 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
     private final int RESULT_CODE_MUTILPLE_SELECTED = 1;
     private final int RESULT_CODE_SINGLE_SELECTED = 2;
+    private final int RESULT_CODE_CROP = 3;
+
     private final int REQUEST_CODE_CAPURE_SELECTED = 0;
     private final String BUNDLE_KEY_IMAGE = "image_selected";
+
+    private boolean useCrop = false;
+    private File mFile;
 
 
     @Override
@@ -138,12 +143,19 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 1:
                     Photal.getInstance().startSingleSelector(MainActivity.this
-                            , RESULT_CODE_SINGLE_SELECTED, BUNDLE_KEY_IMAGE, false, false);
+                            , RESULT_CODE_SINGLE_SELECTED, BUNDLE_KEY_IMAGE, false);
                     break;
                 case 2:
-                    File file = FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
-                    Log.e("file", file.getAbsolutePath());
-                    Photal.getInstance().capture(MainActivity.this, REQUEST_CODE_CAPURE_SELECTED, file, false);
+                    useCrop = false;
+                    mFile= FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
+                    Log.e("file", mFile.getAbsolutePath());
+                    Photal.getInstance().capture(MainActivity.this, REQUEST_CODE_CAPURE_SELECTED, mFile);
+                    break;
+                case 3:
+                    useCrop = true;
+                    mFile = FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
+                    Log.e("file", mFile.getAbsolutePath());
+                    Photal.getInstance().capture(MainActivity.this, REQUEST_CODE_CAPURE_SELECTED, mFile);
                     break;
             }
         }
@@ -165,7 +177,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else if (requestCode == REQUEST_CODE_CAPURE_SELECTED && resultCode == Activity.RESULT_OK) {
-            Log.e("capture", "done");
+            if(useCrop){
+                Photal.getInstance().crop(this,RESULT_CODE_CROP,BUNDLE_KEY_IMAGE,mFile.getAbsolutePath());
+            }else {
+                Log.e("capture", "done");
+            }
+
+        }else if(resultCode == RESULT_CODE_CROP){
 
         }
     }
@@ -204,5 +222,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         PermissionAssistant.forceRequestPermissions(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Photal.getInstance().release();
     }
 }

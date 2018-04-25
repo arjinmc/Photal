@@ -3,6 +3,7 @@ package com.arjinmc.photal;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.arjinmc.photal.activity.CropImageActivity;
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
@@ -66,7 +67,7 @@ public final class Photal {
     }
 
     public void startSingleSelector(Activity activity, int resultCode, String imageKey
-            , boolean useCamera, boolean useCrop) {
+            , boolean useCamera) {
 
         if (!isSetConfig()) {
             try {
@@ -84,7 +85,7 @@ public final class Photal {
         activity.startActivityForResult(intent, resultCode);
     }
 
-    public void capture(Activity activity, int requestCode, File file, boolean useCrop) {
+    public void capture(Activity activity, int requestCode, File file) {
 
         if (!isSetConfig()) {
             try {
@@ -95,9 +96,27 @@ public final class Photal {
             }
         }
 
-        activity.startActivityForResult(
-                CommonUtil.newCaptureIntent(activity, getConfig().getFileProviderAuthorities(), file)
-                , requestCode);
+        Intent intent = CommonUtil.newCaptureIntent(activity, getConfig().getFileProviderAuthorities(), file);
+        activity.startActivityForResult(intent, requestCode);
+
+    }
+
+    public void crop(Activity activity,int resultCode,String imageKey,String originFilePath){
+
+        if (!isSetConfig()) {
+            try {
+                throw new ConfigException();
+            } catch (ConfigException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        Intent intent = new Intent(activity, CropImageActivity.class);
+        intent.putExtra(Constant.BUNDLE_KEY_RESULT_CODE,resultCode);
+        intent.putExtra(Constant.BUNDLE_KEY_RESULT_KEY,imageKey);
+        intent.putExtra(Constant.BUNDLE_KEY_ORIGINAL_FILE_PATH,originFilePath);
+        activity.startActivityForResult(intent,resultCode);
 
     }
 

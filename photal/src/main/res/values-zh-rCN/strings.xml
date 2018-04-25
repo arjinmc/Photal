@@ -14,5 +14,8 @@
     <string name="photal_chosen_max">你只能最多选择%d张图片! </string>
     <string name="photal_preview">预览</string>
     <string name="photal_choose">选择</string>
+    <string name="photal_crop">裁剪</string>
+    <string name="photal_use">使用</string>
+
 
 </resources>

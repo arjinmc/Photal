@@ -8,6 +8,7 @@
     <dimen name="photal_margin_normal">8dp</dimen>
     <dimen name="photal_margin_big">16dp</dimen>
     <dimen name="photal_margin_huge">32dp</dimen>
+    <dimen name="photal_margin_super_huge">48dp</dimen>
 
     <dimen name="photal_title_bar_h">56dp</dimen>
     <dimen name="photal_bottom_bar_h">50dp</dimen>

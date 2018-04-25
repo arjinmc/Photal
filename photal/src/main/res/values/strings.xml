@@ -14,4 +14,6 @@
     <string name="photal_chosen_max">You can only select up to %d images! </string>
     <string name="photal_preview">Preview</string>
     <string name="photal_choose">Choose</string>
+    <string name="photal_crop">Crop</string>
+    <string name="photal_use">Done</string>
 </resources>
