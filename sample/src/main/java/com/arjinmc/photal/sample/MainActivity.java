@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     useCrop = false;
-                    mFile= FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
+                    mFile = FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
                     Log.e("file", mFile.getAbsolutePath());
                     Photal.getInstance().capture(MainActivity.this, REQUEST_CODE_CAPURE_SELECTED, mFile);
                     break;
@@ -176,14 +176,18 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
             }
 
-        } else if (requestCode == REQUEST_CODE_CAPURE_SELECTED && resultCode == Activity.RESULT_OK) {
-            if(useCrop){
-                Photal.getInstance().crop(this,RESULT_CODE_CROP,BUNDLE_KEY_IMAGE,mFile.getAbsolutePath());
-            }else {
-                Log.e("capture", "done");
+        } else if (requestCode == REQUEST_CODE_CAPURE_SELECTED) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (useCrop) {
+                    Photal.getInstance().crop(this, RESULT_CODE_CROP, BUNDLE_KEY_IMAGE, mFile.getAbsolutePath());
+                } else {
+                    Log.e("capture", "done");
+                }
+            } else {
+                mFile.delete();
             }
 
-        }else if(resultCode == RESULT_CODE_CROP){
+        } else if (resultCode == RESULT_CODE_CROP) {
 
         }
     }
