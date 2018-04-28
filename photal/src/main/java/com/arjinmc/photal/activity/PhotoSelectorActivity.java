@@ -71,7 +71,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photal_activity_photo_grid_selector);
 
-        CommonUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.photal_theme));
+        CommonUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.photal_theme_dark));
 
         mBtnBack = findViewById(R.id.btn_back);
         ViewCompat.setBackground(mBtnBack
@@ -185,7 +185,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         mTvPreview.setTextColor(mPhotalConfig.getPreviewTextColor());
         mTvPreview.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getPreviewTextSize());
 
-        CommonUtil.setStatusBarColor(this, mPhotalConfig.getThemeColor());
+        CommonUtil.setStatusBarColor(this, mPhotalConfig.getThemeDarkColor());
     }
 
     @Override

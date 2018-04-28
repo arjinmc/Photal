@@ -24,6 +24,7 @@
             android:id="@id/btn_back"
             android:layout_width="@dimen/photal_title_bar_h"
             android:layout_height="@dimen/photal_title_bar_h"
+            android:background="@color/photal_transparent"
             android:padding="@dimen/photal_margin_normal"
             android:scaleType="fitXY"
             android:src="@drawable/photal_ic_arrow_back" />
@@ -31,9 +32,8 @@
         <TextView
             android:id="@+id/tv_head_title"
             style="@style/layout_ww.single"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/photal_margin_small"
-            android:layout_toRightOf="@id/btn_back"
             android:text="@string/photal_photos"
             android:textColor="@color/photal_title_text"
             android:textSize="@dimen/photal_txt_normal" />

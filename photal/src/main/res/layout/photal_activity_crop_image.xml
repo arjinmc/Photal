@@ -14,6 +14,7 @@
             android:id="@id/btn_back"
             android:layout_width="@dimen/photal_title_bar_h"
             android:layout_height="@dimen/photal_title_bar_h"
+            android:background="@color/photal_transparent"
             android:padding="@dimen/photal_margin_normal"
             android:scaleType="fitXY"
             android:src="@drawable/photal_ic_arrow_back" />

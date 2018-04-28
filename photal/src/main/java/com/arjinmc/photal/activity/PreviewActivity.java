@@ -59,7 +59,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photal_activity_preview);
 
-        CommonUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.photal_theme));
+        CommonUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.photal_theme_dark));
 
         mBtnBack = findViewById(R.id.btn_back);
         ViewCompat.setBackground(mBtnBack
@@ -197,7 +197,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         if (photalConfig.getPreviewCheckbox() != -1) {
             mCbSelected.setButtonDrawable(photalConfig.getPreviewCheckbox());
         }
-        CommonUtil.setStatusBarColor(this, photalConfig.getThemeColor());
+        CommonUtil.setStatusBarColor(this, photalConfig.getThemeDarkColor());
     }
 
     /**
