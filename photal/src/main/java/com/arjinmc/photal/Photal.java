@@ -21,7 +21,6 @@ import java.io.File;
  */
 public final class Photal {
 
-
     private static Photal mPhotal;
     private PhotalConfig mConfig;
 
@@ -40,8 +39,16 @@ public final class Photal {
         return mConfig;
     }
 
+    /**
+     * select multipule images
+     *
+     * @param activity
+     * @param resultCode
+     * @param imageArrayKey
+     * @param selectMaxCount
+     */
     public void startMultipleSelector(Activity activity, int resultCode, String imageArrayKey
-            , int selectMaxCount, boolean useCamera) {
+            , int selectMaxCount) {
 
         if (selectMaxCount <= 1) {
             try {
@@ -68,8 +75,14 @@ public final class Photal {
         activity.startActivityForResult(intent, resultCode);
     }
 
-    public void startSingleSelector(Activity activity, int resultCode, String imageKey
-            , boolean useCamera) {
+    /**
+     * select one image
+     *
+     * @param activity
+     * @param resultCode
+     * @param imageKey
+     */
+    public void startSingleSelector(Activity activity, int resultCode, String imageKey) {
 
         if (!isSetConfig()) {
             try {
@@ -87,6 +100,13 @@ public final class Photal {
         activity.startActivityForResult(intent, resultCode);
     }
 
+    /**
+     * capture (use system camera)
+     *
+     * @param activity
+     * @param requestCode
+     * @param file
+     */
     public void capture(Activity activity, int requestCode, File file) {
 
         if (!isSetConfig()) {
@@ -103,6 +123,14 @@ public final class Photal {
 
     }
 
+    /**
+     * crop image (unfinlish)
+     *
+     * @param activity
+     * @param resultCode
+     * @param imageKey
+     * @param originFilePath
+     */
     public void crop(Activity activity, int resultCode, String imageKey, String originFilePath) {
 
         if (!isSetConfig()) {
@@ -122,7 +150,7 @@ public final class Photal {
 
     }
 
-    public void ucrop(Activity activity, String originFilePath, String destinationFilePath, int resultMaxWidth, int resultMaxHeight) {
+    public void crop(Activity activity, String originFilePath, String destinationFilePath, int resultMaxWidth) {
         if (!isSetConfig()) {
             try {
                 throw new ConfigException();
@@ -145,7 +173,7 @@ public final class Photal {
         UCrop uCrop = UCrop.of(CommonUtil.compatFileUri(activity, getConfig().getFileProviderAuthorities(), new File(originFilePath))
                 , CommonUtil.compatFileUri(activity, getConfig().getFileProviderAuthorities(), new File(destinationFilePath)))
                 .withAspectRatio(1, 1)
-                .withMaxResultSize(resultMaxHeight, resultMaxHeight);
+                .withMaxResultSize(resultMaxWidth, resultMaxWidth);
         uCrop.withOptions(options);
         uCrop.start(activity);
 

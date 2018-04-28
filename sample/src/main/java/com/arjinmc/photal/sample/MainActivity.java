@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final int RESULT_CODE_MUTILPLE_SELECTED = 1;
     private final int RESULT_CODE_SINGLE_SELECTED = 2;
-    private final int RESULT_CODE_CROP = 3;
 
     private final int REQUEST_CODE_CAPURE_SELECTED = 0;
     private final String BUNDLE_KEY_IMAGE = "image_selected";
@@ -86,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 //        photalConfig.setPreviewCheckbox(R.drawable.cb_album);
 //        photalConfig.setPreviewTextColor(Color.RED);
 //        photalConfig.setPreviewTextSize(R.dimen.text_send);
+//        photalConfig.setCropDoneIcon(R.drawable.photal_ic_crop_done);
         photalConfig.setFileProviderAuthorities("com.arjinmc.photal.fileprovider");
 //        photalConfig.setImageLoaderType(ImageLoader.MODE_PICASSO);
         Photal.getInstance().setConfig(photalConfig);
@@ -141,11 +141,11 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     Photal.getInstance().startMultipleSelector(MainActivity.this
-                            , RESULT_CODE_MUTILPLE_SELECTED, BUNDLE_KEY_IMAGE, 3, false);
+                            , RESULT_CODE_MUTILPLE_SELECTED, BUNDLE_KEY_IMAGE, 3);
                     break;
                 case 1:
                     Photal.getInstance().startSingleSelector(MainActivity.this
-                            , RESULT_CODE_SINGLE_SELECTED, BUNDLE_KEY_IMAGE, false);
+                            , RESULT_CODE_SINGLE_SELECTED, BUNDLE_KEY_IMAGE);
                     break;
                 case 2:
                     useCrop = false;
@@ -182,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 if (useCrop) {
 //                    Photal.getInstance().crop(this, RESULT_CODE_CROP, BUNDLE_KEY_IMAGE, mFile.getAbsolutePath());
-                    Photal.getInstance().ucrop(this, mFile.getAbsolutePath()
-                            ,mFile.getAbsolutePath(),400,400);
+                    Photal.getInstance().crop(this, mFile.getAbsolutePath()
+                            , mFile.getAbsolutePath(), 400);
                 } else {
                     Log.e("capture", "done");
                 }
@@ -191,10 +191,12 @@ public class MainActivity extends AppCompatActivity {
                 mFile.delete();
             }
 
-        } else if (resultCode == RESULT_CODE_CROP) {
-
-        } else  if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
-            final Uri resultUri = UCrop.getOutput(data);
+        } else if (requestCode == UCrop.REQUEST_CROP) {
+            if (resultCode == RESULT_OK) {
+                final Uri resultUri = UCrop.getOutput(data);
+            } else {
+                mFile.delete();
+            }
         }
     }
 
