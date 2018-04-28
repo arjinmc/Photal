@@ -15,8 +15,8 @@ import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.util.ImageLoader;
-import com.arjinmc.photal.widget.CropGuideView;
-import com.github.chrisbanes.photoview.PhotoView;
+import com.arjinmc.photal.widget.CropMaskView;
+import com.arjinmc.photal.widget.CropImageView;
 
 import java.io.File;
 
@@ -31,13 +31,15 @@ public class CropImageActivity extends FragmentActivity implements View.OnClickL
     private TextView mTvTitle;
     private Button mBtnDone;
 
-    private PhotoView mPvPhoto;
-    private CropGuideView mCvView;
+    private CropImageView mCvImage;
+    private CropMaskView mCgView;
     private File mOriginalFile;
 
     private String mResultKey;
     private int mResultCode;
     private String mOriginalFilePath;
+
+    private float mTranslationX, mTranslationY;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,8 +52,8 @@ public class CropImageActivity extends FragmentActivity implements View.OnClickL
         mBtnDone = findViewById(R.id.btn_done);
         mBtnDone.setOnClickListener(this);
 
-        mPvPhoto = findViewById(R.id.pv_image);
-        mCvView = findViewById(R.id.iv_crop);
+        mCvImage = findViewById(R.id.pv_image);
+        mCgView = findViewById(R.id.iv_crop);
 
         mResultKey = getIntent().getStringExtra(Constant.BUNDLE_KEY_RESULT_KEY);
         mResultCode = getIntent().getIntExtra(Constant.BUNDLE_KEY_RESULT_CODE, 0);
@@ -72,11 +74,13 @@ public class CropImageActivity extends FragmentActivity implements View.OnClickL
             }
         }
 
-        mCvView.setBorder(Color.YELLOW,2);
-        mCvView.setShape(CropGuideView.SHAPE_CIRCLE);
+        mCgView.setBorder(Color.YELLOW, 2);
+        mCgView.setShape(CropMaskView.SHAPE_CIRCLE);
 
         mOriginalFile = new File(mOriginalFilePath);
-        ImageLoader.load(this, mOriginalFilePath, mPvPhoto);
+        ImageLoader.load(this, mOriginalFilePath, mCvImage);
+        mCvImage.setShapePoint(mCgView.getShapePosition());
+
     }
 
     @Override

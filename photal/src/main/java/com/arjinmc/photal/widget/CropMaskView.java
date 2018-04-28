@@ -13,15 +13,17 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.arjinmc.photal.R;
+import com.arjinmc.photal.entity.ShapePoint;
 
 /**
  * crop image guide
  * Created by Eminem Lo on 2018/4/25.
  * email: arjinmc@hotmail.com
  */
-public class CropGuideView extends View {
+public class CropMaskView extends View {
 
     public static final int SHAPE_CIRCLE = 1;
     public static final int SHAPE_SQUARE = 2;
@@ -38,23 +40,25 @@ public class CropGuideView extends View {
 
     private Paint mPaint;
 
-    public CropGuideView(Context context) {
+    private ShapePoint mShapePoint;
+
+    public CropMaskView(Context context) {
         super(context);
         init();
     }
 
-    public CropGuideView(Context context, @Nullable AttributeSet attrs) {
+    public CropMaskView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public CropGuideView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CropMaskView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public CropGuideView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CropMaskView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
@@ -65,6 +69,7 @@ public class CropGuideView extends View {
         mPadding = getContext().getResources().getDimensionPixelSize(R.dimen.photal_margin_super_huge);
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
     }
 
     public void setShape(@CropShapeType int shape) {
@@ -74,6 +79,21 @@ public class CropGuideView extends View {
     public void setBorder(@ColorInt int borderColor, int thickness) {
         mShapeBorderColor = borderColor;
         mShapeThickness = thickness;
+    }
+
+    private void setShapePosition(int l, int t, int r, int b) {
+
+        if (mShapePoint == null) {
+            mShapePoint = new ShapePoint();
+        }
+        mShapePoint.setLeft(l);
+        mShapePoint.setTop(t);
+        mShapePoint.setRight(r);
+        mShapePoint.setBottom(b);
+    }
+
+    public ShapePoint getShapePosition() {
+        return mShapePoint;
     }
 
     @Override
@@ -125,6 +145,8 @@ public class CropGuideView extends View {
 
         }
 
+        setShapePosition(cX - mPadding, cY - mPadding, cX + mPadding, cY + mPadding);
 
     }
+
 }

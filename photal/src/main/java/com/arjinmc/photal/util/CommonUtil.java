@@ -1,13 +1,16 @@
 package com.arjinmc.photal.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.ColorInt;
 import android.support.v4.content.FileProvider;
 import android.support.v4.util.ArrayMap;
+import android.view.Window;
 import android.view.WindowManager;
 
 import java.io.File;
@@ -43,6 +46,7 @@ public final class CommonUtil {
 
     /**
      * call system capture
+     *
      * @param context
      * @param authority
      * @param file
@@ -57,6 +61,7 @@ public final class CommonUtil {
 
     /**
      * compat file uri
+     *
      * @param context
      * @param authority
      * @param file
@@ -70,5 +75,20 @@ public final class CommonUtil {
             uri = Uri.parse("file:////" + file.getAbsolutePath());
         }
         return uri;
+    }
+
+    /**
+     * Sets status-bar color for L devices.
+     *
+     * @param color - status-bar color
+     */
+    public static void setStatusBarColor(Activity activity, @ColorInt int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            final Window window = activity.getWindow();
+            if (window != null) {
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(color);
+            }
+        }
     }
 }

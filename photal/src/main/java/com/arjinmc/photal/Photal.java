@@ -2,6 +2,7 @@ package com.arjinmc.photal;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 
 import com.arjinmc.photal.activity.CropImageActivity;
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
@@ -9,6 +10,7 @@ import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.util.CommonUtil;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 
@@ -101,7 +103,7 @@ public final class Photal {
 
     }
 
-    public void crop(Activity activity,int resultCode,String imageKey,String originFilePath){
+    public void crop(Activity activity, int resultCode, String imageKey, String originFilePath) {
 
         if (!isSetConfig()) {
             try {
@@ -113,10 +115,39 @@ public final class Photal {
         }
 
         Intent intent = new Intent(activity, CropImageActivity.class);
-        intent.putExtra(Constant.BUNDLE_KEY_RESULT_CODE,resultCode);
-        intent.putExtra(Constant.BUNDLE_KEY_RESULT_KEY,imageKey);
-        intent.putExtra(Constant.BUNDLE_KEY_ORIGINAL_FILE_PATH,originFilePath);
-        activity.startActivityForResult(intent,resultCode);
+        intent.putExtra(Constant.BUNDLE_KEY_RESULT_CODE, resultCode);
+        intent.putExtra(Constant.BUNDLE_KEY_RESULT_KEY, imageKey);
+        intent.putExtra(Constant.BUNDLE_KEY_ORIGINAL_FILE_PATH, originFilePath);
+        activity.startActivityForResult(intent, resultCode);
+
+    }
+
+    public void ucrop(Activity activity, String originFilePath, String destinationFilePath, int resultMaxWidth, int resultMaxHeight) {
+        if (!isSetConfig()) {
+            try {
+                throw new ConfigException();
+            } catch (ConfigException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        PhotalConfig photalConfig = getConfig();
+        UCrop.Options options = new UCrop.Options();
+        options.setToolbarColor(photalConfig.getThemeColor());
+        options.setStatusBarColor(photalConfig.getThemeColor());
+        options.setActiveWidgetColor(photalConfig.getThemeColor());
+        options.setToolbarWidgetColor(photalConfig.getTextTitleColor());
+        options.setRootViewBackgroundColor(ContextCompat.getColor(activity, R.color.photal_black));
+        options.setToolbarCropDrawable(photalConfig.getCropDoneIcon());
+        options.setToolbarCancelDrawable(photalConfig.getBtnBackIcon());
+
+        UCrop uCrop = UCrop.of(CommonUtil.compatFileUri(activity, getConfig().getFileProviderAuthorities(), new File(originFilePath))
+                , CommonUtil.compatFileUri(activity, getConfig().getFileProviderAuthorities(), new File(destinationFilePath)))
+                .withAspectRatio(1, 1)
+                .withMaxResultSize(resultMaxHeight, resultMaxHeight);
+        uCrop.withOptions(options);
+        uCrop.start(activity);
 
     }
 

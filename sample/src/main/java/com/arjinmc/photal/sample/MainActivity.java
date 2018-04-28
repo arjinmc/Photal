@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -179,7 +181,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (requestCode == REQUEST_CODE_CAPURE_SELECTED) {
             if (resultCode == Activity.RESULT_OK) {
                 if (useCrop) {
-                    Photal.getInstance().crop(this, RESULT_CODE_CROP, BUNDLE_KEY_IMAGE, mFile.getAbsolutePath());
+//                    Photal.getInstance().crop(this, RESULT_CODE_CROP, BUNDLE_KEY_IMAGE, mFile.getAbsolutePath());
+                    Photal.getInstance().ucrop(this, mFile.getAbsolutePath()
+                            ,mFile.getAbsolutePath(),400,400);
                 } else {
                     Log.e("capture", "done");
                 }
@@ -189,6 +193,8 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (resultCode == RESULT_CODE_CROP) {
 
+        } else  if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            final Uri resultUri = UCrop.getOutput(data);
         }
     }
 

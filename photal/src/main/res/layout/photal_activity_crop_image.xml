@@ -46,12 +46,12 @@
         android:layout_height="match_parent"
         android:background="@color/photal_black">
 
-        <com.github.chrisbanes.photoview.PhotoView
+        <com.arjinmc.photal.widget.CropImageView
             android:id="@+id/pv_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.arjinmc.photal.widget.CropGuideView
+        <com.arjinmc.photal.widget.CropMaskView
             android:id="@+id/iv_crop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

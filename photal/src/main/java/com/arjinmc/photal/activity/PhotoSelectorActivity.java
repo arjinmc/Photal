@@ -30,6 +30,7 @@ import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.loader.PhotoCursorLoader;
 import com.arjinmc.photal.loader.PhotoLoader;
+import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.util.ToastUtil;
 import com.arjinmc.photal.viewholder.PhotoViewHolder;
@@ -69,6 +70,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photal_activity_photo_grid_selector);
+
+        CommonUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.photal_theme));
 
         mBtnBack = findViewById(R.id.btn_back);
         ViewCompat.setBackground(mBtnBack
@@ -182,6 +185,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         mTvPreview.setTextColor(mPhotalConfig.getPreviewTextColor());
         mTvPreview.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getPreviewTextSize());
 
+        CommonUtil.setStatusBarColor(this, mPhotalConfig.getThemeColor());
     }
 
     @Override

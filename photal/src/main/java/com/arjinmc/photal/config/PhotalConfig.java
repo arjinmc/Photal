@@ -48,6 +48,7 @@ public final class PhotalConfig {
     private int previewTextColor = UNEFFECTED_COLOR;
     private int previewTextSize = -1;
     private String fileProviderAuthorities;
+    private int cropDoneIcon = -1;
     private int imageLoaderType = -1;
 
     public PhotalConfig(Context context) {
@@ -271,6 +272,17 @@ public final class PhotalConfig {
 
     public void setFileProviderAuthorities(String fileProviderAuthorities) {
         this.fileProviderAuthorities = fileProviderAuthorities;
+    }
+
+    public int getCropDoneIcon() {
+        if (cropDoneIcon == -1) {
+            return R.drawable.photal_ic_crop_done;
+        }
+        return cropDoneIcon;
+    }
+
+    public void setCropDoneIcon(@DrawableRes int cropDoneIcon) {
+        this.cropDoneIcon = cropDoneIcon;
     }
 
     public int getImageLoaderType() {

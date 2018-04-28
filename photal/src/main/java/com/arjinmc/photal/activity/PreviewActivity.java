@@ -27,6 +27,7 @@ import com.arjinmc.photal.R;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.exception.ConfigException;
+import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.widget.PressSelectorDrawable;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -57,6 +58,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photal_activity_preview);
+
+        CommonUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.photal_theme));
 
         mBtnBack = findViewById(R.id.btn_back);
         ViewCompat.setBackground(mBtnBack
@@ -177,7 +180,6 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             }
         }
 
-
         RelativeLayout rlHead = findViewById(R.id.rl_head);
         rlHead.setBackgroundColor(photalConfig.getThemeColor());
         RelativeLayout rlBottom = findViewById(R.id.rl_bottom);
@@ -195,6 +197,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         if (photalConfig.getPreviewCheckbox() != -1) {
             mCbSelected.setButtonDrawable(photalConfig.getPreviewCheckbox());
         }
+        CommonUtil.setStatusBarColor(this, photalConfig.getThemeColor());
     }
 
     /**
