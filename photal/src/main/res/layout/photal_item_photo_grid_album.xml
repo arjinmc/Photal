@@ -5,8 +5,8 @@
     
     <ImageView
         android:id="@id/iv_photo"
-        android:layout_width="@dimen/phtoal_photo_grid_album_image"
-        android:layout_height="@dimen/phtoal_photo_grid_album_image"
+        android:layout_width="@dimen/photal_photo_grid_album_image"
+        android:layout_height="@dimen/photal_photo_grid_album_image"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/photal_margin_big"
         android:background="@drawable/photal_album_border"

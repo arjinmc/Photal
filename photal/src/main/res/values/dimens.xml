@@ -14,5 +14,5 @@
     <dimen name="photal_bottom_bar_h">50dp</dimen>
     <dimen name="photal_btn_send_radius">6dp</dimen>
     <dimen name="photal_btn_send_h">36dp</dimen>
-    <dimen name="phtoal_photo_grid_album_image">60dp</dimen>
+    <dimen name="photal_photo_grid_album_image">60dp</dimen>
 </resources>

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 
-import com.arjinmc.photal.activity.CropImageActivity;
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
@@ -120,33 +119,6 @@ public final class Photal {
 
         Intent intent = CommonUtil.newCaptureIntent(activity, getConfig().getFileProviderAuthorities(), file);
         activity.startActivityForResult(intent, requestCode);
-
-    }
-
-    /**
-     * crop image (unfinlish)
-     *
-     * @param activity
-     * @param resultCode
-     * @param imageKey
-     * @param originFilePath
-     */
-    public void crop(Activity activity, int resultCode, String imageKey, String originFilePath) {
-
-        if (!isSetConfig()) {
-            try {
-                throw new ConfigException();
-            } catch (ConfigException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-
-        Intent intent = new Intent(activity, CropImageActivity.class);
-        intent.putExtra(Constant.BUNDLE_KEY_RESULT_CODE, resultCode);
-        intent.putExtra(Constant.BUNDLE_KEY_RESULT_KEY, imageKey);
-        intent.putExtra(Constant.BUNDLE_KEY_ORIGINAL_FILE_PATH, originFilePath);
-        activity.startActivityForResult(intent, resultCode);
 
     }
 

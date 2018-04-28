@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -168,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_CODE_MUTILPLE_SELECTED
-                || requestCode == RESULT_CODE_SINGLE_SELECTED) {
+                || resultCode == RESULT_CODE_SINGLE_SELECTED) {
             String[] paths = data.getStringArrayExtra(BUNDLE_KEY_IMAGE);
             if (paths == null || paths.length == 0) {
                 Log.e("path", "empty");
@@ -181,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
         } else if (requestCode == REQUEST_CODE_CAPURE_SELECTED) {
             if (resultCode == Activity.RESULT_OK) {
                 if (useCrop) {
-//                    Photal.getInstance().crop(this, RESULT_CODE_CROP, BUNDLE_KEY_IMAGE, mFile.getAbsolutePath());
                     Photal.getInstance().crop(this, mFile.getAbsolutePath()
                             , mFile.getAbsolutePath(), 400);
                 } else {
@@ -203,11 +201,11 @@ public class MainActivity extends AppCompatActivity {
     public String getCameraPhotoPath() {
 
         String path = null;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            path = Environment.getExternalStorageDirectory().getPath() + File.separator + "photal";
-        } else {
-            path = getFilesDir().getPath() + File.separator + "photal";
-        }
+//        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+//            path = Environment.getExternalStorageDirectory().getPath() + File.separator + "photal";
+//        } else {
+        path = getFilesDir().getPath() + File.separator + "photal";
+//        }
         FileUtils.createDir(path);
         return path;
 

@@ -14,8 +14,6 @@
         <activity
             android:name=".activity.PreviewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.CropImageActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
