@@ -168,6 +168,10 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_CODE_MUTILPLE_SELECTED
                 || resultCode == RESULT_CODE_SINGLE_SELECTED) {
+            if (data == null) {
+                mFile.delete();
+                return;
+            }
             String[] paths = data.getStringArrayExtra(BUNDLE_KEY_IMAGE);
             if (paths == null || paths.length == 0) {
                 Log.e("path", "empty");
