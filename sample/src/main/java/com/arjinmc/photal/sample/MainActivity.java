@@ -204,12 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String getCameraPhotoPath() {
 
-        String path = null;
-//        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-//            path = Environment.getExternalStorageDirectory().getPath() + File.separator + "photal";
-//        } else {
-        path = getFilesDir().getPath() + File.separator + "photal";
-//        }
+        String path = getFilesDir().getPath() + File.separator + "photal";
         FileUtils.createDir(path);
         return path;
 
