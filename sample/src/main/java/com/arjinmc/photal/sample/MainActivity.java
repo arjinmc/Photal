@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String getCameraPhotoPath() {
 
-        String path = getFilesDir().getPath() + File.separator + "photal";
+        String path = getExternalFilesDir("").getPath() + File.separator + "photal";
         FileUtils.createDir(path);
         return path;
 
