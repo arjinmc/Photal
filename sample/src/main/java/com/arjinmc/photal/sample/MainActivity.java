@@ -25,6 +25,7 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean useCrop = false;
     private File mFile;
+    private File mCropFile;
 
 
     @Override
@@ -155,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     useCrop = true;
                     mFile = FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
+                    mCropFile = FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
                     Log.e("file", mFile.getAbsolutePath());
                     Photal.getInstance().capture(MainActivity.this, REQUEST_CODE_CAPURE_SELECTED, mFile);
                     break;
@@ -185,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 if (useCrop) {
                     Photal.getInstance().crop(this, mFile.getAbsolutePath()
-                            , mFile.getAbsolutePath(), 400);
+                            , mCropFile.getAbsolutePath(), 400);
                 } else {
                     Log.e("capture", "done");
                 }
@@ -196,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (requestCode == UCrop.REQUEST_CROP) {
             if (resultCode == RESULT_OK) {
                 final Uri resultUri = UCrop.getOutput(data);
+                mFile.delete();
+                Log.e("result uri", resultUri.getPath());
             } else {
                 mFile.delete();
             }
@@ -212,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String createImageName() {
         String imageName = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmsss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmsss" + new Random().nextInt(100));
         imageName = "IMAGE_" + simpleDateFormat.format(new Date()) + ".jpg";
         return imageName;
     }
@@ -236,6 +241,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mFile = null;
+        mFile = null;
         Photal.getInstance().release();
     }
 }

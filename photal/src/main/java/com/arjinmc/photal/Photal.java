@@ -2,6 +2,7 @@ package com.arjinmc.photal;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
@@ -143,7 +144,7 @@ public final class Photal {
         options.setToolbarCancelDrawable(photalConfig.getBtnBackIcon());
 
         UCrop uCrop = UCrop.of(CommonUtil.compatFileUri(activity, getConfig().getFileProviderAuthorities(), new File(originFilePath))
-                , CommonUtil.compatFileUri(activity, getConfig().getFileProviderAuthorities(), new File(destinationFilePath)))
+                , Uri.fromFile(new File(destinationFilePath)))
                 .withAspectRatio(1, 1)
                 .withMaxResultSize(resultMaxWidth, resultMaxWidth);
         uCrop.withOptions(options);
