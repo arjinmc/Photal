@@ -5,12 +5,10 @@ import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.IntDef;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 
 import com.arjinmc.photal.R;
-import com.arjinmc.photal.util.ImageLoader;
 
 /**
  * Created by Eminem Lo on 28/4/17.
@@ -18,10 +16,6 @@ import com.arjinmc.photal.util.ImageLoader;
  */
 
 public final class PhotalConfig {
-
-    @IntDef({ImageLoader.MODE_GLIDE, ImageLoader.MODE_PICASSO})
-    @interface ImageLoaderType {
-    }
 
     private static final int UNEFFECTED_COLOR = 1;
 
@@ -49,7 +43,6 @@ public final class PhotalConfig {
     private int previewTextSize = -1;
     private String fileProviderAuthorities;
     private int cropDoneIcon = -1;
-    private int imageLoaderType = -1;
 
     public PhotalConfig(Context context) {
         mContext = context;
@@ -283,14 +276,6 @@ public final class PhotalConfig {
 
     public void setCropDoneIcon(@DrawableRes int cropDoneIcon) {
         this.cropDoneIcon = cropDoneIcon;
-    }
-
-    public int getImageLoaderType() {
-        return imageLoaderType;
-    }
-
-    public void setImageLoaderType(int imageLoaderType) {
-        this.imageLoaderType = imageLoaderType;
     }
 
 }

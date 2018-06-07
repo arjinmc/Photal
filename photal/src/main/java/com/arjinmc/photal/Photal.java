@@ -10,6 +10,8 @@ import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.util.CommonUtil;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -50,6 +52,8 @@ public final class Photal {
     public void startMultipleSelector(Activity activity, int resultCode, String imageArrayKey
             , int selectMaxCount) {
 
+        Glide.get(activity).setMemoryCategory(MemoryCategory.LOW);
+
         if (selectMaxCount <= 1) {
             try {
                 throw new IllegalAccessException("selectMaxCount must above 2");
@@ -83,6 +87,8 @@ public final class Photal {
      * @param imageKey
      */
     public void startSingleSelector(Activity activity, int resultCode, String imageKey) {
+
+        Glide.get(activity).setMemoryCategory(MemoryCategory.LOW);
 
         if (!isSetConfig()) {
             try {

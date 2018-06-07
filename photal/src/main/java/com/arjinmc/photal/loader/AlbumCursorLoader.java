@@ -22,7 +22,7 @@ public class AlbumCursorLoader extends CursorLoader {
     public static final String ALBUM_ID = MediaStore.Images.Media.BUCKET_ID;
     public static final String ALBUM_NAME = MediaStore.Images.Media.BUCKET_DISPLAY_NAME;
     public static final String ALBUM_IMAGE_DATA = MediaStore.Images.Media.DATA;
-    public static final String ALBUM_ORDER_BY = MediaStore.Images.Media.DATE_ADDED + " DESC";
+    public static final String ALBUM_ORDER_BY = MediaStore.Images.Media.DATE_TAKEN + " DESC";
     public static final String ALBUM_PHOTO_COUNT = "count";
 
     private Context mContext;

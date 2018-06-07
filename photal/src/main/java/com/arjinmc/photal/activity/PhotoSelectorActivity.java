@@ -10,6 +10,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -28,10 +29,10 @@ import com.arjinmc.photal.callback.PhotalLoaderCallback;
 import com.arjinmc.photal.config.Constant;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.exception.ConfigException;
+import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.loader.PhotoCursorLoader;
 import com.arjinmc.photal.loader.PhotoLoader;
 import com.arjinmc.photal.util.CommonUtil;
-import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.util.ToastUtil;
 import com.arjinmc.photal.viewholder.PhotoViewHolder;
 import com.arjinmc.photal.widget.PhotoAlbumPopupWindow;
@@ -51,7 +52,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
     private PhotoAlbumPopupWindow mPopAlbum;
     private RecyclerView mRvPhoto;
     private PhotoGridSelectorAdapter mPhotoAdapter;
-    private ArrayMap<String, String> mPhotoList;
+    private SparseArray<String> mPhotoList;
     private PhotoLoader mPhotoLoader;
     private TextView mTvAlbum;
     private TextView mTvPreview;
@@ -123,11 +124,11 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             public void onLoadFinished(Cursor cursor) {
                 if (cursor != null && cursor.getCount() != 0) {
                     int cursorCount = cursor.getCount();
-                    mPhotoList = new ArrayMap<>(cursorCount);
+                    mPhotoList = new SparseArray<>(cursorCount);
                     for (int i = 0; i < cursorCount; i++) {
                         cursor.moveToPosition(i);
                         String key = cursor.getString(cursor.getColumnIndex(PhotoCursorLoader.PHOTO_DATA));
-                        mPhotoList.put(key, key);
+                        mPhotoList.put(i, key);
                     }
                     mPhotoAdapter.setCursor(cursor);
                     mPhotoAdapter.notifyDataSetChanged();
@@ -184,6 +185,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         mRvPhoto.setBackgroundColor(mPhotalConfig.getGalleryBackgroundColor());
         mTvPreview.setTextColor(mPhotalConfig.getPreviewTextColor());
         mTvPreview.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getPreviewTextSize());
+        mTvAlbum.setTextColor(mPhotalConfig.getPreviewTextColor());
+        mTvAlbum.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getPreviewTextSize());
 
         CommonUtil.setStatusBarColor(this, mPhotalConfig.getThemeDarkColor());
     }
@@ -206,7 +209,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         } else if (i == R.id.btn_send) {
             dispatchImages();
         } else if (i == R.id.tv_preview) {
-            if (mPhotoList == null || mPhotoList.isEmpty()
+            if (mPhotoList == null || mPhotoList.size() == 0
                     || mPhotoAdapter.getChosenImagePosition() == null) {
                 return;
             }
@@ -360,4 +363,9 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ImageLoader.clearMemory(this);
+    }
 }
