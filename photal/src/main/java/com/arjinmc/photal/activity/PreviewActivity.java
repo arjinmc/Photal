@@ -2,6 +2,7 @@ package com.arjinmc.photal.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -227,20 +228,18 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     }
 
     /**
-     * dispatch images back to preview
+     * dispatch images back to result
      */
     private void dispatchImages(int resultCode) {
         Intent intent = new Intent();
-
-        String[] selectedPosition = null;
         if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()) {
             int selectedSize = mChosenImagePathMap.size();
-            selectedPosition = new String[selectedSize];
+            ArrayList<MediaFileItem> selectedPosition = new ArrayList<>(selectedSize);
             for (int i = 0; i < selectedSize; i++) {
-                selectedPosition[i] = mChosenImagePathMap.keyAt(i);
+                selectedPosition.add(mChosenImagePathMap.get(mChosenImagePathMap.keyAt(i)));
             }
+            intent.putParcelableArrayListExtra(Constant.BUNDLE_KEY_SELECTED, selectedPosition);
         }
-        intent.putExtra(Constant.BUNDLE_KEY_SELECTED, selectedPosition);
         setResult(resultCode, intent);
         finish();
     }

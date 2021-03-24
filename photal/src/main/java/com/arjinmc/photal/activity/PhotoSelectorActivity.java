@@ -350,12 +350,12 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constant.SELECTOR_RESULT_CODE ||
                 resultCode == Constant.SELECTOR_PREVIEW_RESULT_CODE) {
-            MediaFileItem[] newSelectedImages = (MediaFileItem[]) data.getParcelableArrayExtra(Constant.BUNDLE_KEY_SELECTED);
+            ArrayList<MediaFileItem> newSelectedImages = data.getParcelableArrayListExtra(Constant.BUNDLE_KEY_SELECTED);
             mPhotoAdapter.chosenImagesPaths.clear();
-            if (newSelectedImages != null && newSelectedImages.length != 0) {
-                int selectedSize = newSelectedImages.length;
+            if (newSelectedImages != null && !newSelectedImages.isEmpty()) {
+                int selectedSize = newSelectedImages.size();
                 for (int i = 0; i < selectedSize; i++) {
-                    mPhotoAdapter.chosenImagesPaths.put(newSelectedImages[i].getPath(), newSelectedImages[i]);
+                    mPhotoAdapter.chosenImagesPaths.put(newSelectedImages.get(i).getPath(), newSelectedImages.get(i));
                 }
             }
             mPhotoAdapter.notifyDataSetChanged();
