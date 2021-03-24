@@ -20,12 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.config.PhotalConfig;
+import com.arjinmc.photal.model.MediaFileItem;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewLinearItemDecoration;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -176,13 +178,13 @@ public class MainActivity extends AppCompatActivity {
                 mFile.delete();
                 return;
             }
-            String[] paths = data.getStringArrayExtra(BUNDLE_KEY_IMAGE);
-            if (paths == null || paths.length == 0) {
+            List<MediaFileItem> mediaFileItemList = data.getParcelableArrayListExtra(BUNDLE_KEY_IMAGE);
+            if (mediaFileItemList == null || mediaFileItemList.isEmpty()) {
                 Log.e("path", "empty");
             } else {
-                String result = getPath(paths);
-                Log.e("path", result);
-                Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
+                for (MediaFileItem mediaFileItem : mediaFileItemList) {
+                    Log.e("path", "path:" + mediaFileItem.getPath() + "\t,uri:" + mediaFileItem.getUriPath());
+                }
             }
 
         } else if (requestCode == REQUEST_CODE_CAPURE_SELECTED) {

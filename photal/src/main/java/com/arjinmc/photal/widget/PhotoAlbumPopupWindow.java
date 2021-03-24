@@ -144,7 +144,7 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
 
         @Override
         public void onBindViewHolder(AlbumViewHolder holder, final int position) {
-            if (mCusor != null) {
+            if (mCursor != null) {
                 if (mPhotalConfig != null) {
                     holder.rlRoot.setBackgroundColor(mPhotalConfig.getAlbumBackgroundColor());
                     holder.tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getAlbumTextSize());
@@ -155,13 +155,13 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
                         holder.rbChoose.setButtonDrawable(mPhotalConfig.getAlbumCheckBox());
                     }
                 }
-                mCusor.moveToPosition(position);
-                final int albumId = mCusor.getInt(mCusor.getColumnIndex(AlbumCursorLoader.ALBUM_ID));
-                holder.tvName.setText(mCusor.getString(mCusor.getColumnIndex(AlbumCursorLoader.ALBUM_NAME)));
+                mCursor.moveToPosition(position);
+                final int albumId = mCursor.getInt(mCursor.getColumnIndex(AlbumCursorLoader.ALBUM_ID));
+                holder.tvName.setText(mCursor.getString(mCursor.getColumnIndex(AlbumCursorLoader.ALBUM_NAME)));
                 holder.tvCount.setText(
-                        "(" + mCusor.getInt(mCusor.getColumnIndex(AlbumCursorLoader.ALBUM_PHOTO_COUNT)) + ")");
+                        "(" + mCursor.getInt(mCursor.getColumnIndex(AlbumCursorLoader.ALBUM_PHOTO_COUNT)) + ")");
                 ImageLoader.loadThumbnail(mContext
-                        , mCusor.getString(mCusor.getColumnIndex(AlbumCursorLoader.ALBUM_IMAGE_DATA))
+                        , mCursor.getString(mCursor.getColumnIndex(AlbumCursorLoader.ALBUM_IMAGE_DATA))
                         , holder.ivPhoto);
                 holder.rbChoose.setOnClickListener(new View.OnClickListener() {
                     @Override

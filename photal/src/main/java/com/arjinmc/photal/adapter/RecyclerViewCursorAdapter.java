@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
-    protected Cursor mCusor;
+    protected Cursor mCursor;
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -26,12 +26,12 @@ public class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> exten
 
     @Override
     public int getItemCount() {
-        if (mCusor != null)
-            return mCusor.getCount();
+        if (mCursor != null)
+            return mCursor.getCount();
         return 0;
     }
 
     public void setCursor(Cursor cursor) {
-        mCusor = cursor;
+        mCursor = cursor;
     }
 }
