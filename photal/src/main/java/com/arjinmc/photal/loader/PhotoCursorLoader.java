@@ -2,7 +2,8 @@ package com.arjinmc.photal.loader;
 
 import android.content.Context;
 import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
+
+import androidx.loader.content.CursorLoader;
 
 import com.arjinmc.photal.config.Constant;
 

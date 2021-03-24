@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.config.PhotalConfig;
-import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
+import com.arjinmc.recyclerviewdecoration.RecyclerViewLinearItemDecoration;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -54,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
         mSampleList = getResources().getStringArray(R.array.sample_list);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), RecyclerView.VERTICAL, false));
         mRecyclerView.addItemDecoration(
-                new RecyclerViewItemDecoration.Builder(this)
+                new RecyclerViewLinearItemDecoration.Builder(this)
                         .color(Color.BLACK).thickness(2).paddingStart(20).paddingEnd(20).create());
         mRecyclerView.setAdapter(new MyAdapter());
 

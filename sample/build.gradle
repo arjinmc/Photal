@@ -21,12 +21,15 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:' + rootProject.ext.runnerVersion
+    androidTestImplementation 'androidx.test.espresso:espresso-core:' + rootProject.ext.espressoVersion
+    testImplementation 'junit:junit:'+rootProject.ext.junitVersion
+
+    implementation 'androidx.appcompat:appcompat:' + rootProject.ext.supportLibVersion
+    implementation 'androidx.recyclerview:recyclerview:' + rootProject.ext.recyclerviewVersion
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.github.bumptech.glide:glide:' + rootProject.ext.glideVersion
     annotationProcessor 'com.github.bumptech.glide:compiler:'+ rootProject.ext.glideVersion
+    implementation 'com.arjinmc.android:expandrecyclerview:' + rootProject.ext.expandRecyclerViewVerion
     implementation project(':photal')
 }

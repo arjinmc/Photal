@@ -3,13 +3,6 @@ package com.arjinmc.photal.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.ArrayMap;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -21,6 +14,14 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.collection.ArrayMap;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.R;
@@ -38,7 +39,7 @@ import com.arjinmc.photal.viewholder.PhotoViewHolder;
 import com.arjinmc.photal.widget.PhotoAlbumPopupWindow;
 import com.arjinmc.photal.widget.PressSelectorDrawable;
 import com.arjinmc.photal.widget.SelectBox;
-import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
+import com.arjinmc.recyclerviewdecoration.RecyclerViewLinearItemDecoration;
 
 /**
  * photo selector
@@ -112,7 +113,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         if (mPhotalConfig != null && mPhotalConfig.getGalleryDiver() != null) {
             mRvPhoto.addItemDecoration(mPhotalConfig.getGalleryDiver());
         } else {
-            mRvPhoto.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
+            mRvPhoto.addItemDecoration(new RecyclerViewLinearItemDecoration.Builder(this)
                     .color(ContextCompat.getColor(this, R.color.photal_black))
                     .thickness(2).create());
         }

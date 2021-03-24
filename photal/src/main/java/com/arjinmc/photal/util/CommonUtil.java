@@ -7,11 +7,12 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.annotation.ColorInt;
-import android.support.v4.content.FileProvider;
-import android.support.v4.util.ArrayMap;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.ColorInt;
+import androidx.collection.ArrayMap;
+import androidx.core.content.FileProvider;
 
 import java.io.File;
 

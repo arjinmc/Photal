@@ -3,7 +3,8 @@ package com.arjinmc.photal;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
 
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Constant;
@@ -143,7 +144,7 @@ public final class Photal {
         UCrop.Options options = new UCrop.Options();
         options.setToolbarColor(photalConfig.getThemeColor());
         options.setStatusBarColor(photalConfig.getThemeColor());
-        options.setActiveWidgetColor(photalConfig.getThemeColor());
+        options.setActiveControlsWidgetColor(photalConfig.getThemeColor());
         options.setToolbarWidgetColor(photalConfig.getTextTitleColor());
         options.setRootViewBackgroundColor(ContextCompat.getColor(activity, R.color.photal_black));
         options.setToolbarCropDrawable(photalConfig.getCropDoneIcon());

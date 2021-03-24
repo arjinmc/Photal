@@ -3,12 +3,14 @@ package com.arjinmc.photal.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 /**
  * Created by Eminem Lo on 26/5/17.
  * Email arjinmc@hotmail.com
  */
 
-public class GridImageView extends android.support.v7.widget.AppCompatImageView {
+public class GridImageView extends AppCompatImageView {
 
 
     public GridImageView(Context context) {

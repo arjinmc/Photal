@@ -22,19 +22,17 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestImplementation 'androidx.test:runner:' + rootProject.ext.runnerVersion
+    androidTestImplementation 'androidx.test.espresso:espresso-core:' + rootProject.ext.espressoVersion
+    testImplementation 'junit:junit:' + rootProject.ext.junitVersion
 
-    api 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
-    api 'com.android.support:support-v4:' + rootProject.ext.supportLibVersion
-    api 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.squareup.picasso:picasso:2.3.2'
+    implementation 'androidx.appcompat:appcompat:' + rootProject.ext.supportLibVersion
+    implementation 'androidx.recyclerview:recyclerview:' + rootProject.ext.recyclerviewVersion
+//    implementation 'com.squareup.picasso:picasso:2.3.2'
     implementation 'com.github.bumptech.glide:glide:' + rootProject.ext.glideVersion
-    annotationProcessor 'com.github.bumptech.glide:compiler:'+ rootProject.ext.glideVersion
-    api 'com.arjinmc.android:expandrecyclerview:' + rootProject.ext.expandRecyclerViewVerion
-    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
-    api 'com.github.yalantis:ucrop:2.2.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:' + rootProject.ext.glideVersion
+    implementation 'com.arjinmc.android:expandrecyclerview:' + rootProject.ext.expandRecyclerViewVerion
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    api 'com.github.yalantis:ucrop:2.2.6'
 
 }

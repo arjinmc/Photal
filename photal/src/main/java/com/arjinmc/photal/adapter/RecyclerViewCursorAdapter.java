@@ -1,8 +1,9 @@
 package com.arjinmc.photal.adapter;
 
 import android.database.Cursor;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Eminem Lo on 25/5/17.

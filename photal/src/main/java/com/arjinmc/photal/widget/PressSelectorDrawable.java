@@ -2,7 +2,8 @@ package com.arjinmc.photal.widget;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
-import android.support.annotation.ColorInt;
+
+import androidx.annotation.ColorInt;
 
 /**
  * back button background

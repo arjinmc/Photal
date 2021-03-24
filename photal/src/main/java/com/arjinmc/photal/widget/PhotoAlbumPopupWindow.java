@@ -2,11 +2,6 @@ package com.arjinmc.photal.widget;
 
 import android.database.Cursor;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.R;
@@ -26,7 +27,7 @@ import com.arjinmc.photal.loader.AlbumLoader;
 import com.arjinmc.photal.util.CommonUtil;
 import com.arjinmc.photal.util.ImageLoader;
 import com.arjinmc.photal.viewholder.AlbumViewHolder;
-import com.arjinmc.recyclerviewdecoration.RecyclerViewItemDecoration;
+import com.arjinmc.recyclerviewdecoration.RecyclerViewGridItemDecoration;
 
 /**
  * album chooser for photo grid style
@@ -77,15 +78,16 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
             }
         });
 
-        mRvAlbum.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        mRvAlbum.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         if (mPhotalConfig != null && mPhotalConfig.getAlbumDiver() != null) {
             mRvAlbum.addItemDecoration(mPhotalConfig.getAlbumDiver());
         } else {
-            mRvAlbum.addItemDecoration(new RecyclerViewItemDecoration.Builder(mContext)
-                    .paddingStart(50)
-                    .paddingEnd(50)
+            mRvAlbum.addItemDecoration(new RecyclerViewGridItemDecoration.Builder(mContext)
+                    .borderVisible(true)
+                    .horizontalSpacing(2)
+                    .verticalSpacing(2)
                     .color(ContextCompat.getColor(mContext, R.color.photal_album_diver))
-                    .thickness(2).create());
+                    .create());
         }
         mAlbumAdapter = new AlbumAdapter();
         mRvAlbum.setAdapter(mAlbumAdapter);
