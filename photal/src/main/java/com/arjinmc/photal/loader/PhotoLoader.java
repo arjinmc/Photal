@@ -2,6 +2,7 @@ package com.arjinmc.photal.loader;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.loader.app.LoaderManager;
@@ -41,8 +42,9 @@ public class PhotoLoader implements LoaderManager.LoaderCallbacks<Cursor> {
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         int albumId = args.getInt("id", -1);
 
-        if (albumId != -1)
+        if (albumId != -1) {
             return new PhotoCursorLoader(mContext, albumId);
+        }
         return new PhotoCursorLoader(mContext);
     }
 

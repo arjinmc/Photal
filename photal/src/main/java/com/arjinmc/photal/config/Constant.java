@@ -21,7 +21,7 @@ public final class Constant {
     public static final String BUNDLE_KEY_USE_CAMERA = "photal_use_camera";
     public static final String BUNDLE_KEY_USE_CROP = "photal_use_crop";
 
-    public static final Uri URI_IMAGE_MEDIA = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    public static final Uri URI_MEDIA = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL);
 
     public static final int LOADER_ID_ALBUM = 0xff10001;
     public static final int LOADER_ID_PHOTO = 0xff10002;
