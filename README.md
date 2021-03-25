@@ -1,11 +1,26 @@
 # Photal
-An android plugin library to select photos,take a photo and make photo effects. 
+An android plugin library to select photos,take a photo and make photo effects. This lib has added in Jcenter.
 
 Depends on:
 * [Glide](https://github.com/bumptech/glide)
 * [Ucrop](https://github.com/Yalantis/uCrop)
 * [PhotoView](https://github.com/Baseflow/PhotoView)
 * [ExpandRecyclerView](https://github.com/arjinmc/ExpandRecyclerView)
+
+## Import
+Maven
+```code 
+<dependency>
+	<groupId>com.arjinmc.android</groupId>
+	<artifactId>photal</artifactId>
+	<version>2.0</version>
+	<type>pom</type>
+</dependency>
+```
+Gradle
+```code 
+implementation 'com.arjinmc.android:photal:2.0'
+```
 
 ## Call Selector for photos
 ### Multiple Selector
