@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
 //        photalConfig.setPreviewTextSize(R.dimen.text_send);
 //        photalConfig.setCropDoneIcon(R.drawable.photal_ic_crop_done);
         photalConfig.setFileProviderAuthorities("com.arjinmc.photal.fileprovider");
-//        photalConfig.setImageLoaderType(ImageLoader.MODE_PICASSO);
 //        photalConfig.setAccessGPS(true);
         Photal.getInstance().setConfig(photalConfig);
 
