@@ -173,6 +173,15 @@ public class PhotoAlbumPopupWindow extends PopupWindow {
 
                     }
                 });
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        currentPosition = position;
+                        mAlbumId = albumId;
+                        notifyDataSetChanged();
+                        mHandler.postDelayed(mDismissRunnable, 300);
+                    }
+                });
                 if (currentPosition == position) {
                     holder.rbChoose.setChecked(true);
                 } else {
