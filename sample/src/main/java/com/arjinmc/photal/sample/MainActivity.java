@@ -185,8 +185,12 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 for (MediaFileItem mediaFileItem : mediaFileItemList) {
                     Log.e("path", "path:" + mediaFileItem.getPath()
-                            + "\turi:" + mediaFileItem.getUriPath()
-                            + "\toriginal uri:" + mediaFileItem.getUriOriginalPath());
+                            + "\nuri:" + mediaFileItem.getUriPath()
+                            + "\noriginal uri:" + mediaFileItem.getUriOriginalPath()
+                            + "\nmimeType:" + mediaFileItem.getMimeType()
+                            + "\nsize:" + mediaFileItem.getSize()
+                            + "\ndateTaken:" + mediaFileItem.getDateTaken()
+                    );
                 }
             }
 

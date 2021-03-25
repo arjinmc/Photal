@@ -153,6 +153,9 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                             }
                         }
                         mediaFileItem.setDisplayName(cursor.getString(cursor.getColumnIndex(PhotoCursorLoader.PHOTO_DISPLAY_NAME)));
+                        mediaFileItem.setMimeType(cursor.getString(cursor.getColumnIndex(PhotoCursorLoader.PHOTO_MIME_TYPE)));
+                        mediaFileItem.setSize(cursor.getLong(cursor.getColumnIndex(PhotoCursorLoader.PHOTO_SIZE)));
+                        mediaFileItem.setDateTaken(cursor.getLong(cursor.getColumnIndex(PhotoCursorLoader.PHOTO_DATE_TOKEN)));
                         mPhotoList.put(i, mediaFileItem);
                     }
                     mPhotoAdapter.setCursor(cursor);

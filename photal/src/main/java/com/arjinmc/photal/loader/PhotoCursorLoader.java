@@ -5,6 +5,7 @@ import android.provider.MediaStore;
 
 import androidx.loader.content.CursorLoader;
 
+import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Constant;
 
 /**
@@ -18,7 +19,8 @@ public class PhotoCursorLoader extends CursorLoader {
     public static final String PHOTO_ID = MediaStore.Files.FileColumns._ID;
     public static final String PHOTO_DISPLAY_NAME = MediaStore.Files.FileColumns.DISPLAY_NAME;
     public static final String PHOTO_DATA = MediaStore.Files.FileColumns.DATA;
-    public static final String PHOTO_TYPE = MediaStore.Files.FileColumns.MIME_TYPE;
+    public static final String PHOTO_MIME_TYPE = MediaStore.Files.FileColumns.MIME_TYPE;
+    public static final String PHOTO_SIZE = MediaStore.Files.FileColumns.SIZE;
     public static final String PHOTO_DATE_TOKEN = MediaStore.Files.FileColumns.DATE_TAKEN;
 
     public static final String SELECTION_ALBUM = AlbumCursorLoader.ALBUM_ID + "=?";
@@ -27,7 +29,7 @@ public class PhotoCursorLoader extends CursorLoader {
     public PhotoCursorLoader(Context context) {
 
         super(context, Constant.URI_MEDIA
-                , new String[]{PHOTO_ID, PHOTO_DISPLAY_NAME, PHOTO_DATA, PHOTO_TYPE, PHOTO_DATE_TOKEN}
+                , new String[]{PHOTO_ID, PHOTO_DISPLAY_NAME, PHOTO_DATA, PHOTO_MIME_TYPE, PHOTO_SIZE, PHOTO_DATE_TOKEN}
                 , SELECTION_MEDIA_TYPE
                 , new String[]{String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)}
                 , PHOTO_DATE_TOKEN + " DESC");
@@ -37,8 +39,8 @@ public class PhotoCursorLoader extends CursorLoader {
     public PhotoCursorLoader(Context context, Integer albumId) {
 
         super(context, Constant.URI_MEDIA
-                , new String[]{PHOTO_ID, PHOTO_DISPLAY_NAME, PHOTO_DATA, PHOTO_TYPE, PHOTO_DATE_TOKEN}
-                ,  SELECTION_ALBUM + " AND " + SELECTION_MEDIA_TYPE
+                , new String[]{PHOTO_ID, PHOTO_DISPLAY_NAME, PHOTO_DATA, PHOTO_MIME_TYPE, PHOTO_SIZE, PHOTO_DATE_TOKEN}
+                , SELECTION_ALBUM + " AND " + SELECTION_MEDIA_TYPE
                 , new String[]{String.valueOf(albumId), String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)}
                 , PHOTO_DATE_TOKEN + " DESC");
 

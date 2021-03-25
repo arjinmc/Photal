@@ -136,7 +136,7 @@ public class AlbumCursorLoader extends CursorLoader {
                 if (cur.getPosition() == 0) {
                     totalData = cur.getString(cur.getColumnIndex(ALBUM_IMAGE_DATA));
                 }
-                totalCount += cur.getInt(cur.getColumnIndex(MediaStore.MediaColumns.SIZE));
+                totalCount += cur.getInt(cur.getColumnIndex(ALBUM_PHOTO_COUNT));
             }
 
             allCur.addRow(new String[]{ALBUM_ID_ALL, ALBUM_ID_ALL

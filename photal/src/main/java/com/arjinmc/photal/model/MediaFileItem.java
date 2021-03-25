@@ -17,6 +17,7 @@ public class MediaFileItem implements Parcelable {
     private String uriOriginalPath;
     private long size;
     private long duration;
+    private long dateTaken;
 
     public String getDisplayName() {
         return displayName;
@@ -74,6 +75,14 @@ public class MediaFileItem implements Parcelable {
         this.duration = duration;
     }
 
+    public long getDateTaken() {
+        return dateTaken;
+    }
+
+    public void setDateTaken(long dateTaken) {
+        this.dateTaken = dateTaken;
+    }
+
     public MediaFileItem() {
 
     }
@@ -86,6 +95,7 @@ public class MediaFileItem implements Parcelable {
         uriOriginalPath = in.readString();
         size = in.readLong();
         duration = in.readLong();
+        dateTaken = in.readLong();
     }
 
     @Override
@@ -97,6 +107,7 @@ public class MediaFileItem implements Parcelable {
         dest.writeString(uriOriginalPath);
         dest.writeLong(size);
         dest.writeLong(duration);
+        dest.writeLong(dateTaken);
     }
 
     @Override
