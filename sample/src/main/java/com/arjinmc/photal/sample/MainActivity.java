@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,12 +76,14 @@ public class MainActivity extends AppCompatActivity {
 //        photalConfig.setAlbumTextSize(R.dimen.text_send);
 //        photalConfig.setAlbumTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
 //        photalConfig.setAlbumCheckBox(R.drawable.cb_album);
-//        photalConfig.setAlbumDiver(new RecyclerViewItemDecoration.Builder(this)
+//        photalConfig.setAlbumDiver(new RecyclerViewLinearItemDecoration.Builder(this)
 //                .color(ContextCompat.getColor(this, com.arjinmc.photal.R.color.photal_album_background))
 //                .thickness(2).create());
-//        photalConfig.setGalleryDiver(new RecyclerViewItemDecoration.Builder(this)
+//        photalConfig.setGalleryDiver(new RecyclerViewGridItemDecoration.Builder(this)
 //                .color(ContextCompat.getColor(this, R.color.photal_send_disable))
-//                .thickness(2).create());
+//                .horizontalSpacing(2)
+//                .verticalSpacing(2)
+//                .create());
 //        photalConfig.setGalleryColumnCount(4);
 //        photalConfig.setGalleryCheckboxColor(Color.YELLOW);
 //        photalConfig.setGalleryBackgroundColor(Color.WHITE);
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 //        photalConfig.setCropDoneIcon(R.drawable.photal_ic_crop_done);
         photalConfig.setFileProviderAuthorities("com.arjinmc.photal.fileprovider");
 //        photalConfig.setImageLoaderType(ImageLoader.MODE_PICASSO);
-        photalConfig.setAccessGPS(true);
+//        photalConfig.setAccessGPS(true);
         Photal.getInstance().setConfig(photalConfig);
 
         PermissionAssistant.addPermission(permissions);
