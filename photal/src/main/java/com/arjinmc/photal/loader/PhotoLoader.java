@@ -31,11 +31,11 @@ public class PhotoLoader implements LoaderManager.LoaderCallbacks<Cursor> {
         if (albumId == null) albumId = -1;
         Bundle bundle = new Bundle();
         bundle.putInt("id", albumId);
-        mContext.getSupportLoaderManager().initLoader(Constant.LOADER_ID_PHOTO, bundle, this);
+        LoaderManager.getInstance(mContext).initLoader(Constant.LOADER_ID_PHOTO, bundle, this);
     }
 
     public void destroyLoader() {
-        mContext.getSupportLoaderManager().destroyLoader(Constant.LOADER_ID_PHOTO);
+        LoaderManager.getInstance(mContext).destroyLoader(Constant.LOADER_ID_PHOTO);
     }
 
     @Override

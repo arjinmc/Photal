@@ -27,11 +27,11 @@ public class AlbumLoader implements LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     public void load() {
-        mContext.getSupportLoaderManager().initLoader(Constant.LOADER_ID_ALBUM, null, this);
+        LoaderManager.getInstance(mContext).initLoader(Constant.LOADER_ID_ALBUM, null, this);
     }
 
     public void destroyLoader() {
-        mContext.getSupportLoaderManager().destroyLoader(Constant.LOADER_ID_ALBUM);
+        LoaderManager.getInstance(mContext).destroyLoader(Constant.LOADER_ID_ALBUM);
     }
 
     @Override
