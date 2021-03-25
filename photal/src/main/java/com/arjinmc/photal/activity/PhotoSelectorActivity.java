@@ -145,6 +145,12 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                             Uri contentUri = ContentUris.withAppendedId(
                                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
                             mediaFileItem.setUriPath(contentUri.toString());
+                            //check if need access gps for original path
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+                                    && Photal.getInstance().getConfig().isAccessGPS()) {
+                                contentUri = MediaStore.setRequireOriginal(contentUri);
+                                mediaFileItem.setUriOriginalPath(contentUri.toString());
+                            }
                         }
                         mediaFileItem.setDisplayName(cursor.getString(cursor.getColumnIndex(PhotoCursorLoader.PHOTO_DISPLAY_NAME)));
                         mPhotoList.put(i, mediaFileItem);

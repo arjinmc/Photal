@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 //        photalConfig.setCropDoneIcon(R.drawable.photal_ic_crop_done);
         photalConfig.setFileProviderAuthorities("com.arjinmc.photal.fileprovider");
 //        photalConfig.setImageLoaderType(ImageLoader.MODE_PICASSO);
+        photalConfig.setAccessGPS(true);
         Photal.getInstance().setConfig(photalConfig);
 
         PermissionAssistant.addPermission(permissions);
@@ -183,7 +184,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("path", "empty");
             } else {
                 for (MediaFileItem mediaFileItem : mediaFileItemList) {
-                    Log.e("path", "path:" + mediaFileItem.getPath() + "\t,uri:" + mediaFileItem.getUriPath());
+                    Log.e("path", "path:" + mediaFileItem.getPath()
+                            + "\turi:" + mediaFileItem.getUriPath()
+                            + "\toriginal uri:" + mediaFileItem.getUriOriginalPath());
                 }
             }
 

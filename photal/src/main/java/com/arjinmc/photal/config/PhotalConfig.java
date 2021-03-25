@@ -44,6 +44,7 @@ public final class PhotalConfig {
     private int previewTextSize = -1;
     private String fileProviderAuthorities;
     private int cropDoneIcon = -1;
+    private boolean accessGPS;
 
     public PhotalConfig(Context context) {
         mContext = context;
@@ -279,4 +280,11 @@ public final class PhotalConfig {
         this.cropDoneIcon = cropDoneIcon;
     }
 
+    public boolean isAccessGPS() {
+        return accessGPS;
+    }
+
+    public void setAccessGPS(boolean accessGPS) {
+        this.accessGPS = accessGPS;
+    }
 }

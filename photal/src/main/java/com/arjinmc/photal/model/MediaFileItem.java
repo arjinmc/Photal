@@ -14,6 +14,7 @@ public class MediaFileItem implements Parcelable {
     private String mimeType;
     private String path;
     private String uriPath;
+    private String uriOriginalPath;
     private long size;
     private long duration;
 
@@ -49,6 +50,14 @@ public class MediaFileItem implements Parcelable {
         this.uriPath = uriPath;
     }
 
+    public String getUriOriginalPath() {
+        return uriOriginalPath;
+    }
+
+    public void setUriOriginalPath(String uriOriginalPath) {
+        this.uriOriginalPath = uriOriginalPath;
+    }
+
     public long getSize() {
         return size;
     }
@@ -65,7 +74,7 @@ public class MediaFileItem implements Parcelable {
         this.duration = duration;
     }
 
-    public MediaFileItem(){
+    public MediaFileItem() {
 
     }
 
@@ -74,6 +83,7 @@ public class MediaFileItem implements Parcelable {
         mimeType = in.readString();
         path = in.readString();
         uriPath = in.readString();
+        uriOriginalPath = in.readString();
         size = in.readLong();
         duration = in.readLong();
     }
@@ -84,6 +94,7 @@ public class MediaFileItem implements Parcelable {
         dest.writeString(mimeType);
         dest.writeString(path);
         dest.writeString(uriPath);
+        dest.writeString(uriOriginalPath);
         dest.writeLong(size);
         dest.writeLong(duration);
     }

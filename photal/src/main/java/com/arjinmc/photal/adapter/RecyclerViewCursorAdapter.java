@@ -26,8 +26,9 @@ public class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> exten
 
     @Override
     public int getItemCount() {
-        if (mCursor != null)
+        if (mCursor != null) {
             return mCursor.getCount();
+        }
         return 0;
     }
 
