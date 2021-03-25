@@ -8,6 +8,19 @@ Depends on:
 * [ExpandRecyclerView](https://github.com/arjinmc/ExpandRecyclerView)
 
 ## Import
+JitPack
+```code 
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+dependencies {
+   implementation 'com.github.arjinmc:Photal:2.0'
+}
+```
 Maven
 ```code 
 <dependency>
