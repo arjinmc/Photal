@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -27,11 +26,13 @@ public class SelectBox extends View implements View.OnClickListener {
 
     private int mFullWidth = 1;
     private Paint mPaint;
+    private Paint mTextPaint;
     private int mBorderColor = Color.WHITE;
     private int mBackgroundColor = Color.BLUE;
     private int mIconColor = Color.WHITE;
     private int mThickness;
     private boolean isChecked;
+    private int mTextNumber = 1;
 
     private OnCheckChangeListener mOnCheckChangeListener;
 
@@ -56,8 +57,12 @@ public class SelectBox extends View implements View.OnClickListener {
         init();
     }
 
-    public void setColor(@ColorInt int color){
+    public void setColor(@ColorInt int color) {
         mBackgroundColor = color;
+    }
+
+    public void setTextNumber(int number) {
+        mTextNumber = number;
     }
 
     @Override
@@ -73,15 +78,15 @@ public class SelectBox extends View implements View.OnClickListener {
             mPaint.setStyle(Paint.Style.FILL);
             canvas.drawCircle(mFullWidth / 2, mFullWidth / 2, mFullWidth / 2 - (int) (mThickness * 1.5), mPaint);
 
-            Path path = new Path();
-            path.moveTo((int) (mFullWidth * 0.28), (int) (mFullWidth * 0.53));
-            path.lineTo((int) (mFullWidth * 0.43), (int) (mFullWidth * 0.68));
-            path.lineTo((int) (mFullWidth * 0.73), (int) (mFullWidth * 0.38));
-
-            mPaint.setColor(mIconColor);
-            mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setStrokeWidth(mThickness * 2 / 3);
-            canvas.drawPath(path, mPaint);
+            String drawText = mTextNumber + "";
+            mTextPaint.setColor(mIconColor);
+            mTextPaint.setStrokeWidth(1);
+            mTextPaint.setTextSize(mThickness * 3.5f);
+            mTextPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+            float textWidth = mTextPaint.measureText(drawText);
+            Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
+            float baselineY = mFullWidth / 2 + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
+            canvas.drawText(drawText, mFullWidth / 2 - textWidth / 2, baselineY, mTextPaint);
         }
     }
 
@@ -98,11 +103,15 @@ public class SelectBox extends View implements View.OnClickListener {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+
+        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
         setOnClickListener(this);
     }
 
     public void initFullWidth() {
         Point point = new Point();
+
         ((WindowManager) (getContext().getSystemService(Context.WINDOW_SERVICE)))
                 .getDefaultDisplay().getSize(point);
         mFullWidth = point.x;
@@ -132,7 +141,7 @@ public class SelectBox extends View implements View.OnClickListener {
 
     public interface OnCheckChangeListener {
 
-        public void onChange(boolean change);
+        void onChange(boolean change);
     }
 }
 
