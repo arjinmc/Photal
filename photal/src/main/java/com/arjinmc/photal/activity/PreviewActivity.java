@@ -2,6 +2,7 @@ package com.arjinmc.photal.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -102,7 +103,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 int chosenSize = mChosenImagePaths.size();
                 mChosenImagePathMap = new ArrayMap<>(chosenSize);
                 for (int i = 0; i < chosenSize; i++) {
-                    mChosenImagePathMap.put(mChosenImagePaths.get(i).getPath(), mChosenImagePaths.get(i));
+                    mChosenImagePathMap.put(getImagePath(mChosenImagePaths.get(i)), mChosenImagePaths.get(i));
                 }
             } else {
                 mChosenImagePathMap = new ArrayMap<>();
@@ -119,10 +120,10 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
                 PhotoView photoView = holder.getView(R.id.pv_image);
                 photoView.setZoomable(true);
-                ImageLoader.load(PreviewActivity.this, mediaFileItem.getPath(), photoView);
+                ImageLoader.load(PreviewActivity.this, getImagePath(mediaFileItem), photoView);
 
                 if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()
-                        && mChosenImagePathMap.containsKey(mChosenImagePaths.get(position).getPath())) {
+                        && mChosenImagePathMap.containsKey(getImagePath(mChosenImagePaths.get(position)))) {
                     mCbSelected.setChecked(true);
                 } else {
                     mCbSelected.setChecked(false);
@@ -138,7 +139,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()
                             && getCurrentPosition() != -1
-                            && mChosenImagePathMap.containsKey(mChosenImagePaths.get(getCurrentPosition()).getPath())) {
+                            && mChosenImagePathMap.containsKey(getImagePath(mChosenImagePaths.get(getCurrentPosition())))) {
                         mCbSelected.setChecked(true);
                     } else {
                         mCbSelected.setChecked(false);
@@ -157,12 +158,12 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 int position = getCurrentPosition();
-                boolean checked = mChosenImagePathMap.containsKey(mChosenImagePaths.get(position).getPath());
+                boolean checked = mChosenImagePathMap.containsKey(getImagePath(mChosenImagePaths.get(position)));
 
                 if (checked) {
-                    mChosenImagePathMap.remove(mChosenImagePaths.get(position).getPath());
+                    mChosenImagePathMap.remove(getImagePath(mChosenImagePaths.get(position)));
                 } else {
-                    mChosenImagePathMap.put(mChosenImagePaths.get(position).getPath(), mChosenImagePaths.get(position));
+                    mChosenImagePathMap.put(getImagePath(mChosenImagePaths.get(position)), mChosenImagePaths.get(position));
                 }
 
                 updateBtnSend();
@@ -242,6 +243,11 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         }
         setResult(resultCode, intent);
         finish();
+    }
+
+    private String getImagePath(MediaFileItem mediaFileItem) {
+        return TextUtils.isEmpty(mediaFileItem.getPath())
+                ? mediaFileItem.getUriPath() : mediaFileItem.getUriPath();
     }
 
     @Override

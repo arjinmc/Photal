@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -298,14 +299,14 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         @Override
         public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
             final MediaFileItem mediaFileItem = mPhotoList.get(mPhotoList.keyAt(position));
-            final String dataPath = mediaFileItem.getPath();
+            final String dataPath = getImagePath(mediaFileItem);
             ImageLoader.loadThumbnail(getBaseContext()
                     , dataPath, holder.ivPhoto);
             if (mCurrentAction.equals(Constant.ACTION_CHOOSE_MULTIPLE)) {
                 if (mPhotalConfig != null) {
                     holder.sbCheck.setColor(mPhotalConfig.getGalleryCheckboxColor());
                 }
-                if (chosenImagesPaths.containsKey(mediaFileItem.getPath())) {
+                if (chosenImagesPaths.containsKey(dataPath)) {
                     holder.sbCheck.setChecked(true);
                 } else {
                     holder.sbCheck.setChecked(false);
@@ -354,6 +355,11 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
 
     }
 
+    private String getImagePath(MediaFileItem mediaFileItem) {
+        return TextUtils.isEmpty(mediaFileItem.getPath())
+                ? mediaFileItem.getUriPath() : mediaFileItem.getUriPath();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -364,7 +370,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
             if (newSelectedImages != null && !newSelectedImages.isEmpty()) {
                 int selectedSize = newSelectedImages.size();
                 for (int i = 0; i < selectedSize; i++) {
-                    mPhotoAdapter.chosenImagesPaths.put(newSelectedImages.get(i).getPath(), newSelectedImages.get(i));
+                    mPhotoAdapter.chosenImagesPaths.put(getImagePath(newSelectedImages.get(i)), newSelectedImages.get(i));
                 }
             }
             mPhotoAdapter.notifyDataSetChanged();
