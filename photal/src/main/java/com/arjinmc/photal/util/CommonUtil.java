@@ -14,6 +14,8 @@ import androidx.annotation.ColorInt;
 import androidx.collection.ArrayMap;
 import androidx.core.content.FileProvider;
 
+import com.arjinmc.photal.model.MediaFileItem;
+
 import java.io.File;
 
 /**
@@ -91,5 +93,21 @@ public final class CommonUtil {
                 window.setStatusBarColor(color);
             }
         }
+    }
+
+    /**
+     * get image path
+     *
+     * @param mediaFileItem
+     * @return
+     */
+    public static String getImagePath(MediaFileItem mediaFileItem) {
+        if (mediaFileItem == null) {
+            return null;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return mediaFileItem.getUriPath();
+        }
+        return mediaFileItem.getPath();
     }
 }

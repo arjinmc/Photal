@@ -103,7 +103,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 int chosenSize = mChosenImagePaths.size();
                 mChosenImagePathMap = new ArrayMap<>(chosenSize);
                 for (int i = 0; i < chosenSize; i++) {
-                    mChosenImagePathMap.put(getImagePath(mChosenImagePaths.get(i)), mChosenImagePaths.get(i));
+                    mChosenImagePathMap.put(
+                            CommonUtil.getImagePath(mChosenImagePaths.get(i)), mChosenImagePaths.get(i));
                 }
             } else {
                 mChosenImagePathMap = new ArrayMap<>();
@@ -120,10 +121,10 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
                 PhotoView photoView = holder.getView(R.id.pv_image);
                 photoView.setZoomable(true);
-                ImageLoader.load(PreviewActivity.this, getImagePath(mediaFileItem), photoView);
+                ImageLoader.load(PreviewActivity.this, CommonUtil.getImagePath(mediaFileItem), photoView);
 
                 if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()
-                        && mChosenImagePathMap.containsKey(getImagePath(mChosenImagePaths.get(position)))) {
+                        && mChosenImagePathMap.containsKey(CommonUtil.getImagePath(mChosenImagePaths.get(position)))) {
                     mCbSelected.setChecked(true);
                 } else {
                     mCbSelected.setChecked(false);
@@ -139,7 +140,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()
                             && getCurrentPosition() != -1
-                            && mChosenImagePathMap.containsKey(getImagePath(mChosenImagePaths.get(getCurrentPosition())))) {
+                            && mChosenImagePathMap.containsKey(CommonUtil.getImagePath(mChosenImagePaths.get(getCurrentPosition())))) {
                         mCbSelected.setChecked(true);
                     } else {
                         mCbSelected.setChecked(false);
@@ -158,12 +159,13 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 int position = getCurrentPosition();
-                boolean checked = mChosenImagePathMap.containsKey(getImagePath(mChosenImagePaths.get(position)));
+                boolean checked = mChosenImagePathMap.containsKey(CommonUtil.getImagePath(mChosenImagePaths.get(position)));
 
                 if (checked) {
-                    mChosenImagePathMap.remove(getImagePath(mChosenImagePaths.get(position)));
+                    mChosenImagePathMap.remove(CommonUtil.getImagePath(mChosenImagePaths.get(position)));
                 } else {
-                    mChosenImagePathMap.put(getImagePath(mChosenImagePaths.get(position)), mChosenImagePaths.get(position));
+                    mChosenImagePathMap.put(
+                            CommonUtil.getImagePath(mChosenImagePaths.get(position)), mChosenImagePaths.get(position));
                 }
 
                 updateBtnSend();
@@ -243,11 +245,6 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         }
         setResult(resultCode, intent);
         finish();
-    }
-
-    private String getImagePath(MediaFileItem mediaFileItem) {
-        return TextUtils.isEmpty(mediaFileItem.getPath())
-                ? mediaFileItem.getUriPath() : mediaFileItem.getUriPath();
     }
 
     @Override
