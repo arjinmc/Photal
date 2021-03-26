@@ -2,8 +2,6 @@ package com.arjinmc.photal.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.collection.ArrayMap;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -54,8 +51,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     private RecyclerViewAdapter mImageAdapter;
 
     private String mCurrentAction;
-    private ArrayMap<String, MediaFileItem> mChosenImagePathMap;
     private ArrayList<MediaFileItem> mChosenImagePaths;
+    private ArrayList<MediaFileItem> mOriginalChosenImagePaths;
     private int mMaxCount;
 
     @Override
@@ -91,29 +88,28 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         }
 
         if (mCurrentAction == Constant.ACTION_CHOOSE_MULTIPLE) {
-            mChosenImagePaths = getIntent().getParcelableArrayListExtra(Constant.BUNDLE_KEY_SELECTED);
+            mOriginalChosenImagePaths = getIntent().getParcelableArrayListExtra(Constant.BUNDLE_KEY_SELECTED);
             mMaxCount = getIntent().getIntExtra(Constant.BUNDLE_KEY_MAX_COUNT, 1);
 
-            if (mChosenImagePaths == null || mChosenImagePaths.isEmpty()) {
+            if (mOriginalChosenImagePaths == null || mOriginalChosenImagePaths.isEmpty()) {
                 return;
             }
             mRlBottom.setVisibility(View.VISIBLE);
 
-            if (mChosenImagePaths != null && !mChosenImagePaths.isEmpty()) {
-                int chosenSize = mChosenImagePaths.size();
-                mChosenImagePathMap = new ArrayMap<>(chosenSize);
+            if (mOriginalChosenImagePaths != null && !mOriginalChosenImagePaths.isEmpty()) {
+                int chosenSize = mOriginalChosenImagePaths.size();
+                mChosenImagePaths = new ArrayList<>(chosenSize);
                 for (int i = 0; i < chosenSize; i++) {
-                    mChosenImagePathMap.put(
-                            CommonUtil.getImagePath(mChosenImagePaths.get(i)), mChosenImagePaths.get(i));
+                    mChosenImagePaths.add(mOriginalChosenImagePaths.get(i));
                 }
             } else {
-                mChosenImagePathMap = new ArrayMap<>();
+                mChosenImagePaths = new ArrayList<>();
             }
         } else {
             mRlBottom.setVisibility(View.GONE);
         }
 
-        mImageAdapter = new RecyclerViewAdapter<>(this, mChosenImagePaths
+        mImageAdapter = new RecyclerViewAdapter<>(this, mOriginalChosenImagePaths
                 , R.layout.photal_item_scale_image
                 , new RecyclerViewSingleTypeProcessor<MediaFileItem>() {
             @Override
@@ -123,8 +119,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 photoView.setZoomable(true);
                 ImageLoader.load(PreviewActivity.this, CommonUtil.getImagePath(mediaFileItem), photoView);
 
-                if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()
-                        && mChosenImagePathMap.containsKey(CommonUtil.getImagePath(mChosenImagePaths.get(position)))) {
+                if (mChosenImagePaths != null && !mChosenImagePaths.isEmpty()
+                        && mChosenImagePaths.contains(mOriginalChosenImagePaths.get(position))) {
                     mCbSelected.setChecked(true);
                 } else {
                     mCbSelected.setChecked(false);
@@ -138,9 +134,9 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()
+                    if (mChosenImagePaths != null && !mChosenImagePaths.isEmpty()
                             && getCurrentPosition() != -1
-                            && mChosenImagePathMap.containsKey(CommonUtil.getImagePath(mChosenImagePaths.get(getCurrentPosition())))) {
+                            && mChosenImagePaths.contains(mOriginalChosenImagePaths.get(getCurrentPosition()))) {
                         mCbSelected.setChecked(true);
                     } else {
                         mCbSelected.setChecked(false);
@@ -159,13 +155,12 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 int position = getCurrentPosition();
-                boolean checked = mChosenImagePathMap.containsKey(CommonUtil.getImagePath(mChosenImagePaths.get(position)));
+                boolean checked = mChosenImagePaths.contains(mOriginalChosenImagePaths.get(position));
 
                 if (checked) {
-                    mChosenImagePathMap.remove(CommonUtil.getImagePath(mChosenImagePaths.get(position)));
+                    mChosenImagePaths.remove(mOriginalChosenImagePaths.get(position));
                 } else {
-                    mChosenImagePathMap.put(
-                            CommonUtil.getImagePath(mChosenImagePaths.get(position)), mChosenImagePaths.get(position));
+                    mChosenImagePaths.add(mOriginalChosenImagePaths.get(position));
                 }
 
                 updateBtnSend();
@@ -210,10 +205,10 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
      * update button send status
      */
     private void updateBtnSend() {
-        if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()) {
+        if (mChosenImagePaths != null && !mChosenImagePaths.isEmpty()) {
             if (!mBtnSend.isEnabled()) mBtnSend.setEnabled(true);
             mBtnSend.setText(String.format(getString(R.string.photal_send_number)
-                    , mChosenImagePathMap.size(), mMaxCount));
+                    , mChosenImagePaths.size(), mMaxCount));
         } else {
             mBtnSend.setEnabled(false);
             mBtnSend.setText(getString(R.string.photal_send));
@@ -235,14 +230,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
      */
     private void dispatchImages(int resultCode) {
         Intent intent = new Intent();
-        if (mChosenImagePathMap != null && !mChosenImagePathMap.isEmpty()) {
-            int selectedSize = mChosenImagePathMap.size();
-            ArrayList<MediaFileItem> selectedPosition = new ArrayList<>(selectedSize);
-            for (int i = 0; i < selectedSize; i++) {
-                selectedPosition.add(mChosenImagePathMap.get(mChosenImagePathMap.keyAt(i)));
-            }
-            intent.putParcelableArrayListExtra(Constant.BUNDLE_KEY_SELECTED, selectedPosition);
-        }
+        intent.putParcelableArrayListExtra(Constant.BUNDLE_KEY_SELECTED, mChosenImagePaths);
         setResult(resultCode, intent);
         finish();
     }

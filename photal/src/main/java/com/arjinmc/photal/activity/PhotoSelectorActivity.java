@@ -286,9 +286,11 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
     private class PhotoGridSelectorAdapter extends RecyclerViewCursorAdapter<PhotoViewHolder> {
 
         public ArrayMap<String, MediaFileItem> chosenImagesPaths;
+        public ArrayList<MediaFileItem> chosenImages;
 
         public PhotoGridSelectorAdapter() {
             chosenImagesPaths = new ArrayMap<>();
+            chosenImages = new ArrayList<>();
         }
 
         @Override
@@ -323,9 +325,9 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                                             , mMaxCount));
                         } else {
                             if (change) {
-                                chosenImagesPaths.put(dataPath, mediaFileItem);
+                                addChosen(dataPath, mediaFileItem);
                             } else {
-                                chosenImagesPaths.remove(dataPath);
+                                removeChosen(dataPath);
                             }
                         }
                         updateBtnSend();
@@ -336,7 +338,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                 holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        chosenImagesPaths.put(dataPath, mediaFileItem);
+                        addChosen(dataPath, mediaFileItem);
                         dispatchImages();
                     }
                 });
@@ -344,17 +346,30 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         }
 
         public ArrayList<MediaFileItem> getChosenImagePosition() {
-            if (chosenImagesPaths != null && chosenImagesPaths.size() != 0) {
-                int chosenSize = chosenImagesPaths.size();
-                ArrayList<MediaFileItem> chosenItems = new ArrayList<>(chosenSize);
-                for (int i = 0; i < chosenSize; i++) {
-                    chosenItems.add(chosenImagesPaths.get(chosenImagesPaths.keyAt(i)));
-                }
-                return chosenItems;
-            }
-            return null;
+            return chosenImages;
         }
 
+        public void addChosen(String path, MediaFileItem mediaFileItem) {
+            if (chosenImagesPaths.containsKey(path)) {
+                return;
+            }
+            chosenImagesPaths.put(path, mediaFileItem);
+            chosenImages.add(mediaFileItem);
+        }
+
+        public void removeChosen(String path) {
+            if (!chosenImagesPaths.containsKey(path)) {
+                return;
+            }
+            MediaFileItem mediaFileItem = chosenImagesPaths.get(path);
+            chosenImages.remove(mediaFileItem);
+            chosenImagesPaths.remove(path);
+        }
+
+        public void clearChosen() {
+            chosenImagesPaths.clear();
+            chosenImages.clear();
+        }
     }
 
     @Override
@@ -363,15 +378,15 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         if (resultCode == Constant.SELECTOR_RESULT_CODE ||
                 resultCode == Constant.SELECTOR_PREVIEW_RESULT_CODE) {
             ArrayList<MediaFileItem> newSelectedImages = data.getParcelableArrayListExtra(Constant.BUNDLE_KEY_SELECTED);
-            mPhotoAdapter.chosenImagesPaths.clear();
+            mPhotoAdapter.clearChosen();
             if (newSelectedImages != null && !newSelectedImages.isEmpty()) {
                 int selectedSize = newSelectedImages.size();
                 for (int i = 0; i < selectedSize; i++) {
-                    mPhotoAdapter.chosenImagesPaths.put(
-                            CommonUtil.getImagePath(newSelectedImages.get(i)), newSelectedImages.get(i));
+                    mPhotoAdapter.addChosen(CommonUtil.getImagePath(newSelectedImages.get(i)), newSelectedImages.get(i));
                 }
             }
             mPhotoAdapter.notifyDataSetChanged();
+            updateBtnSend();
         }
         if (resultCode == Constant.SELECTOR_RESULT_CODE) {
             dispatchImages();
