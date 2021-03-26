@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -48,6 +47,7 @@ import com.arjinmc.photal.widget.SelectBox;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewLinearItemDecoration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * photo selector
@@ -238,13 +238,14 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         } else if (i == R.id.btn_send) {
             dispatchImages();
         } else if (i == R.id.tv_preview) {
+            ArrayList<MediaFileItem> chosenImages = mPhotoAdapter.getChosenImagePosition();
             if (mPhotoList == null || mPhotoList.size() == 0
-                    || mPhotoAdapter.getChosenImagePosition() == null) {
+                    || chosenImages == null || chosenImages.isEmpty()) {
                 return;
             }
             Intent previewIntent = new Intent(PhotoSelectorActivity.this, PreviewActivity.class);
             previewIntent.setAction(mCurrentAction);
-            previewIntent.putParcelableArrayListExtra(Constant.BUNDLE_KEY_SELECTED, mPhotoAdapter.getChosenImagePosition());
+            previewIntent.putParcelableArrayListExtra(Constant.BUNDLE_KEY_SELECTED, chosenImages);
             previewIntent.putExtra(Constant.BUNDLE_KEY_MAX_COUNT, mMaxCount);
 
             startActivityForResult(previewIntent, Constant.SELECTOR_REQUEST_CODE);
@@ -258,8 +259,9 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
     private void dispatchImages() {
         Intent intent = new Intent();
 
-        if (mPhotoAdapter.getChosenImagePosition() != null && mPhotoAdapter.getChosenImagePosition().size() != 0) {
-            intent.putExtra(mResultKey, mPhotoAdapter.getChosenImagePosition());
+        ArrayList<MediaFileItem> chosenMediaFiles = mPhotoAdapter.getChosenImagePosition();
+        if (chosenMediaFiles != null && !chosenMediaFiles.isEmpty()) {
+            intent.putExtra(mResultKey, chosenMediaFiles);
         }
         setResult(mResultCode, intent);
         finish();
@@ -269,11 +271,11 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
      * update button send status
      */
     private void updateBtnSend() {
-        if (mPhotoAdapter.getChosenImagePosition() != null
-                && mPhotoAdapter.getChosenImagePosition().size() != 0) {
+        List<MediaFileItem> mediaFileItemList = mPhotoAdapter.getChosenImagePosition();
+        if (mediaFileItemList != null && !mediaFileItemList.isEmpty()) {
             if (!mBtnSend.isEnabled()) mBtnSend.setEnabled(true);
             mBtnSend.setText(String.format(getString(R.string.photal_send_number)
-                    , mPhotoAdapter.getChosenImagePosition().size(), mMaxCount));
+                    , mediaFileItemList.size(), mMaxCount));
         } else {
             mBtnSend.setEnabled(false);
             mBtnSend.setText(getString(R.string.photal_send));
@@ -370,7 +372,6 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                 }
             }
             mPhotoAdapter.notifyDataSetChanged();
-            updateBtnSend();
         }
         if (resultCode == Constant.SELECTOR_RESULT_CODE) {
             dispatchImages();
