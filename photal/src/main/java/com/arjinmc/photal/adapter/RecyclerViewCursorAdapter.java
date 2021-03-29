@@ -14,6 +14,10 @@ public class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> exten
 
     protected Cursor mCursor;
 
+    public RecyclerViewCursorAdapter() {
+        setHasStableIds(true);
+    }
+
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
@@ -30,6 +34,11 @@ public class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> exten
             return mCursor.getCount();
         }
         return 0;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     public void setCursor(Cursor cursor) {

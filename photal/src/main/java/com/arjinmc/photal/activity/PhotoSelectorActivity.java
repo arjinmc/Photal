@@ -329,6 +329,7 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
                 if (chosenIndex != -1) {
                     holder.sbCheck.setChecked(true);
                     holder.sbCheck.setTextNumber(chosenIndex + 1);
+                    holder.sbCheck.postInvalidate();
                 } else {
                     holder.sbCheck.setChecked(false);
                 }
