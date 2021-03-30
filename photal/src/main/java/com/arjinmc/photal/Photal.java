@@ -2,9 +2,6 @@ package com.arjinmc.photal;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
-
-import androidx.core.content.ContextCompat;
 
 import com.arjinmc.photal.activity.PhotoSelectorActivity;
 import com.arjinmc.photal.config.Constant;
@@ -13,7 +10,6 @@ import com.arjinmc.photal.exception.ConfigException;
 import com.arjinmc.photal.util.CommonUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.MemoryCategory;
-import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 
@@ -127,35 +123,6 @@ public final class Photal {
 
         Intent intent = CommonUtil.newCaptureIntent(activity, getConfig().getFileProviderAuthorities(), file);
         activity.startActivityForResult(intent, requestCode);
-
-    }
-
-    public void crop(Activity activity, String originFilePath, String destinationFilePath, int resultMaxWidth) {
-        if (!isSetConfig()) {
-            try {
-                throw new ConfigException();
-            } catch (ConfigException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-
-        PhotalConfig photalConfig = getConfig();
-        UCrop.Options options = new UCrop.Options();
-        options.setToolbarColor(photalConfig.getThemeColor());
-        options.setStatusBarColor(photalConfig.getThemeColor());
-        options.setActiveControlsWidgetColor(photalConfig.getThemeColor());
-        options.setToolbarWidgetColor(photalConfig.getTextTitleColor());
-        options.setRootViewBackgroundColor(ContextCompat.getColor(activity, R.color.photal_black));
-        options.setToolbarCropDrawable(photalConfig.getCropDoneIcon());
-        options.setToolbarCancelDrawable(photalConfig.getBtnBackIcon());
-
-        UCrop uCrop = UCrop.of(CommonUtil.compatFileUri(activity, getConfig().getFileProviderAuthorities(), new File(originFilePath))
-                , Uri.fromFile(new File(destinationFilePath)))
-                .withAspectRatio(1, 1)
-                .withMaxResultSize(resultMaxWidth, resultMaxWidth);
-        uCrop.withOptions(options);
-        uCrop.start(activity);
 
     }
 

@@ -1,10 +1,8 @@
 package com.arjinmc.photal.sample;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +19,6 @@ import com.arjinmc.photal.Photal;
 import com.arjinmc.photal.config.PhotalConfig;
 import com.arjinmc.photal.model.MediaFileItem;
 import com.arjinmc.recyclerviewdecoration.RecyclerViewLinearItemDecoration;
-import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -44,10 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private final int REQUEST_CODE_CAPURE_SELECTED = 0;
     private final String BUNDLE_KEY_IMAGE = "image_selected";
 
-    private boolean useCrop = false;
     private File mFile;
-    private File mCropFile;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,17 +147,11 @@ public class MainActivity extends AppCompatActivity {
                             , RESULT_CODE_SINGLE_SELECTED, BUNDLE_KEY_IMAGE);
                     break;
                 case 2:
-                    useCrop = false;
                     mFile = FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
                     Log.e("file", mFile.getAbsolutePath());
                     Photal.getInstance().capture(MainActivity.this, REQUEST_CODE_CAPURE_SELECTED, mFile);
                     break;
-                case 3:
-                    useCrop = true;
-                    mFile = FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
-                    mCropFile = FileUtils.createFile(getCameraPhotoPath() + File.separator + createImageName());
-                    Log.e("file", mFile.getAbsolutePath());
-                    Photal.getInstance().capture(MainActivity.this, REQUEST_CODE_CAPURE_SELECTED, mFile);
+                default:
                     break;
             }
         }
@@ -194,26 +182,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-        } else if (requestCode == REQUEST_CODE_CAPURE_SELECTED) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (useCrop) {
-                    Photal.getInstance().crop(this, mFile.getAbsolutePath()
-                            , mCropFile.getAbsolutePath(), 400);
-                } else {
-                    Log.e("capture", "done");
-                }
-            } else {
-                mFile.delete();
-            }
-
-        } else if (requestCode == UCrop.REQUEST_CROP) {
-            if (resultCode == RESULT_OK) {
-                final Uri resultUri = UCrop.getOutput(data);
-                mFile.delete();
-                Log.e("result uri", resultUri.getPath());
-            } else {
-                mFile.delete();
-            }
         }
     }
 

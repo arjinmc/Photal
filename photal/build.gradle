@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 group = 'com.github.arjinmc'
-version = '2.1'
+version = '2.2'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -9,7 +9,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
+        versionCode 4
         versionName "&{version}"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -36,8 +36,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:' + rootProject.ext.glideVersion
     implementation 'com.arjinmc.android:expandrecyclerview:' + rootProject.ext.expandRecyclerViewVerion
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
-    api 'com.github.yalantis:ucrop:2.2.6'
-
 }
 
 afterEvaluate {
