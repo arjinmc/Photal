@@ -3,7 +3,6 @@ An android plugin library to select photos,take a photo and make photo effects.
 
 Depends on:
 * [Glide](https://github.com/bumptech/glide)
-* [Ucrop](https://github.com/Yalantis/uCrop)
 * [PhotoView](https://github.com/Baseflow/PhotoView)
 * [ExpandRecyclerView](https://github.com/arjinmc/ExpandRecyclerView)
 
@@ -18,7 +17,7 @@ allprojects {
 }
 
 dependencies {
-   implementation 'com.github.arjinmc:Photal:2.1'
+   implementation 'com.github.arjinmc:Photal:2.2'
 }
 ```
 
@@ -54,11 +53,6 @@ in onActivityResult() as Multiple Selector
 ## Call system camera
 ```code
 Photal.getInstance().capture(context, requestCode, file);
-```
-
-## Also works with UCrop
-```code
-Photal.getInstance().crop(context, mFile.getAbsolutePath(), mCropFile.getAbsolutePath(), size);
 ```
 
 ## Config
