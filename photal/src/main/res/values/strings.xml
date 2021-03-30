@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Photal</string>
-
     <string name="photal_permission_setting">Permission Setting</string>
     <string name="photal_permission_setting_tips">Some permissions denied by System.\nWould you manually set them?</string>
     <string name="photal_permission_setting_yes">Yes</string>
