@@ -11,11 +11,11 @@ Depends on:
 JitPack
 ```code 
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
 
 dependencies {
    implementation 'com.github.arjinmc:Photal:2.1'
