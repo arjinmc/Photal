@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 group = 'com.github.arjinmc'
+version = '2.1'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -9,7 +10,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 3
-        versionName "2.1"
+        versionName "&{version}"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -47,7 +48,7 @@ afterEvaluate {
                 from components.release
                 groupId = group
                 artifactId = 'Photal'
-                version = '2.1'
+                version = "&{version}"
             }
         }
     }
