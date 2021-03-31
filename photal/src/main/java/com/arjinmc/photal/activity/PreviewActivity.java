@@ -191,6 +191,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         tvHeadTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, photalConfig.getTextTitleSize());
         tvHeadTitle.setTextColor(photalConfig.getTextTitleColor());
         mBtnBack.setImageResource(photalConfig.getBtnBackIcon());
+        mBtnBack.setPadding(photalConfig.getBtnBackIconPaddingLeft(),photalConfig.getBtnBackIconPaddingTop()
+                ,photalConfig.getBtnBackIconPaddingRight(),photalConfig.getBtnBackIconPaddingBottom());
         mBtnSend.setBackgroundResource(photalConfig.getBtnDoneBackground());
         mBtnSend.setTextColor(photalConfig.getBtnDoneTextColor());
         mBtnSend.setTextSize(TypedValue.COMPLEX_UNIT_PX, photalConfig.getBtnDoneTextSize());

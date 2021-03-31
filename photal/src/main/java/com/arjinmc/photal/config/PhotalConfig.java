@@ -27,6 +27,10 @@ public final class PhotalConfig {
     private int textTitleColor = UNEFFECTED_COLOR;
     private int textTitleSize = -1;
     private int btnBackIcon = -1;
+    private int btnBackIconPaddingLeft = -1;
+    private int btnBackIconPaddingTop = -1;
+    private int btnBackIconPaddingRight = -1;
+    private int btnBackIconPaddingBottom = -1;
     private int btnDoneBackground = -1;
     private int btnDoneTextColor = UNEFFECTED_COLOR;
     private int btnDoneTextSize = -1;
@@ -106,6 +110,45 @@ public final class PhotalConfig {
 
     public void setBtnBackIcon(@DrawableRes int btnBackIcon) {
         this.btnBackIcon = btnBackIcon;
+    }
+
+    public void setBtnBackIconPadding(int left, int top, int right, int bottom) {
+        this.btnBackIconPaddingLeft = left;
+        this.btnBackIconPaddingTop = top;
+        this.btnBackIconPaddingRight = right;
+        this.btnBackIconPaddingBottom = bottom;
+    }
+
+    public int getBtnBackIconPaddingLeft() {
+        if (btnBackIconPaddingLeft == -1) {
+            return mContext.getResources().getDimensionPixelSize(R.dimen.photal_margin_normal);
+        } else {
+            return btnBackIconPaddingLeft;
+        }
+    }
+
+    public int getBtnBackIconPaddingTop() {
+        if (btnBackIconPaddingTop == -1) {
+            return mContext.getResources().getDimensionPixelSize(R.dimen.photal_margin_normal);
+        } else {
+            return btnBackIconPaddingTop;
+        }
+    }
+
+    public int getBtnBackIconPaddingRight() {
+        if (btnBackIconPaddingRight == -1) {
+            return mContext.getResources().getDimensionPixelSize(R.dimen.photal_margin_normal);
+        } else {
+            return btnBackIconPaddingRight;
+        }
+    }
+
+    public int getBtnBackIconPaddingBottom() {
+        if (btnBackIconPaddingBottom == -1) {
+            return mContext.getResources().getDimensionPixelSize(R.dimen.photal_margin_normal);
+        } else {
+            return btnBackIconPaddingBottom;
+        }
     }
 
     public int getBtnDoneBackground() {

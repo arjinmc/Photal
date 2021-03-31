@@ -210,6 +210,8 @@ public class PhotoSelectorActivity extends FragmentActivity implements View.OnCl
         tvHeadTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getTextTitleSize());
         tvHeadTitle.setTextColor(mPhotalConfig.getTextTitleColor());
         mBtnBack.setImageResource(mPhotalConfig.getBtnBackIcon());
+        mBtnBack.setPadding(mPhotalConfig.getBtnBackIconPaddingLeft(), mPhotalConfig.getBtnBackIconPaddingTop()
+                , mPhotalConfig.getBtnBackIconPaddingRight(), mPhotalConfig.getBtnBackIconPaddingBottom());
         mBtnSend.setBackgroundResource(mPhotalConfig.getBtnDoneBackground());
         mBtnSend.setTextColor(mPhotalConfig.getBtnDoneTextColor());
         mBtnSend.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPhotalConfig.getBtnDoneTextSize());

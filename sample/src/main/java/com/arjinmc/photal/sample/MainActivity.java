@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //        photalConfig.setTextTitleSize(R.dimen.text_title);
 //        photalConfig.setTextTitleColor(ContextCompat.getColor(this, R.color.colorAccent));
 //        photalConfig.setBtnBackIcon(android.R.drawable.ic_menu_more);
+//        photalConfig.setBtnBackIconPadding(20,20,20,20);
 //        photalConfig.setBtnDoneBackground(R.drawable.btn_done);
 //        photalConfig.setBtnDoneTextColor(ContextCompat.getColor(this, R.color.colorAccent));
 //        photalConfig.setBtnDoneTextSize(R.dimen.text_send);

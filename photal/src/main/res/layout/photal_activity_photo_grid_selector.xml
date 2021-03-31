@@ -26,6 +26,7 @@
             android:layout_height="@dimen/photal_title_bar_h"
             android:background="@color/photal_transparent"
             android:padding="@dimen/photal_margin_normal"
+            android:scaleType="fitXY"
             android:src="@drawable/photal_ic_arrow_back" />
 
         <TextView
@@ -55,10 +56,10 @@
         android:layout_height="@dimen/photal_bottom_bar_h"
         android:layout_alignParentBottom="true"
         android:background="@color/photal_theme"
-        android:paddingBottom="@dimen/photal_margin_normal"
         android:paddingLeft="@dimen/photal_margin_big"
+        android:paddingTop="@dimen/photal_margin_normal"
         android:paddingRight="@dimen/photal_margin_big"
-        android:paddingTop="@dimen/photal_margin_normal">
+        android:paddingBottom="@dimen/photal_margin_normal">
 
         <TextView
             android:id="@id/tv_album"
